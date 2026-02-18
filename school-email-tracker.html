@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael's College Application Tracker</title>
+
+<!-- ============================================================
+  CONFIGURATION — Update DATA_URL after you push to GitHub
+  Format: https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/data/tracker.json
+  ============================================================ -->
+<script>
+  const DATA_URL = 'https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/school-tracker/main/data/tracker.json';
+  // Change this to your actual GitHub raw URL after setup (Step 2 in SETUP-GUIDE.md)
+  // Dashboard falls back to embedded data if fetch fails (e.g. when opening as local file)
+</script>
+
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232736;
+    --border: #2e3348;
+    --text: #e4e7f1;
+    --text-dim: #8b90a5;
+    --accent: #6c5ce7;
+    --green: #00b894;
+    --red: #e17055;
+    --yellow: #fdcb6e;
+    --blue: #74b9ff;
+    --orange: #f39c12;
+    --purple: #a29bfe;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; min-height:100vh; }
+
+  .container { max-width:1200px; margin:0 auto; padding:24px; }
+
+  /* Loading */
+  .loading-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; gap:16px; }
+  .spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { color:var(--text-dim); font-size:14px; }
+
+  /* Header */
+  .header { text-align:center; margin-bottom:32px; }
+  .header h1 { font-size:28px; font-weight:700; margin-bottom:4px; }
+  .header h1 span { color:var(--accent); }
+  .header .subtitle { color:var(--text-dim); font-size:14px; }
+  .scan-info { color:var(--text-dim); font-size:12px; margin-top:8px; padding:6px 16px; background:var(--surface); border-radius:20px; display:inline-flex; align-items:center; gap:8px; }
+  .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .data-source { font-size:11px; color:var(--text-dim); margin-top:6px; }
+
+  /* Stats Row */
+  .stats-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:28px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+  .stat-card .number { font-size:32px; font-weight:700; }
+  .stat-card .label { font-size:12px; color:var(--text-dim); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-card.accepted .number  { color:var(--green); }
+  .stat-card.pending .number   { color:var(--yellow); }
+  .stat-card.rejected .number  { color:var(--red); }
+  .stat-card.waitlisted .number{ color:var(--orange); }
+  .stat-card.total .number     { color:var(--blue); }
+
+  /* Tabs */
+  .tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .tab { padding:8px 18px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text-dim); cursor:pointer; font-size:13px; transition:all 0.2s; }
+  .tab:hover { border-color:var(--accent); color:var(--text); }
+  .tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* School Cards */
+  .schools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(350px,1fr)); gap:16px; margin-bottom:32px; }
+  .school-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:all 0.2s; position:relative; overflow:hidden; }
+  .school-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+  .school-card.status-accepted  { border-left:4px solid var(--green); }
+  .school-card.status-pending   { border-left:4px solid var(--yellow); }
+  .school-card.status-rejected  { border-left:4px solid var(--red); }
+  .school-card.status-waitlisted{ border-left:4px solid var(--orange); }
+
+  .school-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+  .school-name { font-size:17px; font-weight:600; }
+  .school-type { font-size:11px; color:var(--text-dim); background:var(--surface2); padding:2px 8px; border-radius:4px; }
+
+  .status-badge { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .status-badge.accepted   { background:rgba(0,184,148,0.15);  color:var(--green); }
+  .status-badge.pending    { background:rgba(253,203,110,0.15); color:var(--yellow); }
+  .status-badge.rejected   { background:rgba(225,112,85,0.15);  color:var(--red); }
+  .status-badge.waitlisted { background:rgba(243,156,18,0.15);  color:var(--orange); }
+
+  .detail-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:6px; font-size:13px; }
+  .detail-icon { width:16px; flex-shrink:0; text-align:center; margin-top:2px; }
+  .detail-text { color:var(--text-dim); }
+  .detail-text a { color:var(--blue); text-decoration:none; }
+  .detail-text a:hover { text-decoration:underline; }
+
+  .deadlines { margin-top:12px; }
+  .deadline-item { background:var(--surface2); border-radius:8px; padding:8px 12px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; font-size:12px; }
+  .deadline-item.urgent { border-left:3px solid var(--red); }
+  .deadline-item.soon   { border-left:3px solid var(--yellow); }
+  .deadline-item.passed { opacity:0.5; border-left:3px solid var(--text-dim); }
+  .deadline-date { color:var(--text-dim); font-weight:600; }
+
+  .action-items { margin-top:12px; }
+  .action-item { font-size:12px; color:var(--text-dim); padding:4px 0 4px 16px; position:relative; }
+  .action-item::before { content:"→"; position:absolute; left:0; color:var(--accent); }
+
+  .confidence-bar { margin-top:12px; display:flex; align-items:center; gap:8px; font-size:11px; color:var(--text-dim); }
+  .conf-track { flex:1; height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+  .conf-fill  { height:100%; border-radius:2px; background:var(--green); transition:width 0.3s; }
+
+  /* Feedback */
+  .feedback-section { margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+  .feedback-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--text-dim); cursor:pointer; font-size:11px; margin-right:4px; transition:all 0.2s; }
+  .feedback-btn:hover  { border-color:var(--accent); color:var(--text); }
+  .feedback-btn.correct{ border-color:var(--green); color:var(--green); }
+  .status-override { margin-top:8px; display:none; }
+  .status-override.visible { display:flex; gap:6px; flex-wrap:wrap; }
+  .override-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--text-dim); cursor:pointer; font-size:11px; }
+  .override-btn:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  /* Deadlines Panel */
+  .deadlines-panel { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:28px; }
+  .deadlines-panel h2 { font-size:18px; margin-bottom:16px; }
+  .deadline-list { list-style:none; }
+  .deadline-list li { padding:10px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:14px; }
+  .deadline-list li:last-child { border-bottom:none; }
+  .deadline-school { font-weight:600; min-width:120px; }
+  .deadline-desc { flex:1; color:var(--text-dim); margin:0 16px; }
+  .days-until { font-weight:600; min-width:80px; text-align:right; }
+  .days-until.urgent { color:var(--red); }
+  .days-until.soon   { color:var(--yellow); }
+  .days-until.ok     { color:var(--green); }
+  .days-until.passed { color:var(--text-dim); }
+
+  /* Email Log */
+  .email-log { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:28px; }
+  .email-log h2 { font-size:18px; margin-bottom:16px; }
+  .log-table { width:100%; border-collapse:collapse; }
+  .log-table th { text-align:left; font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; padding:8px 12px; border-bottom:1px solid var(--border); }
+  .log-table td { padding:10px 12px; border-bottom:1px solid var(--border); font-size:13px; }
+  .log-table tr:hover { background:var(--surface2); }
+  .cat-badge { padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .cat-badge.acceptance     { background:rgba(0,184,148,0.15);  color:var(--green); }
+  .cat-badge.informational  { background:rgba(116,185,255,0.15);color:var(--blue); }
+  .cat-badge.action_required{ background:rgba(253,203,110,0.15);color:var(--yellow); }
+  .cat-badge.rejection      { background:rgba(225,112,85,0.15); color:var(--red); }
+  .cat-badge.waitlist       { background:rgba(243,156,18,0.15); color:var(--orange); }
+
+  /* Scan History */
+  .scan-history { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:28px; }
+  .scan-history h2 { font-size:18px; margin-bottom:16px; }
+  .scan-item { padding:10px 14px; background:var(--surface2); border-radius:8px; margin-bottom:8px; font-size:13px; }
+  .scan-meta { color:var(--text-dim); font-size:11px; margin-top:4px; }
+
+  /* Metrics */
+  .metrics-panel { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:28px; }
+  .metrics-panel h2 { font-size:18px; margin-bottom:16px; }
+  .metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .metric { text-align:center; padding:12px; background:var(--surface2); border-radius:8px; }
+  .metric .val { font-size:24px; font-weight:700; color:var(--accent); }
+  .metric .lbl { font-size:11px; color:var(--text-dim); margin-top:4px; }
+
+  /* Footer */
+  .footer { text-align:center; padding:24px 0; color:var(--text-dim); font-size:12px; border-top:1px solid var(--border); margin-top:8px; }
+  .footer a { color:var(--accent); text-decoration:none; }
+
+  @media(max-width:768px) {
+    .stats-row { grid-template-columns:repeat(3,1fr); }
+    .schools-grid { grid-template-columns:1fr; }
+    .metrics-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="loading-screen">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading latest application data…</div>
+  </div>
+</div>
+
+<script>
+// ==============================================
+// FALLBACK DATA — used only if GitHub fetch fails
+// Live source of truth: data/tracker.json on GitHub,
+// updated automatically by gmail-scanner.gs every 12 hours
+// ==============================================
+const FALLBACK_DATA = {"metadata":{"version":"2.0","last_scan":"2026-02-16T00:00:00Z","total_scans":1,"total_emails_processed":55,"created":"2026-02-16","owner":"Michael Sarmento"},"schools":{"uc_berkeley":{"name":"UC Berkeley","short_name":"UCB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"},{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA by March 2"],"portal_url":null,"notes":"Transfer to Success workshop series ongoing"},"ucla":{"name":"UCLA","short_name":"UCLA","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":["Check MyApplication portal for updates"],"portal_url":"https://www.admission.ucla.edu/MyApplication","notes":"Application received Dec 12, 2025"},"uc_irvine":{"name":"UC Irvine","short_name":"UCI","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001314)"],"portal_url":null,"notes":"UCI school code for FAFSA: 001314"},"uc_santa_barbara":{"name":"UC Santa Barbara","short_name":"UCSB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid + Cal Grant priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001320)"],"portal_url":"https://connect.admissions.ucsb.edu/apply/status","notes":"Applicant Portal open"},"uc_riverside":{"name":"UC Riverside","short_name":"UCR","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Receiving marketing emails, School of Business focus"},"uc_santa_cruz":{"name":"UC Santa Cruz","short_name":"UCSC","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid deadline"},{"type":"decisions","date":"2026-04-01","description":"Transfer decisions begin posting"}],"action_items":["Complete FAFSA (School Code: 001321)","Check Admissions Portal starting April 1"],"portal_url":"https://ucsc.link/adm-portal","notes":"CruzID: mzsarmen. Transfer decisions: April 1-30"},"cal_poly_slo":{"name":"Cal Poly SLO","short_name":"Cal Poly","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Account: sarmento@calpoly.edu. Receiving biweekly newsletters"},"sjsu":{"name":"San Jose State","short_name":"SJSU","type":"CSU","status":"accepted","confidence":0.99,"decision_date":"2026-02-12","deadlines":[{"type":"intent","date":null,"description":"Confirm Intent to Enroll (check MySJSU)"},{"type":"event","date":"2026-04-18","description":"Admitted Spartan Day on campus"},{"type":"deposit","date":null,"description":"$250 enrollment deposit"}],"action_items":["Confirm Intent to Enroll via MySJSU","Pay $250 enrollment deposit","Choose mandatory Orientation session","Send official transcripts","Register for Admitted Spartan Day (April 18)"],"portal_url":"https://one.sjsu.edu","notes":"ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"},"sdsu":{"name":"San Diego State","short_name":"SDSU","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[{"type":"academic_history","date":"2026-01-31","description":"Academic History Update (PASSED)"}],"action_items":["Confirm Academic History Update was completed"],"portal_url":"https://calstate.liaisoncas.com/applicant-ux/#/login","notes":"RedID: 134626697"},"csuf":{"name":"Cal State Fullerton","short_name":"CSUF","type":"CSU","status":"pending","confidence":0.85,"decision_date":null,"deadlines":[],"action_items":["Check CSUF Student Portal for updates"],"portal_url":null,"notes":"CWID: 821713195. Applied Nov 8, 2025"},"sac_state":{"name":"Sacramento State","short_name":"Sac State","type":"CSU","status":"accepted","confidence":0.97,"decision_date":"2025-12-15","deadlines":[{"type":"intent","date":"2026-05-01","description":"Submit Intent to Enroll"},{"type":"business_app","date":"2026-03-16","description":"Business Admin supplemental application"},{"type":"adt","date":"2026-03-15","description":"ADT verification to Admissions"}],"action_items":["Submit Intent to Enroll by May 1","Complete Business supplemental app (Feb 1 - Mar 16)","Email unofficial transcripts to cob-ugrad@csus.edu","Ensure ADT verification by March 15"],"portal_url":"https://idp.csus.edu/idp/profile/cas/login","notes":"ADMITTED! ID: 305148038. Provisional financial aid awarded. Must complete Business supplemental."}},"email_log":[{"id":"1","school":"sjsu","date":"2026-02-14","subject":"Save the Date: SJSU Admitted Spartan Day","category":"action_required","confidence":0.95},{"id":"2","school":"sjsu","date":"2026-02-12","subject":"Welcome to SJSU for Fall 2026!","category":"acceptance","confidence":0.99},{"id":"3","school":"sjsu","date":"2026-02-12","subject":"New message at MySJSU","category":"informational","confidence":0.8},{"id":"4","school":"uc_berkeley","date":"2026-02-13","subject":"[SP26 TTS - Week 4] Transfer to Success Workshop Series","category":"informational","confidence":0.9},{"id":"5","school":"ucla","date":"2026-02-13","subject":"Explore campus life at UCLA","category":"informational","confidence":0.85},{"id":"6","school":"uc_irvine","date":"2026-02-10","subject":"Don't forget to submit your financial aid application!","category":"action_required","confidence":0.92},{"id":"7","school":"uc_santa_barbara","date":"2026-02-09","subject":"UCSB Family Student Housing","category":"informational","confidence":0.85},{"id":"8","school":"uc_santa_barbara","date":"2026-02-06","subject":"UCSB Financial Aid Update","category":"action_required","confidence":0.9},{"id":"9","school":"uc_riverside","date":"2026-02-12","subject":"Real-world experience, industry connections","category":"informational","confidence":0.85},{"id":"10","school":"uc_riverside","date":"2026-02-09","subject":"Michael, find affordable pathways at UC Riverside","category":"informational","confidence":0.85},{"id":"11","school":"uc_santa_cruz","date":"2026-02-05","subject":"Apply for Financial Aid by March 2","category":"action_required","confidence":0.92},{"id":"12","school":"uc_santa_cruz","date":"2026-02-03","subject":"Need help paying for college? Apply for scholarships!","category":"informational","confidence":0.88},{"id":"13","school":"cal_poly_slo","date":"2026-02-05","subject":"#CalPolyProud Newsletter","category":"informational","confidence":0.9},{"id":"14","school":"sdsu","date":"2026-01-30","subject":"Final Reminder: Update Academic History","category":"action_required","confidence":0.92},{"id":"15","school":"csuf","date":"2026-02-02","subject":"CSUF's 3rd Annual Pathway Conference","category":"informational","confidence":0.85},{"id":"16","school":"sac_state","date":"2026-02-03","subject":"Fall 2026 Business Impaction Notice","category":"acceptance","confidence":0.97},{"id":"17","school":"sac_state","date":"2026-01-27","subject":"Supporting Culture, Community at Sacramento State","category":"informational","confidence":0.85}],"scan_history":[{"scan_date":"2026-02-16","scan_timestamp":"2026-02-16T00:00:00Z","emails_found":55,"new_decisions":2,"notes":"Initial scan. Found 2 acceptances (SJSU, Sac State)."}],"feedback_log":[],"performance_metrics":{"total_correct":0,"total_incorrect":0,"total_reviewed":0}};
+
+// ==============================================
+// BOOT — fetch live data, fall back to embedded
+// ==============================================
+let TRACKER_DATA = FALLBACK_DATA;
+let dataSource = 'embedded (fallback)';
+
+async function boot() {
+  try {
+    const resp = await fetch(DATA_URL, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    TRACKER_DATA = await resp.json();
+    dataSource = 'live (GitHub — auto-updated every 12h)';
+  } catch (e) {
+    console.warn('Live fetch failed, using embedded fallback:', e.message);
+    dataSource = 'embedded fallback (update DATA_URL in the HTML to enable live mode)';
+  }
+  render();
+}
+
+// ==============================================
+// UTILITIES
+// ==============================================
+function daysUntil(dateStr) {
+  if (!dateStr) return null;
+  const target = new Date(dateStr + 'T23:59:59');
+  return Math.ceil((target - new Date()) / (1000 * 60 * 60 * 24));
+}
+function daysClass(d) {
+  if (d === null) return '';
+  if (d < 0) return 'passed';
+  if (d <= 7) return 'urgent';
+  if (d <= 21) return 'soon';
+  return 'ok';
+}
+function daysLabel(d) {
+  if (d === null) return 'TBD';
+  if (d < 0) return Math.abs(d) + 'd ago';
+  if (d === 0) return 'TODAY';
+  if (d === 1) return 'Tomorrow';
+  return d + ' days';
+}
+function countByStatus(s) {
+  return Object.values(TRACKER_DATA.schools).filter(x => x.status === s).length;
+}
+
+// ==============================================
+// RENDER
+// ==============================================
+function render() {
+  const schools    = TRACKER_DATA.schools;
+  const schoolKeys = Object.keys(schools);
+
+  const allDeadlines = [];
+  schoolKeys.forEach(k => {
+    (schools[k].deadlines || []).forEach(d => {
+      if (d.date) allDeadlines.push({ school: schools[k].short_name, ...d, days: daysUntil(d.date) });
+    });
+  });
+  allDeadlines.sort((a, b) => {
+    if (a.days === null) return 1;
+    if (b.days === null) return -1;
+    return a.days - b.days;
+  });
+
+  const accepted   = countByStatus('accepted');
+  const pending    = countByStatus('pending');
+  const rejected   = countByStatus('rejected');
+  const waitlisted = countByStatus('waitlisted');
+  const lastScan   = new Date(TRACKER_DATA.metadata.last_scan)
+    .toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+  let html = `
+    <div class="header">
+      <h1>College Application <span>Tracker</span></h1>
+      <div class="subtitle">Fall 2026 Transfer Applications — ${schoolKeys.length} Schools — Michael Sarmento</div>
+      <div class="scan-info">
+        <span class="live-dot"></span>
+        Last scan: ${lastScan} &middot; Scan #${TRACKER_DATA.metadata.total_scans} &middot; ${TRACKER_DATA.metadata.total_emails_processed} emails processed
+      </div>
+      <div class="data-source">Data: ${dataSource}</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card total">     <div class="number">${schoolKeys.length}</div><div class="label">Total Schools</div></div>
+      <div class="stat-card accepted">  <div class="number">${accepted}</div>          <div class="label">Accepted</div></div>
+      <div class="stat-card pending">   <div class="number">${pending}</div>           <div class="label">Pending</div></div>
+      <div class="stat-card waitlisted"><div class="number">${waitlisted}</div>        <div class="label">Waitlisted</div></div>
+      <div class="stat-card rejected">  <div class="number">${rejected}</div>          <div class="label">Rejected</div></div>
+    </div>`;
+
+  // Deadlines
+  const future = allDeadlines.filter(d => d.days !== null && d.days >= 0);
+  if (future.length > 0) {
+    html += `<div class="deadlines-panel"><h2>&#9200; Upcoming Deadlines</h2><ul class="deadline-list">`;
+    future.slice(0, 8).forEach(d => {
+      html += `<li>
+        <span class="deadline-school">${d.school}</span>
+        <span class="deadline-desc">${d.description}</span>
+        <span class="days-until ${daysClass(d.days)}">${daysLabel(d.days)}</span>
+      </li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  // Tabs
+  html += `<div class="tabs">
+    <div class="tab active" onclick="filterSchools('all',event)">All Schools</div>
+    <div class="tab" onclick="filterSchools('accepted',event)">Accepted (${accepted})</div>
+    <div class="tab" onclick="filterSchools('pending',event)">Pending (${pending})</div>
+    <div class="tab" onclick="filterSchools('uc',event)">UC Schools</div>
+    <div class="tab" onclick="filterSchools('csu',event)">CSU Schools</div>
+  </div>`;
+
+  // Cards — accepted first
+  const sorted = schoolKeys.sort((a, b) => {
+    const ord = { accepted:0, waitlisted:1, pending:2, rejected:3 };
+    return (ord[schools[a].status] || 2) - (ord[schools[b].status] || 2);
+  });
+  html += `<div class="schools-grid" id="schools-grid">`;
+  sorted.forEach(k => { html += renderCard(k, schools[k]); });
+  html += `</div>`;
+
+  // Email log
+  const recentEmails = [...TRACKER_DATA.email_log]
+    .sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 15);
+  html += `<div class="email-log"><h2>&#128235; Recent Email Activity</h2>
+    <table class="log-table"><thead><tr>
+      <th>Date</th><th>School</th><th>Subject</th><th>Category</th><th>Confidence</th>
+    </tr></thead><tbody>`;
+  recentEmails.forEach(e => {
+    const sName = schools[e.school]?.short_name || e.school;
+    html += `<tr>
+      <td>${e.date}</td><td>${sName}</td>
+      <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.subject}</td>
+      <td><span class="cat-badge ${e.category}">${e.category.replace('_', ' ')}</span></td>
+      <td>${Math.round(e.confidence * 100)}%</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+
+  // Scan history
+  if ((TRACKER_DATA.scan_history || []).length > 0) {
+    html += `<div class="scan-history"><h2>&#128269; Scan History</h2>`;
+    TRACKER_DATA.scan_history.slice(0, 5).forEach(s => {
+      html += `<div class="scan-item">
+        <strong>${s.scan_date}</strong> &mdash; ${s.emails_found} new email${s.emails_found !== 1 ? 's' : ''}
+        ${s.new_decisions > 0 ? `<strong style="color:var(--green)"> &middot; ${s.new_decisions} decision(s)!</strong>` : ''}
+        <div class="scan-meta">${s.notes || ''}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Metrics
+  const pm  = TRACKER_DATA.performance_metrics;
+  const rev = pm.total_reviewed || 0;
+  const acc = rev > 0 ? Math.round((pm.total_correct / rev) * 100) + '%' : '--';
+  html += `<div class="metrics-panel"><h2>&#9881;&#65039; System Performance</h2>
+    <div class="metrics-grid">
+      <div class="metric"><div class="val">${TRACKER_DATA.metadata.total_scans}</div><div class="lbl">Total Scans</div></div>
+      <div class="metric"><div class="val">${TRACKER_DATA.metadata.total_emails_processed}</div><div class="lbl">Emails Processed</div></div>
+      <div class="metric"><div class="val">${acc}</div><div class="lbl">Accuracy Rate</div></div>
+    </div>
+  </div>`;
+
+  html += `<div class="footer">
+    Michael Sarmento &middot; Fall 2026 Transfer Applications &middot;
+    Auto-updated by <a href="https://script.google.com" target="_blank">Google Apps Script</a> every 12h &middot;
+    Hosted on <a href="https://vercel.com" target="_blank">Vercel</a>
+  </div>`;
+
+  document.getElementById('app').innerHTML = html;
+}
+
+// ==============================================
+// SCHOOL CARD
+// ==============================================
+function renderCard(key, s) {
+  let dHtml = '';
+  if (s.deadlines && s.deadlines.length > 0) {
+    dHtml = '<div class="deadlines">';
+    s.deadlines.forEach(d => {
+      const days = daysUntil(d.date);
+      dHtml += `<div class="deadline-item ${daysClass(days)}">
+        <span>${d.description}</span>
+        <span class="deadline-date">${d.date || 'TBD'} ${days !== null ? '(' + daysLabel(days) + ')' : ''}</span>
+      </div>`;
+    });
+    dHtml += '</div>';
+  }
+  let aHtml = '';
+  if (s.action_items && s.action_items.length > 0) {
+    aHtml = '<div class="action-items">';
+    s.action_items.forEach(a => { aHtml += `<div class="action-item">${a}</div>`; });
+    aHtml += '</div>';
+  }
+  return `
+    <div class="school-card status-${s.status}" data-status="${s.status}" data-type="${s.type.toLowerCase()}">
+      <div class="school-header">
+        <div><div class="school-name">${s.name}</div><span class="school-type">${s.type}</span></div>
+        <span class="status-badge ${s.status}">${s.status}${s.decision_date ? ' &middot; ' + s.decision_date : ''}</span>
+      </div>
+      ${s.notes      ? `<div class="detail-row"><span class="detail-icon">&#128203;</span><span class="detail-text">${s.notes}</span></div>` : ''}
+      ${s.portal_url ? `<div class="detail-row"><span class="detail-icon">&#128279;</span><span class="detail-text"><a href="${s.portal_url}" target="_blank">Open Portal</a></span></div>` : ''}
+      ${dHtml}${aHtml}
+      <div class="confidence-bar">
+        <span>Confidence: ${Math.round(s.confidence * 100)}%</span>
+        <div class="conf-track"><div class="conf-fill" style="width:${s.confidence * 100}%"></div></div>
+      </div>
+      <div class="feedback-section">
+        <span style="font-size:11px;color:var(--text-dim);margin-right:8px">Is this correct?</span>
+        <button class="feedback-btn" onclick="giveFeedback('${key}','correct',this)">&#10003; Correct</button>
+        <button class="feedback-btn" onclick="giveFeedback('${key}','wrong',this)">&#10007; Wrong</button>
+        <div class="status-override" id="override-${key}">
+          <button class="override-btn" onclick="overrideStatus('${key}','accepted')">Accepted</button>
+          <button class="override-btn" onclick="overrideStatus('${key}','pending')">Pending</button>
+          <button class="override-btn" onclick="overrideStatus('${key}','waitlisted')">Waitlisted</button>
+          <button class="override-btn" onclick="overrideStatus('${key}','rejected')">Rejected</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ==============================================
+// FEEDBACK
+// ==============================================
+function giveFeedback(key, type, btn) {
+  if (type === 'correct') {
+    btn.classList.add('correct');
+    btn.textContent = '✓ Marked Correct';
+    btn.disabled = true;
+    TRACKER_DATA.performance_metrics.total_correct++;
+  } else {
+    document.getElementById('override-' + key).classList.add('visible');
+    TRACKER_DATA.performance_metrics.total_incorrect++;
+  }
+  TRACKER_DATA.performance_metrics.total_reviewed++;
+  TRACKER_DATA.feedback_log.push({
+    school: key, type,
+    timestamp: new Date().toISOString(),
+    original_status: TRACKER_DATA.schools[key].status
+  });
+  storeFeedback();
+}
+
+function overrideStatus(key, newStatus) {
+  TRACKER_DATA.schools[key].status = newStatus;
+  const e = TRACKER_DATA.feedback_log.find(f => f.school === key && f.type === 'incorrect' && !f.corrected_status);
+  if (e) e.corrected_status = newStatus;
+  storeFeedback();
+  render();
+}
+
+function storeFeedback() {
+  let el = document.getElementById('feedback-data');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'feedback-data';
+    el.style.display = 'none';
+    document.body.appendChild(el);
+  }
+  el.textContent = JSON.stringify({
+    feedback: TRACKER_DATA.feedback_log,
+    metrics: TRACKER_DATA.performance_metrics,
+    overrides: Object.fromEntries(Object.entries(TRACKER_DATA.schools).map(([k, v]) => [k, v.status]))
+  });
+}
+
+// ==============================================
+// FILTERS
+// ==============================================
+function filterSchools(filter, event) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  document.querySelectorAll('.school-card').forEach(card => {
+    const s = card.dataset.status, t = card.dataset.type;
+    if      (filter === 'all') card.style.display = '';
+    else if (filter === 'uc')  card.style.display = t === 'uc'  ? '' : 'none';
+    else if (filter === 'csu') card.style.display = t === 'csu' ? '' : 'none';
+    else                       card.style.display = s === filter ? '' : 'none';
+  });
+}
+
+// LAUNCH
+boot();
+</script>
+</body>
+</html>
