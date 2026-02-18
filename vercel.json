@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "school-email-tracker.html", "use": "@vercel/static" },
+    { "src": "data/tracker.json",         "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/",              "dest": "/school-email-tracker.html" },
+    { "src": "/data/(.*)",     "dest": "/data/$1", "headers": { "Access-Control-Allow-Origin": "*" } },
+    { "src": "/(.*)",          "dest": "/$1" }
+  ]
+}
