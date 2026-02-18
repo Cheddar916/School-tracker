@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "2.0",
-    "last_scan": "2026-02-18T09:03:50.880Z",
-    "total_scans": 2,
-    "total_emails_processed": 55,
+    "last_scan": "2026-02-18T20:16:31.642Z",
+    "total_scans": 3,
+    "total_emails_processed": 56,
     "created": "2026-02-16",
     "owner": "Michael Sarmento"
   },
@@ -254,6 +254,15 @@
   },
   "email_log": [
     {
+      "id": "19c7006d3b3c3a02",
+      "school": "sjsu",
+      "date": "2026-02-18",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
+    {
       "id": "1",
       "school": "sjsu",
       "date": "2026-02-14",
@@ -408,6 +417,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-18",
+      "scan_timestamp": "2026-02-18T20:16:31.642Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-02-18",
       "scan_timestamp": "2026-02-18T09:03:50.880Z",
