@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "2.0",
-    "last_scan": "2026-02-18T20:16:31.642Z",
-    "total_scans": 3,
-    "total_emails_processed": 56,
+    "last_scan": "2026-02-19T08:16:32.929Z",
+    "total_scans": 4,
+    "total_emails_processed": 61,
     "created": "2026-02-16",
     "owner": "Michael Sarmento"
   },
@@ -29,7 +29,8 @@
       ],
       "action_items": [
         "Submit TAU by March 15",
-        "Complete FAFSA by March 2"
+        "Complete FAFSA by March 2",
+        "by March 2 Dear Michael, March 2 is almost here"
       ],
       "portal_url": null,
       "notes": "Transfer to Success workshop series ongoing"
@@ -254,6 +255,51 @@
   },
   "email_log": [
     {
+      "id": "19c72742df4b4785",
+      "school": "sac_state",
+      "date": "2026-02-18",
+      "subject": "Discover Paid Fellowship Opportunities at Sac State!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "College Corps Program <collegecorps@csus.edu>"
+    },
+    {
+      "id": "19c73ac64f55c5d4",
+      "school": "cal_poly_slo",
+      "date": "2026-02-19",
+      "subject": "#CalPolyProud Newsletter ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19c7431dece5ce55",
+      "school": "uc_irvine",
+      "date": "2026-02-19",
+      "subject": "Fwd: UC Irvine Law: A Law School for Our Times",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Michael Sarmento <mzsarmento@gmail.com>"
+    },
+    {
+      "id": "19c73076720620a9",
+      "school": "uc_irvine",
+      "date": "2026-02-18",
+      "subject": "UC Irvine Law: A Law School for Our Times",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Irvine School of Law <admissions@law.uci.edu>"
+    },
+    {
+      "id": "19c738bbec06716c",
+      "school": "uc_berkeley",
+      "date": "2026-02-19",
+      "subject": "Don?t Miss Out On Financial Aid! File by March 2",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Berkeley Admissions <admissions@berkeley.edu>"
+    },
+    {
       "id": "19c7006d3b3c3a02",
       "school": "sjsu",
       "date": "2026-02-18",
@@ -417,6 +463,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-19",
+      "scan_timestamp": "2026-02-19T08:16:32.929Z",
+      "emails_found": 5,
+      "new_decisions": 0,
+      "notes": "Found 5 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-02-18",
       "scan_timestamp": "2026-02-18T20:16:31.642Z",
