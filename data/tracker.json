@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "2.0",
-    "last_scan": "2026-02-20T20:16:24.488Z",
-    "total_scans": 7,
-    "total_emails_processed": 61,
+    "last_scan": "2026-02-21T08:16:27.861Z",
+    "total_scans": 8,
+    "total_emails_processed": 64,
     "created": "2026-02-16",
     "owner": "Michael Sarmento"
   },
@@ -180,7 +180,8 @@
         "Pay $250 enrollment deposit",
         "Choose mandatory Orientation session",
         "Send official transcripts",
-        "Register for Admitted Spartan Day (April 18)"
+        "Register for Admitted Spartan Day (April 18)",
+        "register/WN_2yrkZ-ScTFCYlJnvMG4phQ> RSVP - Tuesday, March 24"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"
@@ -224,8 +225,8 @@
       "short_name": "Sac State",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.97,
-      "decision_date": "2025-12-15",
+      "confidence": 0.5,
+      "decision_date": "2026-02-21",
       "deadlines": [
         {
           "type": "intent",
@@ -250,10 +251,37 @@
         "Ensure ADT verification by March 15"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
-      "notes": "ADMITTED! ID: 305148038. Provisional financial aid awarded. Must complete Business supplemental."
+      "notes": "? ADMITTED! Decision email received 2026-02-21"
     }
   },
   "email_log": [
+    {
+      "id": "19c7db1a25114e46",
+      "school": "sac_state",
+      "date": "2026-02-21",
+      "subject": "Registration for Admitted Student Day is OPEN!",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "Admitted Student Day <admittedstudentday@csus.edu>"
+    },
+    {
+      "id": "19c7ce049eda8fdd",
+      "school": "sjsu",
+      "date": "2026-02-20",
+      "subject": "SJSU Next Steps Workshops",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "SJSU Student Outreach and Recruitment <outreach@sjsu.edu>"
+    },
+    {
+      "id": "19c7d49487238bf6",
+      "school": "uc_irvine",
+      "date": "2026-02-20",
+      "subject": "UC Irvine Transfer Application - Action Required",
+      "category": "action_required",
+      "confidence": 0.75,
+      "from": "UC Irvine Undergraduate Admissions <admissions@uci.edu>"
+    },
     {
       "id": "19c72742df4b4785",
       "school": "sac_state",
@@ -463,6 +491,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-21",
+      "scan_timestamp": "2026-02-21T08:16:27.861Z",
+      "emails_found": 3,
+      "new_decisions": 1,
+      "notes": "Found 3 new emails. Decisions: Sacramento State: accepted"
+    },
     {
       "scan_date": "2026-02-20",
       "scan_timestamp": "2026-02-20T20:16:24.488Z",
