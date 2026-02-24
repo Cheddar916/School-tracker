@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "2.0",
-    "last_scan": "2026-02-23T20:16:25.739Z",
-    "total_scans": 13,
-    "total_emails_processed": 65,
+    "last_scan": "2026-02-24T08:16:28.656Z",
+    "total_scans": 14,
+    "total_emails_processed": 68,
     "created": "2026-02-16",
     "owner": "Michael Sarmento"
   },
@@ -156,8 +156,8 @@
       "short_name": "SJSU",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.99,
-      "decision_date": "2026-02-12",
+      "confidence": 0.75,
+      "decision_date": "2026-02-24",
       "deadlines": [
         {
           "type": "intent",
@@ -184,7 +184,7 @@
         "register/WN_2yrkZ-ScTFCYlJnvMG4phQ> RSVP - Tuesday, March 24"
       ],
       "portal_url": "https://one.sjsu.edu",
-      "notes": "ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"
+      "notes": "? ADMITTED! Decision email received 2026-02-24"
     },
     "sdsu": {
       "name": "San Diego State",
@@ -255,6 +255,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19c8d03612f578e1",
+      "school": "sjsu",
+      "date": "2026-02-24",
+      "subject": "Welcome to the Spartan Family! Join us for March Game Nights!",
+      "category": "acceptance",
+      "confidence": 0.75,
+      "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
+    },
+    {
+      "id": "19c8c8839a7b2fe8",
+      "school": "uc_riverside",
+      "date": "2026-02-23",
+      "subject": "Michael, log into the MyUCR Applicant Portal",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19c8cbead02a9ea5",
+      "school": "uc_berkeley",
+      "date": "2026-02-23",
+      "subject": "Your Guide to UC Berkeley?s Edge Programs, FPF, and Summer Sessions",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Berkeley Summer Sessions <summeredge@berkeley.edu>"
+    },
     {
       "id": "19c7f71f326efc38",
       "school": "sjsu",
@@ -500,6 +527,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-24",
+      "scan_timestamp": "2026-02-24T08:16:28.656Z",
+      "emails_found": 3,
+      "new_decisions": 1,
+      "notes": "Found 3 new emails. Decisions: San Jose State: accepted"
+    },
     {
       "scan_date": "2026-02-23",
       "scan_timestamp": "2026-02-23T20:16:25.739Z",
