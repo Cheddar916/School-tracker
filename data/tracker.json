@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "2.0",
-    "last_scan": "2026-02-24T20:16:31.386Z",
-    "total_scans": 15,
-    "total_emails_processed": 69,
+    "last_scan": "2026-02-25T08:16:28.488Z",
+    "total_scans": 16,
+    "total_emails_processed": 71,
     "created": "2026-02-16",
     "owner": "Michael Sarmento"
   },
@@ -181,7 +181,10 @@
         "Choose mandatory Orientation session",
         "Send official transcripts",
         "Register for Admitted Spartan Day (April 18)",
-        "register/WN_2yrkZ-ScTFCYlJnvMG4phQ> RSVP - Tuesday, March 24"
+        "register/WN_2yrkZ-ScTFCYlJnvMG4phQ> RSVP - Tuesday, March 24",
+        "complete the FAFSA or CADAA before the priority deadline of March 2",
+        "Submit your FAFSA or CADAA by March 2",
+        "deadline of March 2"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "? ADMITTED! Decision email received 2026-02-24"
@@ -225,8 +228,8 @@
       "short_name": "Sac State",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.5,
-      "decision_date": "2026-02-21",
+      "confidence": 0.75,
+      "decision_date": "2026-02-24",
       "deadlines": [
         {
           "type": "intent",
@@ -251,10 +254,28 @@
         "Ensure ADT verification by March 15"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
-      "notes": "? ADMITTED! Decision email received 2026-02-21"
+      "notes": "? ADMITTED! Decision email received 2026-02-24"
     }
   },
   "email_log": [
+    {
+      "id": "19c9203a83a67a61",
+      "school": "sac_state",
+      "date": "2026-02-24",
+      "subject": "You Are Invited to an Admitted Student Reception!",
+      "category": "acceptance",
+      "confidence": 0.75,
+      "from": "Admitted Student Day <admittedstudentday@csus.edu>"
+    },
+    {
+      "id": "19c922849590d68a",
+      "school": "sjsu",
+      "date": "2026-02-25",
+      "subject": "FAFSA and CADAA Application March 2 priority deadline",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
+    },
     {
       "id": "19c8f13b1ee69bc3",
       "school": "sjsu",
@@ -536,6 +557,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-25",
+      "scan_timestamp": "2026-02-25T08:16:28.488Z",
+      "emails_found": 2,
+      "new_decisions": 1,
+      "notes": "Found 2 new emails. Decisions: Sacramento State: accepted"
+    },
     {
       "scan_date": "2026-02-24",
       "scan_timestamp": "2026-02-24T20:16:31.387Z",
