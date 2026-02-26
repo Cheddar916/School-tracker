@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-02-26T00:00:00Z",
-    "total_scans": 1,
-    "total_emails_processed": 55,
+    "last_scan": "2026-02-26T20:16:26.408Z",
+    "total_scans": 2,
+    "total_emails_processed": 58,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -17,10 +17,21 @@
       "confidence": 0.95,
       "decision_date": null,
       "deadlines": [
-        {"type": "TAU",   "date": "2026-03-15", "description": "Transfer Academic Update final deadline"},
-        {"type": "FAFSA", "date": "2026-03-02", "description": "Financial aid priority deadline"}
+        {
+          "type": "TAU",
+          "date": "2026-03-15",
+          "description": "Transfer Academic Update final deadline"
+        },
+        {
+          "type": "FAFSA",
+          "date": "2026-03-02",
+          "description": "Financial aid priority deadline"
+        }
       ],
-      "action_items": ["Submit TAU by March 15", "Complete FAFSA by March 2"],
+      "action_items": [
+        "Submit TAU by March 15",
+        "Complete FAFSA by March 2"
+      ],
       "portal_url": null,
       "notes": "Transfer to Success workshop series ongoing",
       "cost_breakdown": {
@@ -63,7 +74,12 @@
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -75,7 +91,9 @@
       "confidence": 0.95,
       "decision_date": null,
       "deadlines": [],
-      "action_items": ["Check MyApplication portal for updates"],
+      "action_items": [
+        "Check MyApplication portal for updates"
+      ],
       "portal_url": "https://www.admission.ucla.edu/MyApplication",
       "notes": "Application received Dec 12, 2025",
       "cost_breakdown": {
@@ -100,13 +118,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -118,10 +153,21 @@
       "confidence": 0.95,
       "decision_date": null,
       "deadlines": [
-        {"type": "FAFSA", "date": "2026-03-02", "description": "Financial aid priority deadline"},
-        {"type": "TAU",   "date": "2026-03-15", "description": "Transfer Academic Update final deadline"}
+        {
+          "type": "FAFSA",
+          "date": "2026-03-02",
+          "description": "Financial aid priority deadline"
+        },
+        {
+          "type": "TAU",
+          "date": "2026-03-15",
+          "description": "Transfer Academic Update final deadline"
+        }
       ],
-      "action_items": ["Submit TAU by March 15", "Complete FAFSA (School Code: 001314)"],
+      "action_items": [
+        "Submit TAU by March 15",
+        "Complete FAFSA (School Code: 001314)"
+      ],
       "portal_url": null,
       "notes": "UCI school code for FAFSA: 001314",
       "cost_breakdown": {
@@ -146,13 +192,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -164,10 +227,21 @@
       "confidence": 0.95,
       "decision_date": null,
       "deadlines": [
-        {"type": "FAFSA", "date": "2026-03-02", "description": "Financial aid + Cal Grant priority deadline"},
-        {"type": "TAU",   "date": "2026-03-15", "description": "Transfer Academic Update final deadline"}
+        {
+          "type": "FAFSA",
+          "date": "2026-03-02",
+          "description": "Financial aid + Cal Grant priority deadline"
+        },
+        {
+          "type": "TAU",
+          "date": "2026-03-15",
+          "description": "Transfer Academic Update final deadline"
+        }
       ],
-      "action_items": ["Submit TAU by March 15", "Complete FAFSA (School Code: 001320)"],
+      "action_items": [
+        "Submit TAU by March 15",
+        "Complete FAFSA (School Code: 001320)"
+      ],
       "portal_url": "https://connect.admissions.ucsb.edu/apply/status",
       "notes": "Applicant Portal open",
       "cost_breakdown": {
@@ -192,13 +266,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -235,13 +326,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -253,10 +361,21 @@
       "confidence": 0.95,
       "decision_date": null,
       "deadlines": [
-        {"type": "FAFSA",     "date": "2026-03-02", "description": "Financial aid deadline"},
-        {"type": "decisions", "date": "2026-04-01", "description": "Transfer decisions begin posting"}
+        {
+          "type": "FAFSA",
+          "date": "2026-03-02",
+          "description": "Financial aid deadline"
+        },
+        {
+          "type": "decisions",
+          "date": "2026-04-01",
+          "description": "Transfer decisions begin posting"
+        }
       ],
-      "action_items": ["Complete FAFSA (School Code: 001321)", "Check Admissions Portal starting April 1"],
+      "action_items": [
+        "Complete FAFSA (School Code: 001321)",
+        "Check Admissions Portal starting April 1"
+      ],
       "portal_url": "https://ucsc.link/adm-portal",
       "notes": "CruzID: mzsarmen. Transfer decisions: April 1-30",
       "cost_breakdown": {
@@ -281,13 +400,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -296,7 +432,7 @@
       "short_name": "Cal Poly",
       "type": "CSU",
       "status": "pending",
-      "confidence": 0.90,
+      "confidence": 0.9,
       "decision_date": null,
       "deadlines": [],
       "action_items": [],
@@ -324,13 +460,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -342,16 +495,31 @@
       "confidence": 0.99,
       "decision_date": "2026-02-12",
       "deadlines": [
-        {"type": "intent",  "date": null,         "description": "Confirm Intent to Enroll (check MySJSU)"},
-        {"type": "event",   "date": "2026-04-18", "description": "Admitted Spartan Day on campus"},
-        {"type": "deposit", "date": null,         "description": "$250 enrollment deposit"}
+        {
+          "type": "intent",
+          "date": null,
+          "description": "Confirm Intent to Enroll (check MySJSU)"
+        },
+        {
+          "type": "event",
+          "date": "2026-04-18",
+          "description": "Admitted Spartan Day on campus"
+        },
+        {
+          "type": "deposit",
+          "date": null,
+          "description": "$250 enrollment deposit"
+        }
       ],
       "action_items": [
         "Confirm Intent to Enroll via MySJSU",
         "Pay $250 enrollment deposit",
         "Choose mandatory Orientation session",
         "Send official transcripts",
-        "Register for Admitted Spartan Day (April 18)"
+        "Register for Admitted Spartan Day (April 18)",
+        "complete the FAFSA or CADAA before the priority deadline of March 2",
+        "Submit your FAFSA or CADAA by March 2",
+        "deadline of March 2"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49",
@@ -377,13 +545,41 @@
         "aid_deadline": "2026-05-01"
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 8, "program_quality": 6, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 7},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 8,
+          "program_quality": 6,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 7
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
-        "pros": ["Silicon Valley proximity", "Affordable COA", "Strong tech industry connections"],
-        "cons": ["Urban campus", "Smaller program than UCs"],
-        "gut_feeling_history": [{"date": "2026-02-12", "value": 7}, {"date": "2026-02-20", "value": 8}],
+        "pros": [
+          "Silicon Valley proximity",
+          "Affordable COA",
+          "Strong tech industry connections"
+        ],
+        "cons": [
+          "Urban campus",
+          "Smaller program than UCs"
+        ],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-12",
+            "value": 7
+          },
+          {
+            "date": "2026-02-20",
+            "value": 8
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -392,12 +588,18 @@
       "short_name": "SDSU",
       "type": "CSU",
       "status": "pending",
-      "confidence": 0.90,
+      "confidence": 0.9,
       "decision_date": null,
       "deadlines": [
-        {"type": "academic_history", "date": "2026-01-31", "description": "Academic History Update (PASSED)"}
+        {
+          "type": "academic_history",
+          "date": "2026-01-31",
+          "description": "Academic History Update (PASSED)"
+        }
       ],
-      "action_items": ["Confirm Academic History Update was completed"],
+      "action_items": [
+        "Confirm Academic History Update was completed"
+      ],
       "portal_url": "https://calstate.liaisoncas.com/applicant-ux/#/login",
       "notes": "RedID: 134626697",
       "cost_breakdown": {
@@ -422,13 +624,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -440,7 +659,9 @@
       "confidence": 0.85,
       "decision_date": null,
       "deadlines": [],
-      "action_items": ["Check CSUF Student Portal for updates"],
+      "action_items": [
+        "Check CSUF Student Portal for updates"
+      ],
       "portal_url": null,
       "notes": "CWID: 821713195. Applied Nov 8, 2025",
       "cost_breakdown": {
@@ -465,13 +686,30 @@
         "aid_deadline": null
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 0, "program_quality": 0, "career_outcomes": 0, "location_vibe": 0, "gut_feeling": 5},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 0,
+          "program_quality": 0,
+          "career_outcomes": 0,
+          "location_vibe": 0,
+          "gut_feeling": 5
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
         "pros": [],
         "cons": [],
-        "gut_feeling_history": [{"date": "2026-02-17", "value": 5}],
+        "gut_feeling_history": [
+          {
+            "date": "2026-02-17",
+            "value": 5
+          }
+        ],
         "deal_breakers": []
       }
     },
@@ -483,9 +721,21 @@
       "confidence": 0.97,
       "decision_date": "2025-12-15",
       "deadlines": [
-        {"type": "intent",       "date": "2026-05-01", "description": "Submit Intent to Enroll"},
-        {"type": "business_app", "date": "2026-03-16", "description": "Business Admin supplemental application"},
-        {"type": "adt",          "date": "2026-03-15", "description": "ADT verification to Admissions"}
+        {
+          "type": "intent",
+          "date": "2026-05-01",
+          "description": "Submit Intent to Enroll"
+        },
+        {
+          "type": "business_app",
+          "date": "2026-03-16",
+          "description": "Business Admin supplemental application"
+        },
+        {
+          "type": "adt",
+          "date": "2026-03-15",
+          "description": "ADT verification to Admissions"
+        }
       ],
       "action_items": [
         "Submit Intent to Enroll by May 1",
@@ -517,37 +767,235 @@
         "aid_deadline": "2026-05-01"
       },
       "decision_analytics": {
-        "criteria_ratings": {"net_cost": 8, "program_quality": 5, "career_outcomes": 6, "location_vibe": 5, "gut_feeling": 6},
-        "criteria_weights": {"net_cost": 10, "program_quality": 9, "career_outcomes": 8, "location_vibe": 7, "gut_feeling": 6},
+        "criteria_ratings": {
+          "net_cost": 8,
+          "program_quality": 5,
+          "career_outcomes": 6,
+          "location_vibe": 5,
+          "gut_feeling": 6
+        },
+        "criteria_weights": {
+          "net_cost": 10,
+          "program_quality": 9,
+          "career_outcomes": 8,
+          "location_vibe": 7,
+          "gut_feeling": 6
+        },
         "weighted_score": 0,
         "rank": null,
-        "pros": ["Lowest net cost", "Already admitted", "Business supplemental in progress"],
-        "cons": ["Sacramento not ideal location", "Less name recognition"],
-        "gut_feeling_history": [{"date": "2025-12-15", "value": 6}, {"date": "2026-02-10", "value": 6}],
+        "pros": [
+          "Lowest net cost",
+          "Already admitted",
+          "Business supplemental in progress"
+        ],
+        "cons": [
+          "Sacramento not ideal location",
+          "Less name recognition"
+        ],
+        "gut_feeling_history": [
+          {
+            "date": "2025-12-15",
+            "value": 6
+          },
+          {
+            "date": "2026-02-10",
+            "value": 6
+          }
+        ],
         "deal_breakers": []
       }
     }
   },
   "email_log": [
-    {"id":"1","school":"sjsu","date":"2026-02-14","subject":"Save the Date: SJSU Admitted Spartan Day","category":"action_required","confidence":0.95,"from":"sjsu.edu"},
-    {"id":"2","school":"sjsu","date":"2026-02-12","subject":"Welcome to SJSU for Fall 2026!","category":"acceptance","confidence":0.99,"from":"sjsu.edu"},
-    {"id":"3","school":"sjsu","date":"2026-02-12","subject":"New message at MySJSU","category":"informational","confidence":0.80,"from":"sjsu.edu"},
-    {"id":"4","school":"uc_berkeley","date":"2026-02-13","subject":"[SP26 TTS - Week 4] Transfer to Success Workshop Series","category":"informational","confidence":0.90,"from":"berkeley.edu"},
-    {"id":"5","school":"ucla","date":"2026-02-13","subject":"Explore campus life at UCLA","category":"informational","confidence":0.85,"from":"ucla.edu"},
-    {"id":"6","school":"uc_irvine","date":"2026-02-10","subject":"Don't forget to submit your financial aid application!","category":"action_required","confidence":0.92,"from":"uci.edu"},
-    {"id":"7","school":"uc_santa_barbara","date":"2026-02-09","subject":"UCSB Family Student Housing","category":"informational","confidence":0.85,"from":"ucsb.edu"},
-    {"id":"8","school":"uc_santa_barbara","date":"2026-02-06","subject":"UCSB Financial Aid Update","category":"action_required","confidence":0.90,"from":"ucsb.edu"},
-    {"id":"9","school":"uc_riverside","date":"2026-02-12","subject":"Real-world experience, industry connections","category":"informational","confidence":0.85,"from":"ucr.edu"},
-    {"id":"10","school":"uc_riverside","date":"2026-02-09","subject":"Michael, find affordable pathways at UC Riverside","category":"informational","confidence":0.85,"from":"ucr.edu"},
-    {"id":"11","school":"uc_santa_cruz","date":"2026-02-05","subject":"Apply for Financial Aid by March 2","category":"action_required","confidence":0.92,"from":"ucsc.edu"},
-    {"id":"12","school":"uc_santa_cruz","date":"2026-02-03","subject":"Need help paying for college? Apply for scholarships!","category":"informational","confidence":0.88,"from":"ucsc.edu"},
-    {"id":"13","school":"cal_poly_slo","date":"2026-02-05","subject":"#CalPolyProud Newsletter","category":"informational","confidence":0.90,"from":"calpoly.edu"},
-    {"id":"14","school":"sdsu","date":"2026-01-30","subject":"Final Reminder: Update Academic History","category":"action_required","confidence":0.92,"from":"sdsu.edu"},
-    {"id":"15","school":"csuf","date":"2026-02-02","subject":"CSUF's 3rd Annual Pathway Conference","category":"informational","confidence":0.85,"from":"fullerton.edu"},
-    {"id":"16","school":"sac_state","date":"2026-02-03","subject":"Fall 2026 Business Impaction Notice","category":"acceptance","confidence":0.97,"from":"csus.edu"},
-    {"id":"17","school":"sac_state","date":"2026-01-27","subject":"Supporting Culture, Community at Sacramento State","category":"informational","confidence":0.85,"from":"csus.edu"}
+    {
+      "id": "19c922849590d68a",
+      "school": "sjsu",
+      "date": "2026-02-25",
+      "subject": "FAFSA and CADAA Application March 2 priority deadline",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
+    },
+    {
+      "id": "19c9419eb3f83cee",
+      "school": "sjsu",
+      "date": "2026-02-25",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
+    {
+      "id": "19c9940516d7785b",
+      "school": "sjsu",
+      "date": "2026-02-26",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
+    {
+      "id": "1",
+      "school": "sjsu",
+      "date": "2026-02-14",
+      "subject": "Save the Date: SJSU Admitted Spartan Day",
+      "category": "action_required",
+      "confidence": 0.95,
+      "from": "sjsu.edu"
+    },
+    {
+      "id": "2",
+      "school": "sjsu",
+      "date": "2026-02-12",
+      "subject": "Welcome to SJSU for Fall 2026!",
+      "category": "acceptance",
+      "confidence": 0.99,
+      "from": "sjsu.edu"
+    },
+    {
+      "id": "3",
+      "school": "sjsu",
+      "date": "2026-02-12",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.8,
+      "from": "sjsu.edu"
+    },
+    {
+      "id": "4",
+      "school": "uc_berkeley",
+      "date": "2026-02-13",
+      "subject": "[SP26 TTS - Week 4] Transfer to Success Workshop Series",
+      "category": "informational",
+      "confidence": 0.9,
+      "from": "berkeley.edu"
+    },
+    {
+      "id": "5",
+      "school": "ucla",
+      "date": "2026-02-13",
+      "subject": "Explore campus life at UCLA",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "ucla.edu"
+    },
+    {
+      "id": "6",
+      "school": "uc_irvine",
+      "date": "2026-02-10",
+      "subject": "Don't forget to submit your financial aid application!",
+      "category": "action_required",
+      "confidence": 0.92,
+      "from": "uci.edu"
+    },
+    {
+      "id": "7",
+      "school": "uc_santa_barbara",
+      "date": "2026-02-09",
+      "subject": "UCSB Family Student Housing",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "ucsb.edu"
+    },
+    {
+      "id": "8",
+      "school": "uc_santa_barbara",
+      "date": "2026-02-06",
+      "subject": "UCSB Financial Aid Update",
+      "category": "action_required",
+      "confidence": 0.9,
+      "from": "ucsb.edu"
+    },
+    {
+      "id": "9",
+      "school": "uc_riverside",
+      "date": "2026-02-12",
+      "subject": "Real-world experience, industry connections",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "ucr.edu"
+    },
+    {
+      "id": "10",
+      "school": "uc_riverside",
+      "date": "2026-02-09",
+      "subject": "Michael, find affordable pathways at UC Riverside",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "ucr.edu"
+    },
+    {
+      "id": "11",
+      "school": "uc_santa_cruz",
+      "date": "2026-02-05",
+      "subject": "Apply for Financial Aid by March 2",
+      "category": "action_required",
+      "confidence": 0.92,
+      "from": "ucsc.edu"
+    },
+    {
+      "id": "12",
+      "school": "uc_santa_cruz",
+      "date": "2026-02-03",
+      "subject": "Need help paying for college? Apply for scholarships!",
+      "category": "informational",
+      "confidence": 0.88,
+      "from": "ucsc.edu"
+    },
+    {
+      "id": "13",
+      "school": "cal_poly_slo",
+      "date": "2026-02-05",
+      "subject": "#CalPolyProud Newsletter",
+      "category": "informational",
+      "confidence": 0.9,
+      "from": "calpoly.edu"
+    },
+    {
+      "id": "14",
+      "school": "sdsu",
+      "date": "2026-01-30",
+      "subject": "Final Reminder: Update Academic History",
+      "category": "action_required",
+      "confidence": 0.92,
+      "from": "sdsu.edu"
+    },
+    {
+      "id": "15",
+      "school": "csuf",
+      "date": "2026-02-02",
+      "subject": "CSUF's 3rd Annual Pathway Conference",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "fullerton.edu"
+    },
+    {
+      "id": "16",
+      "school": "sac_state",
+      "date": "2026-02-03",
+      "subject": "Fall 2026 Business Impaction Notice",
+      "category": "acceptance",
+      "confidence": 0.97,
+      "from": "csus.edu"
+    },
+    {
+      "id": "17",
+      "school": "sac_state",
+      "date": "2026-01-27",
+      "subject": "Supporting Culture, Community at Sacramento State",
+      "category": "informational",
+      "confidence": 0.85,
+      "from": "csus.edu"
+    }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-26",
+      "scan_timestamp": "2026-02-26T20:16:26.408Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-02-16",
       "scan_timestamp": "2026-02-16T00:00:00Z",
