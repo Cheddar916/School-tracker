@@ -1,1622 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Application & Financial Aid Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg: #0f1419;
-            --surface: #1a1f2e;
-            --surface-light: #252d3d;
-            --accent: #00d4ff;
-            --accent-dark: #0099cc;
-            --text: #e0e6ed;
-            --text-muted: #8892a8;
-            --success: #00ff88;
-            --warning: #ffaa00;
-            --danger: #ff3333;
-            --gold: #ffd700;
-            --green-light: #90ee90;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-
-        header {
-            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(0,212,255,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--accent) 0%, #00ff88 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        header p { color: var(--text-muted); font-size: 0.95em; }
-
-        /* ===== TAB NAV ===== */
-        .main-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            background: var(--surface);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(0,212,255,0.1);
-        }
-        .main-tab {
-            flex: 1;
-            min-width: 150px;
-            padding: 12px 20px;
-            background: var(--surface-light);
-            color: var(--text-muted);
-            border: 1px solid rgba(0,212,255,0.2);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .tab-icon { font-size: 1.2em; }
-        .main-tab:hover { background: rgba(0,212,255,0.1); border-color: var(--accent); color: var(--accent); }
-        .main-tab.active {
-            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
-            color: var(--bg);
-            border-color: var(--accent);
-        }
-
-        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
-        .tab-panel.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* ===== CARDS & GRIDS ===== */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .card {
-            background: var(--surface);
-            border: 1px solid rgba(0,212,255,0.1);
-            border-radius: 8px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        .card:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(0,212,255,0.15); }
-        .card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
-
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-
-        /* ===== INSIGHT CARD ===== */
-        .insight-card {
-            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-            border: 2px solid var(--accent);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .insight-card h3 { color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .insight-card p { margin: 8px 0; line-height: 1.6; font-size: 0.95em; }
-        .insight-highlight { color: var(--success); font-weight: 700; }
-        .insight-warning { color: var(--warning); font-weight: 700; }
-        .insight-info { color: var(--accent); font-weight: 600; }
-
-        /* ===== TABLES ===== */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            background: var(--surface);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th {
-            background: var(--surface-light);
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            color: var(--accent);
-            border-bottom: 2px solid rgba(0,212,255,0.2);
-            cursor: pointer;
-            user-select: none;
-        }
-        th:hover { background: rgba(0,212,255,0.1); }
-        td { padding: 12px; border-bottom: 1px solid rgba(0,212,255,0.1); }
-        tr:last-child td { border-bottom: none; }
-
-        /* ===== STATUS BADGES ===== */
-        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        .status-accepted { background: rgba(0,255,136,0.2); color: var(--success); }
-        .status-pending { background: rgba(255,170,0,0.2); color: var(--warning); }
-        .status-rejected { background: rgba(255,51,51,0.2); color: var(--danger); }
-        .status-deferred { background: rgba(0,212,255,0.2); color: var(--accent); }
-
-        /* ===== BUTTONS ===== */
-        button {
-            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
-            color: var(--bg);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,255,0.3); }
-        button.secondary {
-            background: var(--surface-light);
-            color: var(--text);
-            border: 1px solid rgba(0,212,255,0.3);
-        }
-        button.secondary:hover { border-color: var(--accent); background: rgba(0,212,255,0.1); }
-        button.danger-btn { background: linear-gradient(135deg, #cc2200 0%, var(--danger) 100%); }
-
-        /* ===== FORM ELEMENTS ===== */
-        input, select, textarea {
-            background: var(--surface-light);
-            color: var(--text);
-            border: 1px solid rgba(0,212,255,0.2);
-            padding: 10px;
-            border-radius: 6px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 12px rgba(0,212,255,0.2);
-        }
-        input[readonly] { opacity: 0.6; cursor: not-allowed; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--accent); font-weight: 600; font-size: 0.9em; }
-        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-
-        /* ===== FILTER BAR ===== */
-        .filter-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            background: var(--surface);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(0,212,255,0.1);
-            align-items: center;
-        }
-        .filter-bar label { color: var(--text-muted); white-space: nowrap; font-size: 0.9em; }
-        .filter-bar select { width: auto; min-width: 160px; }
-        .filter-pill {
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(0,212,255,0.3);
-            background: var(--surface-light);
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.85em;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-        }
-        .filter-pill.active { background: rgba(0,212,255,0.2); color: var(--accent); border-color: var(--accent); }
-        .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* ===== COST TABLE COLORS ===== */
-        .cost-row-cheap { background: rgba(0,255,136,0.06); }
-        .cost-row-mid { background: rgba(255,170,0,0.06); }
-        .cost-row-expensive { background: rgba(255,51,51,0.06); }
-        .cost-row-cheap:hover { background: rgba(0,255,136,0.12) !important; }
-        .cost-row-mid:hover { background: rgba(255,170,0,0.12) !important; }
-        .cost-row-expensive:hover { background: rgba(255,51,51,0.12) !important; }
-
-        /* ===== EXPANDABLE ROWS ===== */
-        .expandable { cursor: pointer; user-select: none; }
-        .details-row { display: none; background: rgba(0,0,0,0.3); }
-        .details-row.expanded { display: table-row; }
-        .details-content {
-            padding: 15px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-        }
-        .detail-item {
-            background: var(--surface-light);
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 3px solid var(--accent);
-        }
-        .detail-item label { display: block; font-size: 0.75em; color: var(--text-muted); margin-bottom: 4px; }
-        .detail-item .value { font-weight: 600; color: var(--accent); font-size: 1.05em; }
-        .detail-item.green-border { border-left-color: var(--success); }
-        .detail-item.green-border .value { color: var(--success); }
-        .detail-item.orange-border { border-left-color: var(--warning); }
-        .detail-item.orange-border .value { color: var(--warning); }
-        .detail-item.red-border { border-left-color: var(--danger); }
-        .detail-item.red-border .value { color: var(--danger); }
-
-        /* ===== EXPAND INDICATOR ===== */
-        .expand-icon { transition: transform 0.2s; display: inline-block; }
-        .expand-icon.open { transform: rotate(90deg); }
-
-        /* ===== CHART CONTAINERS ===== */
-        .chart-container {
-            background: var(--surface);
-            border: 1px solid rgba(0,212,255,0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .chart-container h3 { color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .chart-wrap { position: relative; }
-        .chart-wrap canvas { max-height: 340px; }
-
-        /* ===== AID ENTRY FORM ===== */
-        .aid-form-card {
-            background: var(--surface);
-            border: 1px solid rgba(0,212,255,0.15);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .aid-form-card h3 { color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .calc-row {
-            background: var(--surface-light);
-            border-radius: 6px;
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            border-left: 3px solid var(--accent);
-        }
-        .calc-row.total-row { border-left-color: var(--success); }
-        .calc-row.oop-row { border-left-color: var(--danger); }
-        .calc-row label { color: var(--text-muted); font-size: 0.9em; }
-        .calc-row .calc-val { font-weight: 700; font-size: 1.1em; color: var(--accent); }
-        .calc-row.total-row .calc-val { color: var(--success); }
-        .calc-row.oop-row .calc-val { color: var(--danger); }
-
-        /* ===== AID DEADLINE TRACKER ===== */
-        .deadline-urgency-red { color: var(--danger); font-weight: 700; }
-        .deadline-urgency-yellow { color: var(--warning); font-weight: 600; }
-        .deadline-urgency-green { color: var(--success); }
-        .deadline-urgency-gray { color: var(--text-muted); }
-
-        .received-check { accent-color: var(--success); width: 18px; height: 18px; cursor: pointer; }
-
-        /* ===== STATS ROW ===== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .stat-card {
-            background: var(--surface);
-            border: 1px solid rgba(0,212,255,0.1);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-        }
-        .stat-label { color: var(--text-muted); font-size: 0.8em; margin-bottom: 8px; }
-        .stat-value { color: var(--accent); font-size: 1.6em; font-weight: 700; }
-        .stat-value.green { color: var(--success); }
-        .stat-value.red { color: var(--danger); }
-        .stat-value.yellow { color: var(--warning); }
-
-        /* ===== MATCH BADGE ===== */
-        .match-badge { display: inline-block; padding: 6px 12px; border-radius: 4px; font-weight: 600; font-size: 0.85em; }
-        .match-high { background: rgba(0,255,136,0.2); color: var(--success); }
-        .match-medium { background: rgba(255,170,0,0.2); color: var(--warning); }
-        .match-low { background: rgba(255,51,51,0.2); color: var(--danger); }
-
-        /* ===== AMOUNT ===== */
-        .amount-currency { color: var(--success); font-weight: 600; }
-
-        /* ===== SCHOLARSHIP TABLE ===== */
-        .status-select { padding: 6px 10px; font-size: 0.9em; width: auto; }
-
-        /* ===== DEAL BREAKERS ===== */
-        .dealbreaker-section {
-            background: var(--surface);
-            border: 1px solid rgba(0,212,255,0.1);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .dealbreaker-section h4 { color: var(--accent); margin-bottom: 12px; }
-        .dealbreaker-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
-        .dealbreaker-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
-        .dealbreaker-item label { flex: 1; cursor: pointer; margin: 0; }
-        .eliminated { background: rgba(255,51,51,0.1); border-left: 4px solid var(--danger); }
-
-        /* ===== JOURNAL ===== */
-        .journal-entry {
-            background: var(--surface);
-            border-left: 4px solid var(--accent);
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .journal-entry-date { color: var(--text-muted); font-size: 0.85em; margin-bottom: 8px; }
-        .journal-entry-text { color: var(--text); line-height: 1.6; margin-bottom: 8px; }
-        .journal-entry-tag {
-            display: inline-block;
-            background: rgba(0,212,255,0.2);
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-right: 5px;
-        }
-
-        /* ===== DEADLINE COUNTDOWN BANNER ===== */
-        .deadline-countdown-banner {
-            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .deadline-countdown-banner.warning { border-left-color: var(--warning); background: linear-gradient(135deg, rgba(255,170,0,0.1) 0%, rgba(255,170,0,0.05) 100%); }
-        .deadline-countdown-banner.danger { border-left-color: var(--danger); background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(255,51,51,0.05) 100%); }
-        .deadline-countdown-banner h3 { margin-bottom: 15px; }
-        .deadline-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,212,255,0.1); font-size: 0.9em; }
-        .deadline-item:last-child { border-bottom: none; }
-
-        /* ===== SCHOLARSHIP CARD ===== */
-        .scholarship-card {
-            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-            border: 2px solid var(--accent);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .scholarship-card-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid rgba(0,212,255,0.1); }
-        .scholarship-card-row:last-child { border-bottom: none; }
-        .scholarship-card-label { color: var(--text-muted); font-size: 0.9em; }
-        .scholarship-card-value { color: var(--accent); font-weight: 600; }
-
-        /* ===== SCHOLARSHIP FILTERS ===== */
-        .scholarship-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; background: var(--surface); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,212,255,0.1); }
-        .scholarship-filters .filter-group { display: flex; gap: 8px; align-items: center; }
-        .scholarship-filters select { min-width: 140px; width: auto; }
-
-        /* ===== COMPARISON ===== */
-        .comparison-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 20px 0; }
-        .comparison-card { background: var(--surface); border: 2px solid var(--accent); border-radius: 8px; padding: 20px; }
-        .comparison-card h4 { color: var(--accent); margin-bottom: 15px; font-size: 1.2em; }
-        .comparison-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,212,255,0.1); }
-        .comparison-item:last-child { border-bottom: none; }
-        .comparison-item label { color: var(--text-muted); font-size: 0.9em; }
-        .comparison-item .value { color: var(--accent); font-weight: 600; }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .two-col { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            header h1 { font-size: 1.8em; }
-            .grid { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .comparison-cards { grid-template-columns: 1fr; }
-            table { font-size: 0.85em; }
-            .main-tab { min-width: 120px; padding: 10px 15px; }
-            .tab-icon { font-size: 1em; }
-            td, th { padding: 8px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael's College Application Tracker</title>
+<script>
+  const DATA_URL = 'https://raw.githubusercontent.com/Cheddar916/school-tracker/main/data/tracker.json';
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+  :root{--bg:#0b0d14;--surface:#13161f;--surface2:#1c2030;--surface3:#252a3a;--border:#2a2f42;--border-light:#363d55;--text:#e4e7f1;--text-dim:#7c829b;--text-muted:#555b74;--accent:#6c5ce7;--accent-light:#8577ed;--green:#00b894;--green-dim:rgba(0,184,148,0.15);--red:#e17055;--red-dim:rgba(225,112,85,0.15);--yellow:#fdcb6e;--yellow-dim:rgba(253,203,110,0.15);--blue:#74b9ff;--blue-dim:rgba(116,185,255,0.15);--orange:#f39c12;--orange-dim:rgba(243,156,18,0.15);--purple:#a29bfe;--purple-dim:rgba(162,155,254,0.15);--cyan:#00cec9;--pink:#fd79a8}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,-apple-system,sans-serif;min-height:100vh;line-height:1.5}
+  .container{max-width:1280px;margin:0 auto;padding:20px 24px}
+  .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px}
+  .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text{color:var(--text-dim);font-size:14px}
+  .header{text-align:center;margin-bottom:8px;padding:16px 0}
+  .header h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+  .header h1 span{color:var(--accent)}
+  .header .subtitle{color:var(--text-dim);font-size:13px;margin-top:2px}
+  .scan-info{color:var(--text-dim);font-size:11px;margin-top:8px;padding:5px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .data-source{font-size:10px;color:var(--text-muted);margin-top:4px}
+  .main-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px}
+  .main-tab{flex:1;padding:11px 16px;border-radius:9px;border:none;background:transparent;color:var(--text-dim);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;justify-content:center;gap:8px}
+  .main-tab:hover{color:var(--text);background:var(--surface2)}
+  .main-tab.active{background:var(--accent);color:#fff;font-weight:600;box-shadow:0 2px 12px rgba(108,92,231,.3)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .decision-banner{background:linear-gradient(135deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .decision-banner .banner-left{display:flex;align-items:center;gap:12px}
+  .decision-banner .banner-icon{font-size:24px}
+  .decision-banner .banner-text{font-size:13px;color:var(--text-dim)}
+  .decision-banner .banner-text strong{color:var(--text);font-size:15px;display:block}
+  .decision-banner .days-count{font-size:28px;font-weight:700;color:var(--yellow);min-width:80px;text-align:center}
+  .decision-banner .days-count span{font-size:12px;font-weight:400;color:var(--text-dim);display:block}
+  .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:transform .2s,border-color .2s}
+  .stat-card:hover{transform:translateY(-2px);border-color:var(--border-light)}
+  .stat-card .number{font-size:30px;font-weight:700}
+  .stat-card .label{font-size:11px;color:var(--text-dim);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+  .stat-card.accepted .number{color:var(--green)}.stat-card.pending .number{color:var(--yellow)}.stat-card.rejected .number{color:var(--red)}.stat-card.waitlisted .number{color:var(--orange)}.stat-card.total .number{color:var(--blue)}
+  .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s}
+  .tab:hover{border-color:var(--accent);color:var(--text)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .schools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:14px;margin-bottom:28px}
+  .school-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:all .2s;position:relative;overflow:hidden}
+  .school-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+  .school-card.status-accepted{border-left:4px solid var(--green)}.school-card.status-pending{border-left:4px solid var(--yellow)}.school-card.status-rejected{border-left:4px solid var(--red)}.school-card.status-waitlisted{border-left:4px solid var(--orange)}.school-card.status-committed{border-left:4px solid var(--accent);background:linear-gradient(135deg,var(--surface),rgba(108,92,231,.08))}
+  .school-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+  .school-name{font-size:16px;font-weight:600}
+  .school-type{font-size:10px;color:var(--text-dim);background:var(--surface2);padding:2px 8px;border-radius:4px}
+  .status-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .status-badge.accepted{background:var(--green-dim);color:var(--green)}.status-badge.pending{background:var(--yellow-dim);color:var(--yellow)}.status-badge.rejected{background:var(--red-dim);color:var(--red)}.status-badge.waitlisted{background:var(--orange-dim);color:var(--orange)}.status-badge.committed{background:var(--purple-dim);color:var(--purple)}.status-badge.declined{background:rgba(85,91,116,.15);color:var(--text-muted)}
+  .detail-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;font-size:13px}
+  .detail-icon{width:16px;flex-shrink:0;text-align:center;margin-top:1px}
+  .detail-text{color:var(--text-dim)}
+  .detail-text a{color:var(--blue);text-decoration:none}
+  .detail-text a:hover{text-decoration:underline}
+  .deadlines{margin-top:10px}
+  .deadline-item{background:var(--surface2);border-radius:8px;padding:7px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .deadline-item.urgent{border-left:3px solid var(--red)}.deadline-item.soon{border-left:3px solid var(--yellow)}.deadline-item.passed{opacity:.5;border-left:3px solid var(--text-muted)}.deadline-item.ok{border-left:3px solid var(--green)}
+  .deadline-date{color:var(--text-dim);font-weight:600}
+  .action-items{margin-top:10px}
+  .action-item{font-size:12px;color:var(--text-dim);padding:3px 0 3px 16px;position:relative}
+  .action-item::before{content:"→";position:absolute;left:0;color:var(--accent)}
+  .confidence-bar{margin-top:10px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-dim)}
+  .conf-track{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+  .conf-fill{height:100%;border-radius:2px;background:var(--green);transition:width .3s}
+  .feedback-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .feedback-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-size:11px;font-family:inherit;margin-right:4px;transition:all .2s}
+  .feedback-btn:hover{border-color:var(--accent);color:var(--text)}.feedback-btn.correct{border-color:var(--green);color:var(--green)}
+  .status-override{margin-top:8px;display:none}
+  .status-override.visible{display:flex;gap:6px;flex-wrap:wrap}
+  .override-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-size:11px;font-family:inherit}
+  .override-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+  .panel h2{font-size:17px;margin-bottom:14px;font-weight:600}
+  .panel h3{font-size:14px;margin-bottom:10px;font-weight:600;color:var(--text-dim)}
+  .deadline-list{list-style:none}
+  .deadline-list li{padding:9px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:13px}
+  .deadline-list li:last-child{border-bottom:none}
+  .deadline-school{font-weight:600;min-width:100px}
+  .deadline-desc{flex:1;color:var(--text-dim);margin:0 12px}
+  .days-until{font-weight:600;min-width:80px;text-align:right}
+  .days-until.urgent{color:var(--red)}.days-until.soon{color:var(--yellow)}.days-until.ok{color:var(--green)}.days-until.passed{color:var(--text-muted)}
+  .log-table{width:100%;border-collapse:collapse}
+  .log-table th{text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;border-bottom:1px solid var(--border)}
+  .log-table td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:12px}
+  .log-table tr:hover{background:var(--surface2)}
+  .cat-badge{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+  .cat-badge.acceptance{background:var(--green-dim);color:var(--green)}.cat-badge.informational{background:var(--blue-dim);color:var(--blue)}.cat-badge.action_required{background:var(--yellow-dim);color:var(--yellow)}.cat-badge.rejection{background:var(--red-dim);color:var(--red)}.cat-badge.waitlist{background:var(--orange-dim);color:var(--orange)}
+  .scan-item{padding:9px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;font-size:13px}
+  .scan-meta{color:var(--text-dim);font-size:11px;margin-top:3px}
+  .metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .metric{text-align:center;padding:12px;background:var(--surface2);border-radius:8px}
+  .metric .val{font-size:22px;font-weight:700;color:var(--accent)}
+  .metric .lbl{font-size:10px;color:var(--text-dim);margin-top:3px}
+  .footer{text-align:center;padding:20px 0;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border);margin-top:8px}
+  .footer a{color:var(--accent);text-decoration:none}
+  .aid-table-wrap{overflow-x:auto;margin-bottom:20px}
+  .aid-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
+  .aid-table th{background:var(--surface2);padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);border-bottom:2px solid var(--border);position:sticky;top:0}
+  .aid-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+  .aid-table tr:hover{background:var(--surface2)}
+  .aid-table tr.cheapest td{background:rgba(0,184,148,.06)}
+  .aid-table .school-col{font-weight:600;min-width:130px;white-space:normal}
+  .aid-table .cost-col{font-weight:700}
+  .net-positive{color:var(--green)}.net-negative{color:var(--red)}.net-zero{color:var(--yellow)}
+  .aid-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:6px;font-size:12px;font-family:inherit;width:90px;text-align:right;transition:border-color .2s}
+  .aid-input:focus{outline:none;border-color:var(--accent)}
+  .btn{padding:9px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+  .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-light);box-shadow:0 2px 12px rgba(108,92,231,.3)}
+  .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--accent)}
+  .btn-danger{background:var(--red);color:#fff}.btn-success{background:var(--green);color:#fff}
+  .btn-sm{padding:5px 12px;font-size:11px}
+  .bar-chart{display:flex;align-items:flex-end;gap:8px;height:220px;padding-bottom:30px}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;height:100%;justify-content:flex-end}
+  .bar{border-radius:6px 6px 0 0;transition:height .5s ease;min-height:4px;width:100%;max-width:60px}
+  .bar-label{font-size:10px;color:var(--text-dim);text-align:center;white-space:nowrap;position:absolute;bottom:-24px;width:100%;overflow:hidden;text-overflow:ellipsis}
+  .bar-value{font-size:10px;font-weight:600;color:var(--text)}
+  .pie-chart-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .pie-svg{width:180px;height:180px}
+  .pie-legend{display:flex;flex-direction:column;gap:6px}
+  .pie-legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+  .pie-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .criteria-grid{display:grid;gap:12px}
+  .criteria-row{display:grid;grid-template-columns:160px 1fr 50px;gap:12px;align-items:center;padding:10px 14px;background:var(--surface2);border-radius:10px}
+  .criteria-label{font-size:13px;font-weight:500}
+  .criteria-label small{font-size:10px;color:var(--text-dim);display:block}
+  input[type="range"]{-webkit-appearance:none;width:100%;height:6px;background:var(--border);border-radius:3px;outline:none}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 1px 6px rgba(0,0,0,.3)}
+  .range-value{font-size:14px;font-weight:700;color:var(--accent);text-align:center}
+  .rating-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+  .rating-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .rating-card-title{font-size:15px;font-weight:600}
+  .weighted-score{font-size:22px;font-weight:700;color:var(--accent)}
+  .weighted-score span{font-size:11px;font-weight:400;color:var(--text-dim)}
+  .rating-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .rating-item{display:flex;align-items:center;gap:8px}
+  .rating-item label{font-size:11px;color:var(--text-dim);min-width:80px}
+  .rating-item input[type="range"]{flex:1}
+  .rating-item .rating-val{font-size:12px;font-weight:600;min-width:20px;text-align:center}
+  .radar-wrap{display:flex;justify-content:center;padding:16px 0}
+  .radar-svg{max-width:400px;width:100%}
+  .proscons-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+  .proscons-header{padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+  .proscons-header:hover{background:var(--surface2)}
+  .proscons-header h3{font-size:14px;margin:0}
+  .proscons-chevron{transition:transform .3s;color:var(--text-dim)}
+  .proscons-chevron.open{transform:rotate(180deg)}
+  .proscons-body{padding:0 16px 16px;display:none}
+  .proscons-body.open{display:block}
+  .proscons-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .proscons-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid}
+  .proscons-col.pros-col h4{color:var(--green);border-color:var(--green)}
+  .proscons-col.cons-col h4{color:var(--red);border-color:var(--red)}
+  .proscons-entry{font-size:12px;color:var(--text-dim);padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+  .proscons-entry .entry-time{font-size:10px;color:var(--text-muted);white-space:nowrap;margin-left:8px}
+  .proscons-input-wrap{display:flex;gap:6px;margin-top:8px}
+  .proscons-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:12px;font-family:inherit}
+  .proscons-input:focus{outline:none;border-color:var(--accent)}
+  .gut-card{background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+  .gut-school{font-size:13px;font-weight:600;min-width:120px}
+  .gut-slider-wrap{flex:1;display:flex;align-items:center;gap:10px}
+  .gut-value{font-size:20px;font-weight:700;min-width:32px;text-align:center}
+  .gut-vs{font-size:11px;color:var(--text-dim);text-align:center;min-width:80px}
+  .gut-vs .discrepancy{font-weight:600}
+  .gut-vs .discrepancy.high{color:var(--red)}.gut-vs .discrepancy.med{color:var(--yellow)}.gut-vs .discrepancy.low{color:var(--green)}
+  .rank-item{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface2);border-radius:10px;margin-bottom:8px;transition:transform .2s}
+  .rank-item:hover{transform:translateX(4px)}
+  .rank-item .rank-num{font-size:22px;font-weight:700;color:var(--accent);min-width:30px}
+  .rank-item .rank-name{font-size:14px;font-weight:600;flex:1}
+  .rank-item .rank-score{font-size:18px;font-weight:700}
+  .rank-item:first-child{border:1px solid var(--accent);background:rgba(108,92,231,.08)}
+  .rank-item:first-child .rank-num{color:var(--yellow)}
+  .commit-section{text-align:center;padding:24px 0}
+  .commit-btn{padding:14px 32px;border-radius:12px;border:2px solid var(--accent);background:transparent;color:var(--accent);font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .3s}
+  .commit-btn:hover{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(108,92,231,.4)}
+  .committed-banner{background:linear-gradient(135deg,rgba(108,92,231,.15),rgba(162,155,254,.1));border:2px solid var(--accent);border-radius:14px;padding:24px;text-align:center;margin-bottom:20px}
+  .committed-banner h2{font-size:22px;color:var(--accent);margin-bottom:4px}
+  .committed-banner p{color:var(--text-dim);font-size:13px}
+  .confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+  @media(max-width:768px){.stats-row{grid-template-columns:repeat(3,1fr)}.schools-grid{grid-template-columns:1fr}.metrics-grid{grid-template-columns:1fr}.main-tabs{flex-direction:column}.proscons-cols{grid-template-columns:1fr}.criteria-row{grid-template-columns:1fr 1fr 40px}.decision-banner{flex-direction:column;text-align:center}.rating-grid{grid-template-columns:1fr}}
+  @media(max-width:480px){.stats-row{grid-template-columns:repeat(2,1fr)}.container{padding:12px}}
+</style>
 </head>
 <body>
-<div class="container">
-    <header>
-        <h1>📚 School Application & Financial Aid Tracker</h1>
-        <p>Michael Sarmento · Business Analytics Transfer · Fall 2026 · 2 Acceptances so far</p>
-    </header>
-
-    <div class="main-tabs">
-        <button class="main-tab active" onclick="switchMainTab('applications')"><span class="tab-icon">📋</span> Applications</button>
-        <button class="main-tab" onclick="switchMainTab('financial')"><span class="tab-icon">💰</span> Financial Aid</button>
-        <button class="main-tab" onclick="switchMainTab('analytics')"><span class="tab-icon">📊</span> Decision Analytics</button>
-        <button class="main-tab" onclick="switchMainTab('scholarships')"><span class="tab-icon">🎯</span> Scholarship Hunter</button>
-    </div>
-
-    <div class="tab-panel active" id="applications-panel"></div>
-    <div class="tab-panel" id="financial-panel"></div>
-    <div class="tab-panel" id="analytics-panel"></div>
-    <div class="tab-panel" id="scholarships-panel"></div>
+<div class="container" id="app">
+  <div class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading latest application data…</div></div>
 </div>
 
 <script>
-// ============================================================
-// DATA STRUCTURES
-// ============================================================
-const BASE_COSTS = {
-    uc_berkeley: 47500, ucla: 42000, uc_irvine: 43000,
-    uc_santa_barbara: 43500, uc_riverside: 43000, uc_santa_cruz: 43500,
-    cal_poly_slo: 35500, sjsu: 35000, sdsu: 33500,
-    sac_state: 33500, csuf: 32000
-};
-
-const DETAILED_COSTS = {
-    uc_berkeley:    { tuition: 15900, housing: 24600, books: 1200, transport: 700,  personal: 5100 },
-    ucla:           { tuition: 14700, housing: 19000, books: 1400, transport: 600,  personal: 6300 },
-    uc_irvine:      { tuition: 15000, housing: 20500, books: 1300, transport: 600,  personal: 5600 },
-    uc_santa_barbara:{ tuition: 15200, housing: 20800, books: 1200, transport: 650, personal: 5650 },
-    uc_riverside:   { tuition: 15100, housing: 20400, books: 1300, transport: 700,  personal: 5500 },
-    uc_santa_cruz:  { tuition: 15500, housing: 21000, books: 1200, transport: 700,  personal: 5100 },
-    cal_poly_slo:   { tuition: 13400, housing: 16500, books: 1100, transport: 800,  personal: 3700 },
-    sjsu:           { tuition: 8850,  housing: 19900, books: 1000, transport: 900,  personal: 4350 },
-    sdsu:           { tuition: 8200,  housing: 18500, books: 1100, transport: 850,  personal: 4850 },
-    sac_state:      { tuition: 8450,  housing: 18000, books: 1200, transport: 900,  personal: 4950 },
-    csuf:           { tuition: 7900,  housing: 17500, books: 1000, transport: 850,  personal: 4750 }
-};
-
-const SCHOOL_NAMES = {
-    uc_berkeley: "UC Berkeley", ucla: "UCLA", uc_irvine: "UC Irvine",
-    uc_santa_barbara: "UC Santa Barbara", uc_riverside: "UC Riverside",
-    uc_santa_cruz: "UC Santa Cruz", cal_poly_slo: "Cal Poly SLO",
-    sjsu: "San Jose State", sdsu: "San Diego State",
-    sac_state: "Sacramento State", csuf: "Cal State Fullerton"
-};
-
-const CRITERIA_KEYS = ['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];
+// ==============================================
+// CONSTANTS
+// ==============================================
+const BASE_COSTS = {csuf:2675,uc_berkeley:5895,cal_poly_slo:6476,uc_irvine:6485,ucla:6864,sac_state:7306,uc_santa_barbara:7745,uc_riverside:8240,sjsu:9743,uc_santa_cruz:9472,sdsu:9655};
+const DEFAULT_PELL = 7395;
+const CRITERIA_KEYS = ['net_cost','program_quality','location','career_outcomes','campus_resources','distance_from_home'];
 const CRITERIA_LABELS = {
-    net_cost: 'Net Cost', program_quality: 'Program Quality',
-    career_outcomes: 'Career Outcomes', location_vibe: 'Location & Vibe', gut_feeling: 'Gut Feeling'
+  net_cost:{name:'Net Cost',desc:'Financial burden'},
+  program_quality:{name:'Program Quality',desc:'Major strength'},
+  location:{name:'Location / Vibe',desc:'Campus feel'},
+  career_outcomes:{name:'Career Outcomes',desc:'Jobs & alumni'},
+  campus_resources:{name:'Resources',desc:'Clubs & facilities'},
+  distance_from_home:{name:'Distance',desc:'From home'}
 };
 
-const FALLBACK_DATA = {
-    schools: [
-        { id:'uc_berkeley',     name:'UC Berkeley',     status:'pending',   feedback:'', scores:{net_cost:3,program_quality:10,career_outcomes:10,location_vibe:7,gut_feeling:8} },
-        { id:'ucla',            name:'UCLA',            status:'pending',   feedback:'', scores:{net_cost:4,program_quality:9, career_outcomes:9, location_vibe:9,gut_feeling:9} },
-        { id:'uc_irvine',       name:'UC Irvine',       status:'pending',   feedback:'', scores:{net_cost:5,program_quality:8, career_outcomes:8, location_vibe:6,gut_feeling:7} },
-        { id:'uc_santa_barbara',name:'UC Santa Barbara',status:'pending',   feedback:'', scores:{net_cost:4,program_quality:8, career_outcomes:8, location_vibe:9,gut_feeling:8} },
-        { id:'uc_riverside',    name:'UC Riverside',    status:'pending',   feedback:'', scores:{net_cost:6,program_quality:7, career_outcomes:7, location_vibe:6,gut_feeling:6} },
-        { id:'uc_santa_cruz',   name:'UC Santa Cruz',   status:'pending',   feedback:'', scores:{net_cost:5,program_quality:7, career_outcomes:7, location_vibe:7,gut_feeling:7} },
-        { id:'cal_poly_slo',    name:'Cal Poly SLO',    status:'pending',   feedback:'', scores:{net_cost:7,program_quality:7, career_outcomes:7, location_vibe:8,gut_feeling:8} },
-        { id:'sjsu',            name:'San Jose State',  status:'accepted',  feedback:'', scores:{net_cost:9,program_quality:6, career_outcomes:8, location_vibe:7,gut_feeling:7} },
-        { id:'sdsu',            name:'San Diego State', status:'pending',   feedback:'', scores:{net_cost:7,program_quality:6, career_outcomes:7, location_vibe:8,gut_feeling:7} },
-        { id:'sac_state',       name:'Sacramento State',status:'accepted',  feedback:'', scores:{net_cost:8,program_quality:5, career_outcomes:6, location_vibe:5,gut_feeling:6} },
-        { id:'csuf',            name:'Cal State Fullerton',status:'pending',feedback:'', scores:{net_cost:8,program_quality:5, career_outcomes:6, location_vibe:6,gut_feeling:6} }
-    ],
-    aid_packages: {},
-    aid_deadlines: {},
-    dealbreakers: {},
-    journal_entries: []
-};
+const FALLBACK_DATA = {"metadata":{"version":"2.0","last_scan":"2026-02-16T00:00:00Z","total_scans":1,"total_emails_processed":55,"created":"2026-02-16","owner":"Michael Sarmento"},"schools":{"uc_berkeley":{"name":"UC Berkeley","short_name":"UCB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"},{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA by March 2"],"portal_url":null,"notes":"Transfer to Success workshop series ongoing"},"ucla":{"name":"UCLA","short_name":"UCLA","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":["Check MyApplication portal for updates"],"portal_url":"https://www.admission.ucla.edu/MyApplication","notes":"Application received Dec 12, 2025"},"uc_irvine":{"name":"UC Irvine","short_name":"UCI","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001314)"],"portal_url":null,"notes":"UCI school code for FAFSA: 001314"},"uc_santa_barbara":{"name":"UC Santa Barbara","short_name":"UCSB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid + Cal Grant priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001320)"],"portal_url":"https://connect.admissions.ucsb.edu/apply/status","notes":"Applicant Portal open"},"uc_riverside":{"name":"UC Riverside","short_name":"UCR","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Receiving marketing emails, School of Business focus"},"uc_santa_cruz":{"name":"UC Santa Cruz","short_name":"UCSC","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid deadline"},{"type":"decisions","date":"2026-04-01","description":"Transfer decisions begin posting"}],"action_items":["Complete FAFSA (School Code: 001321)","Check Admissions Portal starting April 1"],"portal_url":"https://ucsc.link/adm-portal","notes":"CruzID: mzsarmen. Transfer decisions: April 1-30"},"cal_poly_slo":{"name":"Cal Poly SLO","short_name":"Cal Poly","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Account: sarmento@calpoly.edu. Receiving biweekly newsletters"},"sjsu":{"name":"San Jose State","short_name":"SJSU","type":"CSU","status":"accepted","confidence":0.99,"decision_date":"2026-02-12","deadlines":[{"type":"intent","date":null,"description":"Confirm Intent to Enroll (check MySJSU)"},{"type":"event","date":"2026-04-18","description":"Admitted Spartan Day on campus"},{"type":"deposit","date":null,"description":"$250 enrollment deposit"}],"action_items":["Confirm Intent to Enroll via MySJSU","Pay $250 enrollment deposit","Choose mandatory Orientation session","Send official transcripts","Register for Admitted Spartan Day (April 18)"],"portal_url":"https://one.sjsu.edu","notes":"ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"},"sdsu":{"name":"San Diego State","short_name":"SDSU","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[{"type":"academic_history","date":"2026-01-31","description":"Academic History Update (PASSED)"}],"action_items":["Confirm Academic History Update was completed"],"portal_url":"https://calstate.liaisoncas.com/applicant-ux/#/login","notes":"RedID: 134626697"},"csuf":{"name":"Cal State Fullerton","short_name":"CSUF","type":"CSU","status":"pending","confidence":0.85,"decision_date":null,"deadlines":[],"action_items":["Check CSUF Student Portal for updates"],"portal_url":null,"notes":"CWID: 821713195. Applied Nov 8, 2025"},"sac_state":{"name":"Sacramento State","short_name":"Sac State","type":"CSU","status":"accepted","confidence":0.97,"decision_date":"2025-12-15","deadlines":[{"type":"intent","date":"2026-05-01","description":"Submit Intent to Enroll"},{"type":"business_app","date":"2026-03-16","description":"Business Admin supplemental application"},{"type":"adt","date":"2026-03-15","description":"ADT verification to Admissions"}],"action_items":["Submit Intent to Enroll by May 1","Complete Business supplemental app (Feb 1 - Mar 16)","Email unofficial transcripts to cob-ugrad@csus.edu","Ensure ADT verification by March 15"],"portal_url":"https://idp.csus.edu/idp/profile/cas/login","notes":"ADMITTED! ID: 305148038. Provisional financial aid awarded."}},"email_log":[{"id":"1","school":"sjsu","date":"2026-02-14","subject":"Save the Date: SJSU Admitted Spartan Day","category":"action_required","confidence":0.95},{"id":"2","school":"sjsu","date":"2026-02-12","subject":"Welcome to SJSU for Fall 2026!","category":"acceptance","confidence":0.99}],"scan_history":[{"scan_date":"2026-02-16","scan_timestamp":"2026-02-16T00:00:00Z","emails_found":55,"new_decisions":2,"notes":"Initial scan. Found 2 acceptances (SJSU, Sac State)."}],"feedback_log":[],"performance_metrics":{"total_correct":0,"total_incorrect":0,"total_reviewed":0}};
 
-const SCHOLARSHIP_DB = [
-    { id:1,  name:"Gates Scholarship",                         amount:50000, deadline:"2026-09-15", essay:true,  time:"4hr+",  match:45, source:"Bold.org",   link:"https://bold.org/scholarships/the-gates-scholarship/", category:"major", status:"not_started", notes:"" },
-    { id:2,  name:"Filipino American Heritage Fund",           amount:5000,  deadline:"2026-04-30", essay:false, time:"1hr",   match:95, source:"Niche",       link:"https://scholarships.niche.com",                       category:"major", status:"not_started", notes:"" },
-    { id:3,  name:"Portuguese-American Scholarship",           amount:3000,  deadline:"2026-05-15", essay:true,  time:"2hr",   match:90, source:"PANO",        link:"https://www.portuam.org",                              category:"major", status:"not_started", notes:"" },
-    { id:4,  name:"CA Community College Transfer Excellence",  amount:8000,  deadline:"2026-06-01", essay:true,  time:"3hr",   match:85, source:"ScholarshipUniverse", link:"https://scholarshipuniverse.com",             category:"major", status:"not_started", notes:"" },
-    { id:5,  name:"Business Analytics Leaders Award",          amount:7500,  deadline:"2026-05-30", essay:false, time:"1.5hr", match:80, source:"BAA",         link:"https://baa.org/scholarships",                        category:"major", status:"not_started", notes:"" },
-    { id:6,  name:"California Resident STEM Transfer",         amount:6000,  deadline:"2026-04-15", essay:true,  time:"2.5hr", match:75, source:"Cal-STEM",    link:"https://calstem.org",                                 category:"major", status:"not_started", notes:"" },
-    { id:7,  name:"Non-Traditional Student Achievement",       amount:4500,  deadline:"2026-07-01", essay:true,  time:"2hr",   match:88, source:"NACADA",      link:"https://nacada.ksu.edu",                              category:"major", status:"not_started", notes:"" },
-    { id:8,  name:"UC Berkeley Foundation Scholarship",        amount:10000, deadline:"2026-03-15", essay:true,  time:"3hr",   match:70, source:"UC Berkeley", link:"https://berkeley.edu/scholarships",                   category:"major", status:"not_started", notes:"" },
-    { id:9,  name:"UCLA Student Support Fund",                 amount:8500,  deadline:"2026-04-01", essay:true,  time:"3hr",   match:72, source:"UCLA",        link:"https://ucla.edu/scholarships",                       category:"major", status:"not_started", notes:"" },
-    { id:10, name:"FAPAC Career Scholarship",                  amount:3500,  deadline:"2026-06-15", essay:true,  time:"2hr",   match:92, source:"FAPAC",       link:"https://fapac.org",                                   category:"major", status:"not_started", notes:"" },
-    { id:11, name:"Filipino Community Services - Education",   amount:2500,  deadline:"2026-05-01", essay:false, time:"1hr",   match:93, source:"FCS",         link:"https://fcsprogramming.org",                          category:"mid",   status:"not_started", notes:"" },
-    { id:12, name:"CA Filipino Scholarship Fund",              amount:2800,  deadline:"2026-06-15", essay:true,  time:"2hr",   match:93, source:"CAFSF",       link:"https://cafilipinofund.org",                          category:"mid",   status:"not_started", notes:"" },
-    { id:13, name:"Data Science & Analytics Future Leaders",   amount:6500,  deadline:"2026-07-15", essay:true,  time:"3hr",   match:82, source:"DSAFL",       link:"https://dsafl.org",                                   category:"major", status:"not_started", notes:"" },
-    { id:14, name:"First Generation College Student Fund",     amount:4000,  deadline:"2026-06-15", essay:true,  time:"2hr",   match:80, source:"FGCSF",       link:"https://fgcsf.org",                                   category:"major", status:"not_started", notes:"" },
-    { id:15, name:"Applied Analytics Rising Star",             amount:5500,  deadline:"2026-07-05", essay:true,  time:"2.5hr", match:81, source:"AAR",         link:"https://appliedanalytics.org",                        category:"major", status:"not_started", notes:"" },
-    { id:16, name:"Filipino American National Historical Soc", amount:3500,  deadline:"2026-07-30", essay:true,  time:"2.5hr", match:91, source:"FANHS",       link:"https://fanhs.org",                                   category:"major", status:"not_started", notes:"" },
-    { id:17, name:"Niche - Filipino Americans in California",  amount:2200,  deadline:"2026-08-01", essay:false, time:"30min", match:94, source:"Niche",       link:"https://niche.com/scholarships",                      category:"mid",   status:"not_started", notes:"" },
-    { id:18, name:"Transfer Student Transition Award",         amount:3000,  deadline:"2026-05-10", essay:false, time:"1hr",   match:84, source:"TST",         link:"https://transferstudent.org",                         category:"mid",   status:"not_started", notes:"" },
-    { id:19, name:"CA Budget Act Cal Grant Supplement",        amount:7000,  deadline:"2026-03-02", essay:false, time:"1hr",   match:85, source:"State of CA", link:"https://www.calgrant.org",                            category:"major", status:"not_started", notes:"" },
-    { id:20, name:"Community College to UC Pipeline",          amount:7000,  deadline:"2026-04-30", essay:true,  time:"3hr",   match:84, source:"CCUP",        link:"https://ccup.org",                                    category:"major", status:"not_started", notes:"" },
-    { id:21, name:"Niche $2000 No Essay Scholarship",          amount:2000,  deadline:"2026-07-31", essay:false, time:"30min", match:68, source:"Niche",       link:"https://niche.com/scholarships",                      category:"mid",   status:"not_started", notes:"" },
-    { id:22, name:"Asian American Leadership Initiative",      amount:3500,  deadline:"2026-06-20", essay:true,  time:"2hr",   match:86, source:"AALI",        link:"https://aali.org",                                    category:"major", status:"not_started", notes:"" },
-    { id:23, name:"Bold.org Quick Apply - Education Impact",   amount:500,   deadline:"2026-09-30", essay:false, time:"15min", match:65, source:"Bold.org",    link:"https://bold.org",                                    category:"micro", status:"not_started", notes:"" }
-];
-
-// ============================================================
+// ==============================================
 // STATE
-// ============================================================
+// ==============================================
+let TRACKER_DATA = FALLBACK_DATA;
+let dataSource = 'embedded (fallback)';
 let currentMainTab = 'applications';
-let aidSortField = 'net_cost';
-let aidShowAll = false;
-let currentCompareSchools = [];
-let dealBreakers = {};
-let journalEntries = [];
-let aidDeadlines = {};
-let barChartInstance = null;
-let pieChartInstance = null;
+let aidData = {};
+let analyticsData = {};
+let globalWeights = {};
+let aidSort = 'net';
 
-// ============================================================
+// ==============================================
 // BOOT
-// ============================================================
-function boot() {
-    loadLocalData();
-    renderFull();
+// ==============================================
+async function boot() {
+  loadLocalData();
+  try {
+    const resp = await fetch(DATA_URL, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    TRACKER_DATA = await resp.json();
+    dataSource = 'live (GitHub \u2014 auto-updated every 12h)';
+  } catch (e) {
+    console.warn('Live fetch failed, using embedded fallback:', e.message);
+    dataSource = 'embedded fallback';
+  }
+  initAidAndAnalytics();
+  renderFull();
 }
 
 function loadLocalData() {
-    const saved = localStorage.getItem('st_schools_v2');
-    if (saved) {
-        const data = JSON.parse(saved);
-        window.schools   = data.schools        || JSON.parse(JSON.stringify(FALLBACK_DATA.schools));
-        window.aidPkgs   = data.aid_packages   || {};
-        dealBreakers      = data.dealbreakers   || {};
-        journalEntries    = data.journal_entries|| [];
-        aidDeadlines      = data.aid_deadlines  || {};
-    } else {
-        window.schools   = JSON.parse(JSON.stringify(FALLBACK_DATA.schools));
-        window.aidPkgs   = {};
-        dealBreakers      = {};
-        journalEntries    = [];
-        aidDeadlines      = {};
-    }
-    const sch = localStorage.getItem('st_scholarships');
-    if (sch) {
-        const schData = JSON.parse(sch);
-        SCHOLARSHIP_DB.forEach(s => {
-            const found = schData.find(x => x.id === s.id);
-            if (found) { s.status = found.status; s.notes = found.notes || ""; }
-        });
-    }
+  try { const a=localStorage.getItem('st_aid'); if(a) aidData=JSON.parse(a); } catch(e){}
+  try { const d=localStorage.getItem('st_analytics'); if(d) analyticsData=JSON.parse(d); } catch(e){}
+  try { const w=localStorage.getItem('st_weights'); if(w) globalWeights=JSON.parse(w); } catch(e){}
 }
-
 function saveLocalData() {
-    const data = {
-        schools: window.schools,
-        aid_packages: window.aidPkgs,
-        dealbreakers: dealBreakers,
-        journal_entries: journalEntries,
-        aid_deadlines: aidDeadlines
-    };
-    localStorage.setItem('st_schools_v2', JSON.stringify(data));
-    const schData = SCHOLARSHIP_DB.map(s => ({ id: s.id, status: s.status, notes: s.notes || "" }));
-    localStorage.setItem('st_scholarships', JSON.stringify(schData));
+  try { localStorage.setItem('st_aid',JSON.stringify(aidData)); localStorage.setItem('st_analytics',JSON.stringify(analyticsData)); localStorage.setItem('st_weights',JSON.stringify(globalWeights)); } catch(e){}
+}
+function initAidAndAnalytics() {
+  Object.keys(TRACKER_DATA.schools).forEach(key => {
+    if(!aidData[key]) aidData[key]={pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,aid_deadline:null};
+    if(!analyticsData[key]) { analyticsData[key]={ratings:{},pros:[],cons:[],gut_feeling:5,gut_history:[]}; CRITERIA_KEYS.forEach(c=>{analyticsData[key].ratings[c]=5;}); }
+  });
+  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:8,location:6,career_outcomes:8,campus_resources:5,distance_from_home:4};
+  if(!analyticsData._committed) analyticsData._committed={locked:false,school:null};
+  saveLocalData();
 }
 
-function switchMainTab(tab) {
-    currentMainTab = tab;
-    renderFull();
-}
+// ==============================================
+// UTILITIES
+// ==============================================
+function daysUntil(d){if(!d)return null;const t=new Date(d+'T23:59:59');return Math.ceil((t-new Date())/(864e5));}
+function daysClass(d){if(d===null)return'';if(d<0)return'passed';if(d<=7)return'urgent';if(d<=21)return'soon';return'ok';}
+function daysLabel(d){if(d===null)return'TBD';if(d<0)return Math.abs(d)+'d ago';if(d===0)return'TODAY';if(d===1)return'Tomorrow';return d+' days';}
+function countByStatus(s){return Object.values(TRACKER_DATA.schools).filter(x=>x.status===s).length;}
+function fmt$(n){if(n==null)return'--';return'$'+Math.abs(n).toLocaleString('en-US');}
+function getNetCost(k){const b=BASE_COSTS[k]||0;const a=aidData[k]||{};return b-(a.pell_grant||0)-(a.cal_grant||0)-(a.school_grants||0)-(a.work_study||0);}
+function getWeightedScore(k){const r=analyticsData[k]?.ratings||{};let t=0,m=0;CRITERIA_KEYS.forEach(c=>{const w=globalWeights[c]||0;t+=w*(r[c]||0);m+=w*10;});return{score:t,max:m,pct:m>0?Math.round(t/m*100):0};}
+function getAcceptedSchools(){return Object.entries(TRACKER_DATA.schools).filter(([k,s])=>s.status==='accepted'||s.status==='committed');}
+function getSchoolStatus(k){const c=analyticsData._committed;if(c.locked&&c.school===k)return'committed';if(c.locked&&TRACKER_DATA.schools[k]?.status==='accepted')return'declined';return TRACKER_DATA.schools[k]?.status||'pending';}
+function may1Days(){return daysUntil('2026-05-01');}
 
-const TAB_NAMES = { applications:'Applications', financial:'Financial', analytics:'Analytics', scholarships:'Scholarship' };
-
+// ==============================================
+// RENDER FULL APP
+// ==============================================
 function renderFull() {
-    // Update tab button states
-    document.querySelectorAll('.main-tab').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.trim().includes(TAB_NAMES[currentMainTab])) {
-            btn.classList.add('active');
-        }
-    });
-
-    // Render panels
-    document.getElementById('applications-panel').innerHTML = renderApplicationsTab();
-    document.getElementById('financial-panel').innerHTML    = renderFinancialTab();
-    document.getElementById('analytics-panel').innerHTML    = renderAnalyticsTab();
-    document.getElementById('scholarships-panel').innerHTML = renderScholarshipTab();
-
-    // Show active panel
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    const tabMap = { applications:0, financial:1, analytics:2, scholarships:3 };
-    document.querySelectorAll('.tab-panel')[tabMap[currentMainTab]].classList.add('active');
-
-    // Init charts after DOM update
-    if (currentMainTab === 'financial') {
-        setTimeout(() => {
-            initBarChart();
-            initPieChart();
-        }, 50);
-    }
+  const m1=may1Days();const schools=TRACKER_DATA.schools;const committed=analyticsData._committed;
+  let html=`<div class="header"><h1>College Application <span>Tracker</span></h1>
+    <div class="subtitle">Fall 2026 Transfer Applications \u2014 ${Object.keys(schools).length} Schools \u2014 Michael Sarmento</div>
+    <div class="scan-info"><span class="live-dot"></span>
+    Last scan: ${new Date(TRACKER_DATA.metadata.last_scan).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+    \u00b7 Scan #${TRACKER_DATA.metadata.total_scans} \u00b7 ${TRACKER_DATA.metadata.total_emails_processed} emails</div>
+    <div class="data-source">Data: ${dataSource}</div></div>`;
+  if(!committed.locked) html+=`<div class="decision-banner"><div class="banner-left"><div class="banner-icon">\ud83c\udf93</div><div class="banner-text"><strong>Intent to Enroll Deadline</strong>Commit to your school by May 1, 2026</div></div><div class="days-count ${daysClass(m1)}">${m1!==null?m1:'?'}<span>days left</span></div></div>`;
+  html+=`<div class="main-tabs">
+    <button class="main-tab ${currentMainTab==='applications'?'active':''}" onclick="switchMainTab('applications')"><span class="tab-icon">\ud83d\udccb</span> Applications</button>
+    <button class="main-tab ${currentMainTab==='financial'?'active':''}" onclick="switchMainTab('financial')"><span class="tab-icon">\ud83d\udcb0</span> Financial Aid</button>
+    <button class="main-tab ${currentMainTab==='analytics'?'active':''}" onclick="switchMainTab('analytics')"><span class="tab-icon">\ud83d\udcca</span> Decision Analytics</button></div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='applications'?'active':''}">${renderApplicationsTab()}</div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='financial'?'active':''}">${renderFinancialTab()}</div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='analytics'?'active':''}">${renderAnalyticsTab()}</div>`;
+  html+=`<div class="footer">Michael Sarmento \u00b7 Fall 2026 Transfer Applications \u00b7 Auto-updated by <a href="https://script.google.com" target="_blank">Google Apps Script</a> every 12h \u00b7 Hosted on <a href="https://vercel.com" target="_blank">Vercel</a></div>`;
+  document.getElementById('app').innerHTML=html;
 }
+function switchMainTab(t){currentMainTab=t;renderFull();}
 
-// ============================================================
-// HELPERS
-// ============================================================
-function fmt(n) { return '$' + (n || 0).toLocaleString(); }
-
-function calcNetCost(schoolId) {
-    const aid = window.aidPkgs[schoolId] || {};
-    const coa = BASE_COSTS[schoolId] || 40000;
-    const grants = (aid.pell || 0) + (aid.cal_grant || 0) + (aid.school_grants || 0) + (aid.other || 0);
-    return Math.max(0, coa - grants);
-}
-
-function calcOOP(schoolId) {
-    const aid = window.aidPkgs[schoolId] || {};
-    const net = calcNetCost(schoolId);
-    return Math.max(0, net - (aid.work_study || 0) - (aid.loans || 0));
-}
-
-function daysUntil(dateStr) {
-    if (!dateStr) return null;
-    const today = new Date(); today.setHours(0,0,0,0);
-    const d = new Date(dateStr); d.setHours(0,0,0,0);
-    return Math.ceil((d - today) / 86400000);
-}
-
-function todayStr() {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-// ============================================================
-// APPLICATIONS TAB — UNCHANGED LOGIC, ENHANCED DISPLAY
-// ============================================================
+// ==============================================
+// TAB 1: APPLICATIONS
+// ==============================================
 function renderApplicationsTab() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    const pending  = window.schools.filter(s => s.status === 'pending');
-    const rejected = window.schools.filter(s => s.status === 'rejected');
-    const deferred = window.schools.filter(s => s.status === 'deferred');
-
-    let html = `
-    <div class="stats-row">
-        <div class="stat-card"><div class="stat-label">Total Schools</div><div class="stat-value">${window.schools.length}</div></div>
-        <div class="stat-card"><div class="stat-label">Accepted</div><div class="stat-value green">${accepted.length}</div></div>
-        <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value yellow">${pending.length}</div></div>
-        <div class="stat-card"><div class="stat-label">Decisions Left</div><div class="stat-value yellow">${pending.length + deferred.length}</div></div>
-    </div>`;
-
-    html += '<div class="grid">';
-    [...accepted, ...pending, ...rejected, ...deferred].forEach(school => {
-        html += renderCard(school);
-    });
-    html += '</div>';
-    return html;
+  const schools=TRACKER_DATA.schools,keys=Object.keys(schools);
+  const accepted=countByStatus('accepted'),pending=countByStatus('pending'),rejected=countByStatus('rejected'),waitlisted=countByStatus('waitlisted');
+  const allDl=[];
+  keys.forEach(k=>{(schools[k].deadlines||[]).forEach(d=>{if(d.date)allDl.push({school:schools[k].short_name,...d,days:daysUntil(d.date)});});});
+  allDl.sort((a,b)=>{if(a.days===null)return 1;if(b.days===null)return-1;return a.days-b.days;});
+  let html='';
+  const com=analyticsData._committed;
+  if(com.locked&&com.school){const s=schools[com.school];html+=`<div class="committed-banner"><h2>\ud83c\udf89 Committed to ${s?.name||com.school}!</h2><p>You've made your decision. Good luck!</p></div>`;}
+  html+=`<div class="stats-row">
+    <div class="stat-card total"><div class="number">${keys.length}</div><div class="label">Total</div></div>
+    <div class="stat-card accepted"><div class="number">${accepted}</div><div class="label">Accepted</div></div>
+    <div class="stat-card pending"><div class="number">${pending}</div><div class="label">Pending</div></div>
+    <div class="stat-card waitlisted"><div class="number">${waitlisted}</div><div class="label">Waitlisted</div></div>
+    <div class="stat-card rejected"><div class="number">${rejected}</div><div class="label">Rejected</div></div></div>`;
+  const future=allDl.filter(d=>d.days!==null&&d.days>=0);
+  if(future.length>0){html+=`<div class="panel"><h2>\u23f0 Upcoming Deadlines</h2><ul class="deadline-list">`;future.slice(0,8).forEach(d=>{html+=`<li><span class="deadline-school">${d.school}</span><span class="deadline-desc">${d.description}</span><span class="days-until ${daysClass(d.days)}">${daysLabel(d.days)}</span></li>`;});html+=`</ul></div>`;}
+  html+=`<div class="tabs"><div class="tab active" onclick="filterSchools('all',event)">All</div><div class="tab" onclick="filterSchools('accepted',event)">Accepted (${accepted})</div><div class="tab" onclick="filterSchools('pending',event)">Pending (${pending})</div><div class="tab" onclick="filterSchools('uc',event)">UC</div><div class="tab" onclick="filterSchools('csu',event)">CSU</div></div>`;
+  const sorted=[...keys].sort((a,b)=>{const o={committed:0,accepted:0,waitlisted:1,pending:2,rejected:3,declined:4};return(o[getSchoolStatus(a)]||2)-(o[getSchoolStatus(b)]||2);});
+  html+=`<div class="schools-grid" id="schools-grid">`;sorted.forEach(k=>{html+=renderCard(k,schools[k]);});html+=`</div>`;
+  // Email log
+  const emails=[...TRACKER_DATA.email_log].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,15);
+  html+=`<div class="panel"><h2>\ud83d\udceb Recent Emails</h2><div style="overflow-x:auto"><table class="log-table"><thead><tr><th>Date</th><th>School</th><th>Subject</th><th>Category</th><th>Conf</th></tr></thead><tbody>`;
+  emails.forEach(e=>{const sn=schools[e.school]?.short_name||e.school;html+=`<tr><td>${e.date}</td><td>${sn}</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.subject}</td><td><span class="cat-badge ${e.category}">${e.category.replace('_',' ')}</span></td><td>${Math.round((e.confidence||0)*100)}%</td></tr>`;});
+  html+=`</tbody></table></div></div>`;
+  // Scan history
+  if((TRACKER_DATA.scan_history||[]).length>0){html+=`<div class="panel"><h2>\ud83d\udd0d Scan History</h2>`;TRACKER_DATA.scan_history.slice(0,5).forEach(s=>{html+=`<div class="scan-item"><strong>${s.scan_date}</strong> \u2014 ${s.emails_found} email${s.emails_found!==1?'s':''}${s.new_decisions>0?` <strong style="color:var(--green)">\u00b7 ${s.new_decisions} decision(s)!</strong>`:''}<div class="scan-meta">${s.notes||''}</div></div>`;});html+=`</div>`;}
+  // Metrics
+  const pm=TRACKER_DATA.performance_metrics||{};const rev=pm.total_reviewed||0;const acc=rev>0?Math.round((pm.total_correct/rev)*100)+'%':'--';
+  html+=`<div class="panel"><h2>\u2699\ufe0f System Performance</h2><div class="metrics-grid"><div class="metric"><div class="val">${TRACKER_DATA.metadata.total_scans}</div><div class="lbl">Total Scans</div></div><div class="metric"><div class="val">${TRACKER_DATA.metadata.total_emails_processed}</div><div class="lbl">Emails</div></div><div class="metric"><div class="val">${acc}</div><div class="lbl">Accuracy</div></div></div></div>`;
+  return html;
 }
 
-function renderCard(school) {
-    const statusColors = { accepted:'status-accepted', pending:'status-pending', rejected:'status-rejected', deferred:'status-deferred' };
-    const netCost = calcNetCost(school.id);
-    const coa = BASE_COSTS[school.id] || 0;
-    return `
-    <div class="card">
-        <h3>${school.name}</h3>
-        <p style="margin-bottom:12px;">
-            <span class="status-badge ${statusColors[school.status] || ''}">${school.status.charAt(0).toUpperCase()+school.status.slice(1)}</span>
-            ${school.status === 'accepted' ? `<span style="margin-left:8px;color:var(--text-muted);font-size:0.85em;">COA: ${fmt(coa)} · Net: ${fmt(netCost)}</span>` : ''}
-        </p>
-        <div class="form-group">
-            <label>Notes / Feedback</label>
-            <textarea style="min-height:80px;" onchange="storeFeedback('${school.id}', this.value)">${school.feedback || ''}</textarea>
-        </div>
-        <div class="form-group">
-            <label>Update Status</label>
-            <select onchange="overrideStatus('${school.id}', this.value)">
-                <option value="pending"  ${school.status==='pending'  ? 'selected':''}>Pending</option>
-                <option value="accepted" ${school.status==='accepted' ? 'selected':''}>Accepted</option>
-                <option value="rejected" ${school.status==='rejected' ? 'selected':''}>Rejected</option>
-                <option value="deferred" ${school.status==='deferred' ? 'selected':''}>Deferred/Waitlisted</option>
-            </select>
-        </div>
-    </div>`;
+function renderCard(key,s) {
+  const status=getSchoolStatus(key);
+  let dHtml='';
+  if(s.deadlines&&s.deadlines.length>0){dHtml='<div class="deadlines">';s.deadlines.forEach(d=>{const days=daysUntil(d.date);dHtml+=`<div class="deadline-item ${daysClass(days)}"><span>${d.description}</span><span class="deadline-date">${d.date||'TBD'} ${days!==null?'('+daysLabel(days)+')':''}</span></div>`;});dHtml+='</div>';}
+  let aHtml='';
+  if(s.action_items&&s.action_items.length>0){aHtml='<div class="action-items">';s.action_items.forEach(a=>{aHtml+=`<div class="action-item">${a}</div>`;});aHtml+='</div>';}
+  return `<div class="school-card status-${status}" data-status="${s.status}" data-type="${s.type.toLowerCase()}">
+    <div class="school-header"><div><div class="school-name">${s.name}</div><span class="school-type">${s.type}</span></div>
+    <span class="status-badge ${status}">${status}${s.decision_date?' \u00b7 '+s.decision_date:''}</span></div>
+    ${s.notes?`<div class="detail-row"><span class="detail-icon">\ud83d\udccb</span><span class="detail-text">${s.notes}</span></div>`:''}
+    ${s.portal_url?`<div class="detail-row"><span class="detail-icon">\ud83d\udd17</span><span class="detail-text"><a href="${s.portal_url}" target="_blank">Open Portal</a></span></div>`:''}
+    ${dHtml}${aHtml}
+    <div class="confidence-bar"><span>Confidence: ${Math.round(s.confidence*100)}%</span><div class="conf-track"><div class="conf-fill" style="width:${s.confidence*100}%"></div></div></div>
+    <div class="feedback-section"><span style="font-size:11px;color:var(--text-dim);margin-right:8px">Is this correct?</span>
+    <button class="feedback-btn" onclick="giveFeedback('${key}','correct',this)">\u2713 Correct</button>
+    <button class="feedback-btn" onclick="giveFeedback('${key}','wrong',this)">\u2717 Wrong</button>
+    <div class="status-override" id="override-${key}">
+    <button class="override-btn" onclick="overrideStatus('${key}','accepted')">Accepted</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','pending')">Pending</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','waitlisted')">Waitlisted</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','rejected')">Rejected</button></div></div></div>`;
 }
 
-function storeFeedback(id, fb) {
-    const s = window.schools.find(x => x.id === id);
-    if (s) { s.feedback = fb; saveLocalData(); }
-}
-
-function overrideStatus(id, status) {
-    const s = window.schools.find(x => x.id === id);
-    if (s) { s.status = status; saveLocalData(); renderFull(); }
-}
-
-// ============================================================
-// FINANCIAL AID TAB — FULLY FEATURED
-// ============================================================
+// ==============================================
+// TAB 2: FINANCIAL AID
+// ==============================================
 function renderFinancialTab() {
-    return `
-        ${renderFinancialInsights()}
-        ${renderFinancialStats()}
-        ${renderCostTable()}
-        ${renderAidEntryForm()}
-        <div class="two-col">
-            <div class="chart-container">
-                <h3>📊 Net Cost Comparison</h3>
-                <div style="margin-bottom:12px;">
-                    <button class="filter-pill ${!aidShowAll?'active':''}" onclick="aidShowAll=false;renderFull();">Accepted Only</button>
-                    <button class="filter-pill ${aidShowAll?'active':''}" style="margin-left:8px;" onclick="aidShowAll=true;renderFull();">All Schools</button>
-                </div>
-                <div class="chart-wrap"><canvas id="barChart"></canvas></div>
-                <div style="margin-top:12px;font-size:0.8em;color:var(--text-muted);display:flex;gap:16px;flex-wrap:wrap;">
-                    <span><span style="display:inline-block;width:12px;height:12px;background:var(--success);border-radius:2px;margin-right:4px;"></span>Grants</span>
-                    <span><span style="display:inline-block;width:12px;height:12px;background:var(--warning);border-radius:2px;margin-right:4px;"></span>Work-Study</span>
-                    <span><span style="display:inline-block;width:12px;height:12px;background:#ff8800;border-radius:2px;margin-right:4px;"></span>Loans</span>
-                    <span><span style="display:inline-block;width:12px;height:12px;background:var(--danger);border-radius:2px;margin-right:4px;"></span>Out-of-Pocket</span>
-                </div>
-            </div>
-            <div class="chart-container">
-                <h3>🥧 Aid Breakdown</h3>
-                <div class="form-group">
-                    <label>Select School</label>
-                    <select id="pieSchoolSel" onchange="updatePieChart()">
-                        ${window.schools.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
-            </div>
-        </div>
-        ${renderAidDeadlineTracker()}
-        ${renderFederalAidProfile()}
-    `;
-}
+  const schools=TRACKER_DATA.schools,keys=Object.keys(schools);
+  let html=`<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+    <label style="font-size:12px;color:var(--text-dim);display:flex;align-items:center;gap:6px;cursor:pointer;">
+    <input type="checkbox" id="aid-accepted-only" onchange="renderFull()"> Show accepted only</label>
+    <div style="flex:1"></div><span style="font-size:12px;color:var(--text-dim)">Sort:</span>
+    <button class="btn btn-sm btn-secondary" onclick="aidSort='net';renderFull()">Lowest Cost</button>
+    <button class="btn btn-sm btn-secondary" onclick="aidSort='aid';renderFull()">Highest Aid</button>
+    <button class="btn btn-sm btn-secondary" onclick="aidSort='base';renderFull()">Base Cost</button></div>`;
 
-function renderFinancialInsights() {
-    const allSchools = window.schools;
-    const accepted = window.schools.filter(s => s.status === 'accepted');
+  let sortedKeys=[...keys];
+  const accOnly=document.getElementById('aid-accepted-only')?.checked||false;
+  if(accOnly) sortedKeys=sortedKeys.filter(k=>schools[k].status==='accepted');
+  sortedKeys.sort((a,b)=>{
+    if(aidSort==='net')return getNetCost(a)-getNetCost(b);
+    if(aidSort==='aid'){const aa=(aidData[a]?.pell_grant||0)+(aidData[a]?.cal_grant||0)+(aidData[a]?.school_grants||0)+(aidData[a]?.work_study||0);const bb=(aidData[b]?.pell_grant||0)+(aidData[b]?.cal_grant||0)+(aidData[b]?.school_grants||0)+(aidData[b]?.work_study||0);return bb-aa;}
+    return(BASE_COSTS[a]||0)-(BASE_COSTS[b]||0);
+  });
+  const cheapest=sortedKeys.length>0?sortedKeys.reduce((m,k)=>getNetCost(k)<getNetCost(m)?k:m,sortedKeys[0]):null;
 
-    const withCOA = allSchools.map(s => ({ id: s.id, name: s.name, coa: BASE_COSTS[s.id] || 0, net: calcNetCost(s.id), oop: calcOOP(s.id), status: s.status }));
-    const cheapestCOA = [...withCOA].sort((a,b) => a.coa - b.coa)[0];
-    const cheapestNet = [...withCOA].sort((a,b) => a.net - b.net)[0];
-    const priciest    = [...withCOA].sort((a,b) => b.coa - a.coa)[0];
+  // Comparison Table
+  html+=`<div class="panel"><h2>\ud83d\udcb5 Cost Comparison Table</h2><div class="aid-table-wrap"><table class="aid-table">
+    <thead><tr><th>School</th><th>Status</th><th>Base Cost</th><th>Pell Grant</th><th>Cal Grant</th><th>School Grants</th><th>Work-Study</th><th>Fed. Loans</th><th>True Net Cost</th></tr></thead><tbody>`;
+  sortedKeys.forEach(key=>{
+    const s=schools[key],a=aidData[key]||{},base=BASE_COSTS[key]||0,net=getNetCost(key);
+    const isCheap=key===cheapest;const nc=net<=0?'net-positive':net>5000?'net-negative':'net-zero';
+    html+=`<tr class="${isCheap?'cheapest':''}">
+      <td class="school-col">${isCheap?'\ud83c\udfc6 ':''}${s.short_name}</td>
+      <td><span class="status-badge ${s.status}" style="font-size:10px;padding:2px 8px">${s.status}</span></td>
+      <td class="cost-col">${fmt$(base)}</td>
+      <td><input class="aid-input" type="number" value="${a.pell_grant||0}" onchange="updateAid('${key}','pell_grant',this.value)"></td>
+      <td><input class="aid-input" type="number" value="${a.cal_grant||0}" onchange="updateAid('${key}','cal_grant',this.value)"></td>
+      <td><input class="aid-input" type="number" value="${a.school_grants||0}" onchange="updateAid('${key}','school_grants',this.value)"></td>
+      <td><input class="aid-input" type="number" value="${a.work_study||0}" onchange="updateAid('${key}','work_study',this.value)"></td>
+      <td><input class="aid-input" type="number" value="${a.federal_loans||0}" onchange="updateAid('${key}','federal_loans',this.value)" style="color:var(--orange)"></td>
+      <td class="cost-col ${nc}">${net<=0?'-':''}${fmt$(net)}</td></tr>`;
+  });
+  html+=`</tbody></table></div></div>`;
 
-    const accData = accepted.map(s => ({ name: s.name, net: calcNetCost(s.id) }));
-    const avgNet = accData.length ? Math.round(accData.reduce((s,x)=>s+x.net,0) / accData.length) : null;
+  // Aid Deadlines
+  html+=`<div class="panel"><h2>\ud83d\udcc5 Aid Offer Deadlines</h2>`;
+  const accKeys=Object.entries(schools).filter(([k,s])=>s.status==='accepted').map(([k])=>k);
+  if(accKeys.length===0) html+=`<p style="color:var(--text-dim);font-size:13px">No accepted schools yet.</p>`;
+  else accKeys.forEach(key=>{const a=aidData[key]||{},dl=a.aid_deadline,days=dl?daysUntil(dl):null;
+    html+=`<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+    <span style="font-weight:600;min-width:120px">${schools[key].short_name}</span>
+    <input class="aid-input" type="date" value="${dl||''}" style="width:150px;text-align:left" onchange="updateAid('${key}','aid_deadline',this.value)">
+    ${days!==null?`<span class="days-until ${daysClass(days)}">${daysLabel(days)}</span>`:'<span style="color:var(--text-muted);font-size:12px">Set deadline \u2192</span>'}</div>`;
+  });
+  html+=`</div>`;
 
-    return `
-    <div class="insight-card">
-        <h3>💡 Smart Financial Insights</h3>
-        <p>Cheapest total COA: <span class="insight-highlight">${cheapestCOA.name} (${fmt(cheapestCOA.coa)})</span></p>
-        <p>Cheapest net cost (after grants): <span class="insight-highlight">${cheapestNet.name} (${fmt(cheapestNet.net)})</span></p>
-        <p>Most expensive: <span class="insight-warning">${priciest.name} (${fmt(priciest.coa)}) — ${fmt(priciest.coa - cheapestCOA.coa)} more than cheapest</span></p>
-        ${avgNet !== null ? `<p>Average net cost across accepted schools: <span class="insight-warning">${fmt(avgNet)}</span></p>` : ''}
-        <p><span class="insight-info">💡 Cal Grant A (~$9,084) applies to UC & CSU schools — verify with each school's aid office</span></p>
-        <p><span class="insight-info">📋 Your Pell Grant ($7,395) follows you to any school. Enter aid packages below to see real net costs.</span></p>
-    </div>`;
-}
-
-function renderFinancialStats() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    const totalAid = accepted.reduce((sum, s) => {
-        const aid = window.aidPkgs[s.id] || {};
-        return sum + (aid.pell||0) + (aid.cal_grant||0) + (aid.school_grants||0) + (aid.other||0);
-    }, 0);
-    const avgOOP = accepted.length
-        ? Math.round(accepted.reduce((sum,s) => sum + calcOOP(s.id), 0) / accepted.length)
-        : 0;
-    const cheapestOOP = accepted.length
-        ? Math.min(...accepted.map(s => calcOOP(s.id)))
-        : 0;
-
-    return `
-    <div class="stats-row">
-        <div class="stat-card"><div class="stat-label">Accepted Schools</div><div class="stat-value green">${accepted.length}</div></div>
-        <div class="stat-card"><div class="stat-label">Total Grants Entered</div><div class="stat-value green">${fmt(totalAid)}</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Out-of-Pocket (Accepted)</div><div class="stat-value yellow">${fmt(avgOOP)}</div></div>
-        <div class="stat-card"><div class="stat-label">Lowest OOP (Accepted)</div><div class="stat-value green">${fmt(cheapestOOP)}</div></div>
-    </div>`;
-}
-
-function renderCostTable() {
-    let schools = aidShowAll ? [...window.schools] : window.schools.filter(s => s.status === 'accepted');
-
-    const withData = schools.map(s => ({
-        school: s,
-        coa: BASE_COSTS[s.id] || 0,
-        net: calcNetCost(s.id),
-        oop: calcOOP(s.id),
-        aid: window.aidPkgs[s.id] || {}
-    }));
-
-    if (aidSortField === 'net_cost')  withData.sort((a,b) => a.net - b.net);
-    if (aidSortField === 'total_coa') withData.sort((a,b) => a.coa - b.coa);
-    if (aidSortField === 'alpha')     withData.sort((a,b) => a.school.name.localeCompare(b.school.name));
-
-    const costs = withData.map(x => x.coa);
-    const minC = Math.min(...costs), maxC = Math.max(...costs);
-    const range = (maxC - minC) / 3 || 1;
-
-    function rowColor(coa) {
-        const d = coa - minC;
-        if (d <= range) return 'cost-row-cheap';
-        if (d <= range*2) return 'cost-row-mid';
-        return 'cost-row-expensive';
-    }
-
-    let rows = '';
-    withData.forEach((d, i) => {
-        const costs2 = DETAILED_COSTS[d.school.id] || {};
-        const aid = d.aid;
-        const pell = aid.pell || 0, cal = aid.cal_grant || 0, sg = aid.school_grants || 0;
-        const ws = aid.work_study || 0, loans = aid.loans || 0, other = aid.other || 0;
-        const totalGrants = pell + cal + sg + other;
-        const totalAid = totalGrants + ws + loans;
-
-        rows += `
-        <tr class="${rowColor(d.coa)} expandable" onclick="toggleRow('detail_${i}', 'icon_${i}')">
-            <td>
-                <span class="expand-icon" id="icon_${i}">▶</span>
-                <strong style="margin-left:6px;">${d.school.name}</strong>
-            </td>
-            <td><span class="status-badge status-${d.school.status}">${d.school.status}</span></td>
-            <td>${fmt(d.coa)}</td>
-            <td>${fmt(totalGrants) || '—'}</td>
-            <td><strong>${fmt(d.net)}</strong></td>
-            <td style="color:${d.oop < 15000 ? 'var(--success)' : d.oop < 30000 ? 'var(--warning)' : 'var(--danger)'};font-weight:700;">${fmt(d.oop)}</td>
-            <td><button class="secondary" style="font-size:0.8em;padding:5px 10px;" onclick="event.stopPropagation();jumpToAidForm('${d.school.id}')">Edit Aid</button></td>
-        </tr>
-        <tr class="details-row" id="detail_${i}">
-            <td colspan="7">
-                <div class="details-content">
-                    <div class="detail-item"><label>📚 Tuition & Fees</label><div class="value">${fmt(costs2.tuition)}</div></div>
-                    <div class="detail-item"><label>🏠 Housing & Food</label><div class="value">${fmt(costs2.housing)}</div></div>
-                    <div class="detail-item"><label>📖 Books & Supplies</label><div class="value">${fmt(costs2.books)}</div></div>
-                    <div class="detail-item"><label>🚗 Transportation</label><div class="value">${fmt(costs2.transport)}</div></div>
-                    <div class="detail-item"><label>💳 Personal</label><div class="value">${fmt(costs2.personal)}</div></div>
-                    <div class="detail-item green-border"><label>🎓 Pell Grant</label><div class="value">${fmt(pell)}</div></div>
-                    <div class="detail-item green-border"><label>🏫 Cal Grant</label><div class="value">${fmt(cal)}</div></div>
-                    <div class="detail-item green-border"><label>🏛️ School Grants</label><div class="value">${fmt(sg)}</div></div>
-                    <div class="detail-item orange-border"><label>💼 Work-Study</label><div class="value">${fmt(ws)}</div></div>
-                    <div class="detail-item orange-border"><label>🏦 Fed Loans</label><div class="value">${fmt(loans)}</div></div>
-                    <div class="detail-item green-border"><label>✨ Other Aid</label><div class="value">${fmt(other)}</div></div>
-                    <div class="detail-item"><label>📊 Total Aid</label><div class="value">${fmt(totalAid)}</div></div>
-                    <div class="detail-item red-border"><label>💸 Out-of-Pocket</label><div class="value">${fmt(d.oop)}</div></div>
-                </div>
-            </td>
-        </tr>`;
+  // Bar Chart
+  const chartKeys=accKeys.length>0?accKeys:sortedKeys.filter(k=>schools[k].status==='accepted');
+  if(chartKeys.length>0){
+    const costs=chartKeys.map(k=>({key:k,name:schools[k].short_name,net:getNetCost(k)}));
+    const maxC=Math.max(...costs.map(c=>Math.abs(c.net)),1);
+    html+=`<div class="panel"><h2>\ud83d\udcca Net Cost Comparison</h2><div class="bar-chart">`;
+    costs.forEach(c=>{const h=Math.max(Math.abs(c.net)/maxC*180,8);const col=c.net<=0?'var(--green)':c.net>5000?'var(--red)':'var(--yellow)';
+      html+=`<div class="bar-col"><div class="bar-value">${c.net<=0?'-':''}${fmt$(c.net)}</div><div class="bar" style="height:${h}px;background:${col}"></div><div class="bar-label">${c.name}</div></div>`;
     });
+    html+=`</div></div>`;
 
-    return `
-    <div class="card" style="margin-bottom:20px;overflow:auto;">
-        <h3>📋 Full Cost Comparison</h3>
-        <div class="filter-bar">
-            <label>Sort:</label>
-            <select onchange="aidSortField=this.value;renderFull()" style="width:auto;">
-                <option value="net_cost"  ${aidSortField==='net_cost' ?'selected':''}>Lowest Net Cost</option>
-                <option value="total_coa" ${aidSortField==='total_coa'?'selected':''}>Lowest Total COA</option>
-                <option value="alpha"     ${aidSortField==='alpha'    ?'selected':''}>Alphabetical</option>
-            </select>
-            <label style="margin-left:12px;">Filter:</label>
-            <button class="filter-pill ${!aidShowAll?'active':''}" onclick="aidShowAll=false;renderFull();">Accepted Only</button>
-            <button class="filter-pill ${aidShowAll?'active':''}" onclick="aidShowAll=true;renderFull();">All Schools</button>
-            <span style="margin-left:auto;font-size:0.8em;color:var(--text-muted);">Click any row to expand cost breakdown</span>
-        </div>
-        <div style="overflow-x:auto;">
-            <table>
-                <thead><tr>
-                    <th onclick="aidSortField='alpha';renderFull()">School</th>
-                    <th>Status</th>
-                    <th onclick="aidSortField='total_coa';renderFull()">Total COA ↕</th>
-                    <th>Total Grants</th>
-                    <th onclick="aidSortField='net_cost';renderFull()">Net Cost ↕</th>
-                    <th>Out-of-Pocket</th>
-                    <th>Actions</th>
-                </tr></thead>
-                <tbody>${rows}</tbody>
-            </table>
-        </div>
-        <div style="font-size:0.8em;color:var(--text-muted);margin-top:8px;">
-            <span style="color:var(--success);">■</span> Cheapest third &nbsp;
-            <span style="color:var(--warning);">■</span> Middle third &nbsp;
-            <span style="color:var(--danger);">■</span> Most expensive third
-        </div>
-    </div>`;
-}
-
-function toggleRow(id, iconId) {
-    const row = document.getElementById(id);
-    const icon = document.getElementById(iconId);
-    if (row) {
-        row.classList.toggle('expanded');
-        if (icon) icon.classList.toggle('open');
-    }
-}
-
-function jumpToAidForm(schoolId) {
-    // Select the school in the aid form and scroll to it
-    const sel = document.getElementById('aidSchoolSel');
-    if (sel) {
-        sel.value = schoolId;
-        updateAidForm();
-        document.getElementById('aid-entry-section').scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-function renderAidEntryForm() {
-    const acceptedSchools = window.schools;
-    const firstId = acceptedSchools.find(s => s.status === 'accepted')?.id || acceptedSchools[0]?.id || 'sjsu';
-    const aid = window.aidPkgs[firstId] || {};
-    const coa = BASE_COSTS[firstId] || 0;
-    const net = calcNetCost(firstId);
-    const oop = calcOOP(firstId);
-    const totalAid = (aid.pell||0)+(aid.cal_grant||0)+(aid.school_grants||0)+(aid.work_study||0)+(aid.loans||0)+(aid.other||0);
-
-    return `
-    <div class="aid-form-card" id="aid-entry-section">
-        <h3>✏️ Aid Package Entry</h3>
-        <div class="form-group">
-            <label>Select School</label>
-            <select id="aidSchoolSel" onchange="updateAidForm()">
-                ${window.schools.map(s => `<option value="${s.id}" ${s.id===firstId?'selected':''}>${s.name} — ${fmt(BASE_COSTS[s.id]||0)} COA</option>`).join('')}
-            </select>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>🎓 Federal Pell Grant</label>
-                <input type="number" id="aid_pell" value="${aid.pell !== undefined ? aid.pell : 7395}" onchange="liveCalcAid()" placeholder="7395">
-            </div>
-            <div class="form-group">
-                <label>🏫 Cal Grant A</label>
-                <input type="number" id="aid_cal_grant" value="${aid.cal_grant || 0}" onchange="liveCalcAid()" placeholder="0 or 9084">
-            </div>
-            <div class="form-group">
-                <label>🏛️ School Grants / Scholarships</label>
-                <input type="number" id="aid_school_grants" value="${aid.school_grants || 0}" onchange="liveCalcAid()" placeholder="0">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>💼 Federal Work-Study</label>
-                <input type="number" id="aid_work_study" value="${aid.work_study || 0}" onchange="liveCalcAid()" placeholder="0">
-            </div>
-            <div class="form-group">
-                <label>🏦 Federal Direct Loans</label>
-                <input type="number" id="aid_loans" value="${aid.loans || 0}" onchange="liveCalcAid()" placeholder="max 12500">
-            </div>
-            <div class="form-group">
-                <label>✨ Other Aid (Private Scholarships)</label>
-                <input type="number" id="aid_other" value="${aid.other || 0}" onchange="liveCalcAid()" placeholder="0">
-            </div>
-        </div>
-        <div style="margin:15px 0;">
-            <div class="calc-row">
-                <label>Total COA</label>
-                <span class="calc-val" id="calc_coa">${fmt(coa)}</span>
-            </div>
-            <div class="calc-row total-row">
-                <label>Total Aid Package</label>
-                <span class="calc-val" id="calc_total_aid">${fmt(totalAid)}</span>
-            </div>
-            <div class="calc-row">
-                <label>Net Cost (COA − Grants/Scholarships)</label>
-                <span class="calc-val" id="calc_net">${fmt(net)}</span>
-            </div>
-            <div class="calc-row oop-row">
-                <label>Out-of-Pocket (Net − Work-Study − Loans)</label>
-                <span class="calc-val" id="calc_oop">${fmt(oop)}</span>
-            </div>
-        </div>
-        <div style="display:flex;gap:12px;">
-            <button onclick="saveAidPkg()">💾 Save Aid Package</button>
-            <button class="secondary" onclick="clearAidForm()">🗑️ Clear</button>
-        </div>
-    </div>`;
-}
-
-function updateAidForm() {
-    const id = document.getElementById('aidSchoolSel')?.value;
-    if (!id) return;
-    const aid = window.aidPkgs[id] || {};
-    document.getElementById('aid_pell').value         = aid.pell         !== undefined ? aid.pell : 7395;
-    document.getElementById('aid_cal_grant').value    = aid.cal_grant    || 0;
-    document.getElementById('aid_school_grants').value= aid.school_grants|| 0;
-    document.getElementById('aid_work_study').value   = aid.work_study   || 0;
-    document.getElementById('aid_loans').value        = aid.loans        || 0;
-    document.getElementById('aid_other').value        = aid.other        || 0;
-    liveCalcAid();
-}
-
-function liveCalcAid() {
-    const id = document.getElementById('aidSchoolSel')?.value;
-    if (!id) return;
-    const coa   = BASE_COSTS[id] || 0;
-    const pell  = parseFloat(document.getElementById('aid_pell').value)          || 0;
-    const cal   = parseFloat(document.getElementById('aid_cal_grant').value)     || 0;
-    const sg    = parseFloat(document.getElementById('aid_school_grants').value) || 0;
-    const ws    = parseFloat(document.getElementById('aid_work_study').value)    || 0;
-    const loans = parseFloat(document.getElementById('aid_loans').value)         || 0;
-    const other = parseFloat(document.getElementById('aid_other').value)         || 0;
-    const grants = pell + cal + sg + other;
-    const totalAid = grants + ws + loans;
-    const net = Math.max(0, coa - grants);
-    const oop = Math.max(0, net - ws - loans);
-    document.getElementById('calc_coa').textContent       = fmt(coa);
-    document.getElementById('calc_total_aid').textContent = fmt(totalAid);
-    document.getElementById('calc_net').textContent       = fmt(net);
-    document.getElementById('calc_oop').textContent       = fmt(oop);
-}
-
-function saveAidPkg() {
-    const id = document.getElementById('aidSchoolSel')?.value;
-    if (!id) return;
-    window.aidPkgs[id] = {
-        pell:         parseFloat(document.getElementById('aid_pell').value)          || 0,
-        cal_grant:    parseFloat(document.getElementById('aid_cal_grant').value)     || 0,
-        school_grants:parseFloat(document.getElementById('aid_school_grants').value) || 0,
-        work_study:   parseFloat(document.getElementById('aid_work_study').value)    || 0,
-        loans:        parseFloat(document.getElementById('aid_loans').value)         || 0,
-        other:        parseFloat(document.getElementById('aid_other').value)         || 0
-    };
-    saveLocalData();
-    // Flash saved indicator
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '✅ Saved!';
-    setTimeout(() => { btn.textContent = orig; renderFull(); }, 800);
-}
-
-function clearAidForm() {
-    ['aid_pell','aid_cal_grant','aid_school_grants','aid_work_study','aid_loans','aid_other']
-        .forEach(id => { const el = document.getElementById(id); if(el) el.value = 0; });
-    document.getElementById('aid_pell').value = 7395;
-    liveCalcAid();
-}
-
-// ===== BAR CHART =====
-function initBarChart() {
-    const ctx = document.getElementById('barChart');
-    if (!ctx) return;
-    if (barChartInstance) { barChartInstance.destroy(); barChartInstance = null; }
-
-    const schools = aidShowAll
-        ? window.schools
-        : window.schools.filter(s => s.status === 'accepted');
-
-    const sorted = [...schools].sort((a,b) => calcNetCost(a.id) - calcNetCost(b.id));
-
-    const labels = sorted.map(s => s.name.replace('San Jose State','SJSU').replace('Sacramento State','Sac State').replace('Cal State Fullerton','CSUF').replace('UC Santa Barbara','UCSB').replace('UC Santa Cruz','UCSC').replace('UC Riverside','UCR').replace('UC Irvine','UCI').replace('Cal Poly SLO','Cal Poly'));
-
-    const grantsData   = sorted.map(s => { const a=window.aidPkgs[s.id]||{}; return (a.pell||0)+(a.cal_grant||0)+(a.school_grants||0)+(a.other||0); });
-    const workData     = sorted.map(s => (window.aidPkgs[s.id]||{}).work_study||0);
-    const loansData    = sorted.map(s => (window.aidPkgs[s.id]||{}).loans||0);
-    const oopData      = sorted.map(s => calcOOP(s.id));
-
-    barChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels,
-            datasets: [
-                { label: 'Grants', data: grantsData,  backgroundColor: 'rgba(0,255,136,0.7)' },
-                { label: 'Work-Study', data: workData, backgroundColor: 'rgba(255,170,0,0.7)' },
-                { label: 'Loans', data: loansData,    backgroundColor: 'rgba(255,136,0,0.7)' },
-                { label: 'Out-of-Pocket', data: oopData, backgroundColor: 'rgba(255,51,51,0.7)' }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { labels: { color: '#e0e6ed', font: { family: 'Poppins' } } },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => ` ${ctx.dataset.label}: $${ctx.raw.toLocaleString()}`
-                    }
-                }
-            },
-            scales: {
-                x: { stacked: true, ticks: { color: '#8892a8', font: { family: 'Poppins', size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                y: { stacked: true, ticks: { color: '#8892a8', callback: v => '$'+v.toLocaleString(), font: { family: 'Poppins' } }, grid: { color: 'rgba(255,255,255,0.05)' } }
-            }
-        }
+    // Pie chart for first accepted
+    const fk=chartKeys[0],fa=aidData[fk]||{},fb=BASE_COSTS[fk]||0,fn=getNetCost(fk);
+    const slices=[{label:'Pell Grant',value:fa.pell_grant||0,color:'var(--green)'},{label:'Cal Grant',value:fa.cal_grant||0,color:'var(--blue)'},{label:'School Grants',value:fa.school_grants||0,color:'var(--purple)'},{label:'Work-Study',value:fa.work_study||0,color:'var(--cyan)'},{label:'Fed. Loans',value:fa.federal_loans||0,color:'var(--orange)'},{label:'Out of Pocket',value:Math.max(fn,0),color:'var(--red)'}].filter(s=>s.value>0);
+    const tot=slices.reduce((s,v)=>s+v.value,0)||1;
+    html+=`<div class="panel"><h2>\ud83c\udf69 Aid Breakdown \u2014 ${schools[fk].short_name}</h2><div class="pie-chart-wrap"><svg class="pie-svg" viewBox="-1 -1 2 2" style="transform:rotate(-90deg)">`;
+    let cum=0;
+    slices.forEach(s=>{const pct=s.value/tot;const x1=Math.cos(2*Math.PI*cum),y1=Math.sin(2*Math.PI*cum);cum+=pct;const x2=Math.cos(2*Math.PI*cum),y2=Math.sin(2*Math.PI*cum);const lg=pct>0.5?1:0;
+      html+=`<path d="M ${x1} ${y1} A 1 1 0 ${lg} 1 ${x2} ${y2} L 0 0" fill="${s.color}" stroke="var(--bg)" stroke-width="0.02"/>`;
     });
+    html+=`</svg><div class="pie-legend">`;
+    slices.forEach(s=>{html+=`<div class="pie-legend-item"><div class="pie-legend-dot" style="background:${s.color}"></div>${s.label}: ${fmt$(s.value)} (${Math.round(s.value/tot*100)}%)</div>`;});
+    html+=`</div></div></div>`;
+  }
+
+  html+=`<div class="panel" style="border-left:3px solid var(--accent)"><h3>\u2139\ufe0f Your Federal Aid Profile</h3><p style="font-size:13px;color:var(--text-dim)"><strong style="color:var(--text)">Pell Grant:</strong> Up to $7,395 (confirmed) \u00b7 <strong style="color:var(--text)">SAI:</strong> -1,500 (maximum aid eligible)</p></div>`;
+  return html;
 }
 
-function updatePieChart() {
-    const sel = document.getElementById('pieSchoolSel');
-    if (!sel) return;
-    initPieChart(sel.value);
-}
+function updateAid(key,field,value){if(!aidData[key])aidData[key]={};aidData[key][field]=field==='aid_deadline'?value:parseFloat(value)||0;saveLocalData();renderFull();}
 
-// ===== PIE CHART =====
-function initPieChart(schoolId) {
-    const ctx = document.getElementById('pieChart');
-    if (!ctx) return;
-    if (pieChartInstance) { pieChartInstance.destroy(); pieChartInstance = null; }
-
-    const id = schoolId || document.getElementById('pieSchoolSel')?.value || window.schools[0]?.id;
-    if (!id) return;
-
-    const aid = window.aidPkgs[id] || {};
-    const coa = BASE_COSTS[id] || 0;
-    const pell   = aid.pell || 0;
-    const cal    = aid.cal_grant || 0;
-    const sg     = aid.school_grants || 0;
-    const ws     = aid.work_study || 0;
-    const loans  = aid.loans || 0;
-    const other  = aid.other || 0;
-    const oop    = calcOOP(id);
-
-    pieChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Pell Grant', 'Cal Grant', 'School Grants', 'Work-Study', 'Loans', 'Other Aid', 'Out-of-Pocket'],
-            datasets: [{
-                data: [pell, cal, sg, ws, loans, other, oop],
-                backgroundColor: [
-                    'rgba(0,255,136,0.8)', 'rgba(0,212,255,0.8)',
-                    'rgba(130,80,255,0.8)', 'rgba(255,170,0,0.8)',
-                    'rgba(255,136,0,0.8)', 'rgba(100,200,100,0.8)',
-                    'rgba(255,51,51,0.8)'
-                ],
-                borderColor: '#1a1f2e',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { position: 'bottom', labels: { color: '#e0e6ed', font: { family: 'Poppins', size: 11 }, padding: 10 } },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => ` ${ctx.label}: $${ctx.raw.toLocaleString()} (${coa > 0 ? ((ctx.raw/coa)*100).toFixed(0) : 0}% of COA)`
-                    }
-                }
-            },
-            cutout: '55%'
-        }
-    });
-}
-
-// ===== AID DEADLINE TRACKER =====
-function renderAidDeadlineTracker() {
-    const schools = window.schools;
-
-    let rows = '';
-    schools.forEach(s => {
-        const dl = aidDeadlines[s.id] || {};
-        const received = dl.received || false;
-        const deadline = dl.deadline || '';
-        const days = daysUntil(deadline);
-
-        let daysLabel = '<span class="deadline-urgency-gray">No deadline set</span>';
-        if (days !== null) {
-            if (days < 0)  daysLabel = `<span class="deadline-urgency-red">PAST DUE (${Math.abs(days)}d ago)</span>`;
-            else if (days < 7)  daysLabel = `<span class="deadline-urgency-red">⚠️ ${days} days!</span>`;
-            else if (days < 21) daysLabel = `<span class="deadline-urgency-yellow">${days} days</span>`;
-            else                daysLabel = `<span class="deadline-urgency-green">${days} days</span>`;
-        }
-
-        rows += `
-        <tr>
-            <td><strong>${s.name}</strong></td>
-            <td><span class="status-badge status-${s.status}">${s.status}</span></td>
-            <td style="text-align:center;">
-                <input type="checkbox" class="received-check" ${received?'checked':''} onchange="updateAidDeadline('${s.id}','received',this.checked)">
-            </td>
-            <td>
-                <input type="date" value="${deadline}" style="width:150px;padding:5px 8px;font-size:0.85em;"
-                    onchange="updateAidDeadline('${s.id}','deadline',this.value)">
-            </td>
-            <td>${daysLabel}</td>
-        </tr>`;
-    });
-
-    return `
-    <div class="card" style="margin-bottom:20px;">
-        <h3>📅 Aid Deadline Tracker</h3>
-        <p style="color:var(--text-muted);font-size:0.85em;margin-bottom:15px;">Check "Received?" when your aid offer arrives. Set a deadline to track urgency.</p>
-        <div style="overflow-x:auto;">
-            <table>
-                <thead><tr>
-                    <th>School</th>
-                    <th>Status</th>
-                    <th style="text-align:center;">Aid Received?</th>
-                    <th>Deadline to Accept/Decline</th>
-                    <th>Days Until</th>
-                </tr></thead>
-                <tbody>${rows}</tbody>
-            </table>
-        </div>
-    </div>`;
-}
-
-function updateAidDeadline(id, field, value) {
-    if (!aidDeadlines[id]) aidDeadlines[id] = {};
-    aidDeadlines[id][field] = value;
-    saveLocalData();
-    // Re-render just deadline section to avoid chart reset
-    const panel = document.getElementById('financial-panel');
-    if (panel) renderFull();
-}
-
-// ===== FEDERAL AID PROFILE =====
-function renderFederalAidProfile() {
-    return `
-    <div class="card">
-        <h3>🏛️ Your Federal Aid Profile</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;">
-            <div class="detail-item green-border">
-                <label>Student Aid Index (SAI)</label>
-                <div class="value">-$1,500</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">Maximum aid eligible</div>
-            </div>
-            <div class="detail-item green-border">
-                <label>Federal Pell Grant</label>
-                <div class="value">$7,395 / year</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">Confirmed — follows you to any school</div>
-            </div>
-            <div class="detail-item green-border">
-                <label>Cal Grant A Estimate</label>
-                <div class="value">~$9,084 / year</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">UC & CSU schools — verify eligibility</div>
-            </div>
-            <div class="detail-item orange-border">
-                <label>Federal Work-Study</label>
-                <div class="value">Eligible</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">Amount varies by school</div>
-            </div>
-            <div class="detail-item orange-border">
-                <label>Direct Subsidized Loans</label>
-                <div class="value">Up to $5,500 / year</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">No interest while enrolled</div>
-            </div>
-            <div class="detail-item orange-border">
-                <label>Direct Unsubsidized Loans</label>
-                <div class="value">Up to $12,500 total</div>
-                <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px;">Interest accrues immediately</div>
-            </div>
-        </div>
-    </div>`;
-}
-
-// ============================================================
-// DECISION ANALYTICS TAB — UNCHANGED FROM ORIGINAL
-// ============================================================
+// ==============================================
+// TAB 3: DECISION ANALYTICS
+// ==============================================
 function renderAnalyticsTab() {
-    let html = '';
-    html += renderDeadlineCountdown();
-    html += renderWeightedScores();
-    html += renderComparisonMode();
-    html += renderDealBreakersChecklist();
-    html += renderDecisionJournal();
-    html += renderRadarSection();
-    return html;
+  const schools=TRACKER_DATA.schools,committed=analyticsData._committed,accepted=getAcceptedSchools();
+  let html='';
+
+  if(committed.locked&&committed.school){
+    html+=`<div class="committed-banner"><h2>\ud83c\udf93 You're committed to ${schools[committed.school]?.name}!</h2><p>Decision locked. All other accepted schools marked as declined.</p>
+    <button class="btn btn-secondary" style="margin-top:12px" onclick="unlockDecision()">Unlock Decision</button></div>`;
+  }
+  if(accepted.length===0) return html+`<div class="panel" style="text-align:center;padding:40px"><p style="font-size:16px;margin-bottom:8px">No accepted schools yet</p><p style="color:var(--text-dim);font-size:13px">Once you receive acceptances, you can rate and compare them here.</p></div>`;
+
+  // Criteria Weights
+  html+=`<div class="panel"><h2>\u2696\ufe0f Criteria Weights</h2><p style="font-size:12px;color:var(--text-dim);margin-bottom:14px">Set importance of each factor (0=irrelevant, 10=critical)</p><div class="criteria-grid">`;
+  CRITERIA_KEYS.forEach(c=>{const w=globalWeights[c]||0;html+=`<div class="criteria-row"><div class="criteria-label">${CRITERIA_LABELS[c].name}<small>${CRITERIA_LABELS[c].desc}</small></div><input type="range" min="0" max="10" value="${w}" oninput="updateWeight('${c}',this.value)"><div class="range-value" id="wv-${c}">${w}</div></div>`;});
+  html+=`</div></div>`;
+
+  // School Ratings
+  html+=`<div class="panel"><h2>\u2b50 Rate Each School</h2><p style="font-size:12px;color:var(--text-dim);margin-bottom:14px">Score each accepted school (1-10)</p>`;
+  accepted.forEach(([key,s])=>{const ws=getWeightedScore(key),ratings=analyticsData[key]?.ratings||{};
+    html+=`<div class="rating-card"><div class="rating-card-header"><div class="rating-card-title">${s.name}</div><div class="weighted-score">${ws.score}<span> / ${ws.max} (${ws.pct}%)</span></div></div><div class="rating-grid">`;
+    CRITERIA_KEYS.forEach(c=>{const v=ratings[c]||5;html+=`<div class="rating-item"><label>${CRITERIA_LABELS[c].name}</label><input type="range" min="1" max="10" value="${v}" oninput="updateRating('${key}','${c}',this.value)"><span class="rating-val" id="rv-${key}-${c}">${v}</span></div>`;});
+    html+=`</div></div>`;
+  });
+  html+=`</div>`;
+
+  // Rankings
+  const ranked=accepted.map(([k,s])=>({key:k,name:s.name,...getWeightedScore(k)})).sort((a,b)=>b.score-a.score);
+  html+=`<div class="panel"><h2>\ud83c\udfc6 Rankings</h2><div>`;
+  ranked.forEach((r,i)=>{html+=`<div class="rank-item"><div class="rank-num">#${i+1}</div><div class="rank-name">${r.name}</div><div class="rank-score" style="color:${i===0?'var(--yellow)':'var(--text-dim)'}">${r.score} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">/ ${r.max}</span></div></div>`;});
+  html+=`</div></div>`;
+
+  // Radar Chart
+  html+=`<div class="panel"><h2>\ud83d\udd78\ufe0f Radar Comparison</h2><div class="radar-wrap">${renderRadarChart(accepted)}</div></div>`;
+
+  // Gut Feeling
+  html+=`<div class="panel"><h2>\ud83d\udcab Gut Feeling Tracker</h2><p style="font-size:12px;color:var(--text-dim);margin-bottom:14px">How excited are you? (0=meh, 10=ecstatic)</p>`;
+  accepted.forEach(([key,s])=>{const ad=analyticsData[key]||{},gut=ad.gut_feeling||5,ws=getWeightedScore(key),gutN=gut*10,diff=Math.abs(gutN-ws.pct),dc=diff>30?'high':diff>15?'med':'low';
+    html+=`<div class="gut-card"><div class="gut-school">${s.short_name}</div><div class="gut-slider-wrap"><input type="range" min="0" max="10" value="${gut}" oninput="updateGut('${key}',this.value)" style="flex:1"><div class="gut-value" id="gv-${key}" style="color:${gut>=7?'var(--green)':gut>=4?'var(--yellow)':'var(--red)'}">${gut}</div></div>
+    <div class="gut-vs">Gut: ${gutN}%<br>Score: ${ws.pct}%<br><span class="discrepancy ${dc}">\u0394 ${diff}%</span></div></div>`;
+  });
+  html+=`</div>`;
+
+  // Pros/Cons
+  html+=`<div class="panel"><h2>\ud83d\udcdd Pros & Cons Journal</h2>`;
+  accepted.forEach(([key,s])=>{const ad=analyticsData[key]||{};
+    html+=`<div class="proscons-card"><div class="proscons-header" onclick="toggleProscons('${key}')"><h3>${s.name}</h3><span class="proscons-chevron" id="chev-${key}">\u25bc</span></div>
+    <div class="proscons-body" id="pc-${key}"><div class="proscons-cols">
+    <div class="proscons-col pros-col"><h4>\u2705 Pros</h4>`;
+    (ad.pros||[]).forEach((p,i)=>{html+=`<div class="proscons-entry"><span>${p.text}</span><span class="entry-time">${p.time||''} <button class="btn btn-sm" style="padding:1px 6px;font-size:9px;margin-left:4px" onclick="removePro('${key}',${i})">\u00d7</button></span></div>`;});
+    html+=`<div class="proscons-input-wrap"><input class="proscons-input" id="pro-input-${key}" placeholder="Add a pro..." onkeydown="if(event.key==='Enter')addPro('${key}')"><button class="btn btn-sm btn-success" onclick="addPro('${key}')">+</button></div></div>
+    <div class="proscons-col cons-col"><h4>\u274c Cons</h4>`;
+    (ad.cons||[]).forEach((c,i)=>{html+=`<div class="proscons-entry"><span>${c.text}</span><span class="entry-time">${c.time||''} <button class="btn btn-sm" style="padding:1px 6px;font-size:9px;margin-left:4px" onclick="removeCon('${key}',${i})">\u00d7</button></span></div>`;});
+    html+=`<div class="proscons-input-wrap"><input class="proscons-input" id="con-input-${key}" placeholder="Add a con..." onkeydown="if(event.key==='Enter')addCon('${key}')"><button class="btn btn-sm btn-danger" onclick="addCon('${key}')">+</button></div></div>
+    </div></div></div>`;
+  });
+  html+=`</div>`;
+
+  // Final Decision
+  if(!committed.locked&&accepted.length>0){
+    html+=`<div class="panel commit-section"><h2>\ud83d\udd12 Final Decision</h2><p style="color:var(--text-dim);font-size:13px;margin-bottom:16px">Ready to commit? This will mark your chosen school and archive the rest.</p>
+    <select id="commit-select" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:12px"><option value="">Select your school...</option>`;
+    accepted.forEach(([key,s])=>{html+=`<option value="${key}">${s.name}</option>`;});
+    html+=`</select><br><button class="commit-btn" onclick="commitToSchool()">I'm committing to this school \ud83c\udf93</button></div>`;
+  }
+  return html;
 }
 
-function renderDeadlineCountdown() {
-    const today = new Date(); today.setHours(0,0,0,0);
-    const deadline = new Date(2026,4,1);
-    const daysLeft = Math.ceil((deadline - today) / 86400000);
-    let cls = 'deadline-countdown-banner';
-    if (daysLeft < 15) cls += ' danger';
-    else if (daysLeft < 30) cls += ' warning';
-
-    let html = `<div class="${cls}">`;
-    html += `<h3>⏰ Decision Deadline Countdown</h3>`;
-    html += `<p style="font-size:1.1em;margin-bottom:12px;"><strong>${daysLeft} days</strong> until May 1, 2026 — Intent to Enroll deadline</p>`;
-    html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">`;
-    window.schools.filter(s => s.status === 'accepted').forEach(s => {
-        html += `<div class="deadline-item"><span>${s.name}</span><span>${daysLeft} days</span></div>`;
-    });
-    html += `</div></div>`;
-    return html;
+// Radar Chart SVG
+function renderRadarChart(accepted) {
+  const n=CRITERIA_KEYS.length,cx=200,cy=200,r=150;
+  const colors=['#6c5ce7','#00b894','#74b9ff','#f39c12','#fd79a8','#00cec9'];
+  let svg=`<svg class="radar-svg" viewBox="0 0 400 420">`;
+  [0.2,0.4,0.6,0.8,1.0].forEach(scale=>{let pts=[];for(let i=0;i<n;i++){const angle=(Math.PI*2*i/n)-Math.PI/2;pts.push(`${cx+r*scale*Math.cos(angle)},${cy+r*scale*Math.sin(angle)}`);}svg+=`<polygon points="${pts.join(' ')}" fill="none" stroke="#2a2f42" stroke-width="0.5"/>`;});
+  for(let i=0;i<n;i++){const angle=(Math.PI*2*i/n)-Math.PI/2;const ex=cx+r*Math.cos(angle),ey=cy+r*Math.sin(angle);svg+=`<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#2a2f42" stroke-width="0.5"/>`;const lx=cx+(r+22)*Math.cos(angle),ly=cy+(r+22)*Math.sin(angle);svg+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#7c829b" font-size="10" font-family="DM Sans">${CRITERIA_LABELS[CRITERIA_KEYS[i]].name}</text>`;}
+  accepted.forEach(([key,s],idx)=>{const ratings=analyticsData[key]?.ratings||{};let pts=[];for(let i=0;i<n;i++){const angle=(Math.PI*2*i/n)-Math.PI/2;const val=(ratings[CRITERIA_KEYS[i]]||5)/10;pts.push(`${cx+r*val*Math.cos(angle)},${cy+r*val*Math.sin(angle)}`);}const color=colors[idx%colors.length];svg+=`<polygon points="${pts.join(' ')}" fill="${color}" fill-opacity="0.12" stroke="${color}" stroke-width="2"/>`;});
+  let ly=395;svg+=`<text x="10" y="${ly}" fill="#7c829b" font-size="10" font-family="DM Sans">`;
+  accepted.forEach(([key,s],idx)=>{svg+=`<tspan fill="${colors[idx%colors.length]}">\u25a0</tspan> ${s.short_name}  `;});
+  svg+=`</text></svg>`;return svg;
 }
 
-function renderWeightedScores() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    if (!accepted.length) return '<div class="card"><h3>Weighted Scores</h3><p style="color:var(--text-muted);">No accepted schools yet.</p></div>';
+// ==============================================
+// ANALYTICS ACTIONS
+// ==============================================
+function updateWeight(c,v){globalWeights[c]=parseInt(v);const el=document.getElementById('wv-'+c);if(el)el.textContent=v;saveLocalData();}
+function updateRating(s,c,v){if(!analyticsData[s])return;analyticsData[s].ratings[c]=parseInt(v);const el=document.getElementById('rv-'+s+'-'+c);if(el)el.textContent=v;saveLocalData();}
+function updateGut(s,v){if(!analyticsData[s])return;analyticsData[s].gut_feeling=parseInt(v);analyticsData[s].gut_history=analyticsData[s].gut_history||[];analyticsData[s].gut_history.push({value:parseInt(v),time:new Date().toISOString()});const el=document.getElementById('gv-'+s);if(el){el.textContent=v;el.style.color=v>=7?'var(--green)':v>=4?'var(--yellow)':'var(--red)';}saveLocalData();}
+function addPro(s){const i=document.getElementById('pro-input-'+s);if(!i||!i.value.trim())return;analyticsData[s].pros=analyticsData[s].pros||[];analyticsData[s].pros.push({text:i.value.trim(),time:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})});saveLocalData();renderFull();}
+function removePro(s,idx){analyticsData[s].pros.splice(idx,1);saveLocalData();renderFull();}
+function addCon(s){const i=document.getElementById('con-input-'+s);if(!i||!i.value.trim())return;analyticsData[s].cons=analyticsData[s].cons||[];analyticsData[s].cons.push({text:i.value.trim(),time:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})});saveLocalData();renderFull();}
+function removeCon(s,idx){analyticsData[s].cons.splice(idx,1);saveLocalData();renderFull();}
+function toggleProscons(s){const b=document.getElementById('pc-'+s),c=document.getElementById('chev-'+s);if(b){b.classList.toggle('open');if(c)c.classList.toggle('open');}}
 
-    let html = `<div class="card"><h3>🏆 Weighted Decision Scores</h3>
-    <div style="overflow-x:auto;"><table><thead><tr>
-        <th>School</th>`;
-    CRITERIA_KEYS.forEach(k => html += `<th>${CRITERIA_LABELS[k]}</th>`);
-    html += `<th>Weighted Score</th></tr></thead><tbody>`;
+function commitToSchool(){
+  const sel=document.getElementById('commit-select');
+  if(!sel||!sel.value){alert('Please select a school first.');return;}
+  const name=TRACKER_DATA.schools[sel.value]?.name||sel.value;
+  if(!confirm('Are you sure you want to commit to '+name+'? This will mark all other acceptances as declined.'))return;
+  analyticsData._committed={locked:true,school:sel.value};saveLocalData();launchConfetti();setTimeout(()=>renderFull(),1500);
+}
+function unlockDecision(){if(!confirm('Unlock your decision? You can re-commit anytime before May 1.'))return;analyticsData._committed={locked:false,school:null};saveLocalData();renderFull();}
 
-    accepted.forEach(s => {
-        const sc = s.scores || {};
-        let ws = 0;
-        CRITERIA_KEYS.forEach(k => {
-            let v = sc[k] || 5;
-            if (k === 'net_cost') v = 11 - v;
-            ws += v;
-        });
-        ws = (ws / CRITERIA_KEYS.length).toFixed(1);
-        html += `<tr><td><strong>${s.name}</strong></td>`;
-        CRITERIA_KEYS.forEach(k => html += `<td><input type="number" min="1" max="10" value="${sc[k]||5}" style="width:60px;padding:4px;" onchange="updateScore('${s.id}','${k}',this.value)"></td>`);
-        html += `<td><strong style="color:var(--success);">${ws}/10</strong></td></tr>`;
-    });
-    html += `</tbody></table></div></div>`;
-    return html;
+// ==============================================
+// CONFETTI
+// ==============================================
+function launchConfetti(){
+  const canvas=document.createElement('canvas');canvas.className='confetti-canvas';document.body.appendChild(canvas);
+  const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[],colors=['#6c5ce7','#00b894','#fdcb6e','#74b9ff','#e17055','#a29bfe','#fd79a8','#00cec9'];
+  for(let i=0;i<150;i++)pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,w:Math.random()*10+5,h:Math.random()*6+3,color:colors[Math.floor(Math.random()*colors.length)],vy:Math.random()*3+2,vx:Math.random()*2-1,rot:Math.random()*360,vr:Math.random()*6-3});
+  let frame=0;
+  function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.rot+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});frame++;if(frame<180)requestAnimationFrame(animate);else canvas.remove();}
+  animate();
 }
 
-function updateScore(id, key, val) {
-    const s = window.schools.find(x => x.id === id);
-    if (s) { if (!s.scores) s.scores = {}; s.scores[key] = parseInt(val)||5; saveLocalData(); }
+// ==============================================
+// FEEDBACK & FILTERS (existing)
+// ==============================================
+function giveFeedback(key,type,btn){
+  if(type==='correct'){btn.classList.add('correct');btn.textContent='\u2713 Marked Correct';btn.disabled=true;TRACKER_DATA.performance_metrics.total_correct++;}
+  else{document.getElementById('override-'+key).classList.add('visible');TRACKER_DATA.performance_metrics.total_incorrect++;}
+  TRACKER_DATA.performance_metrics.total_reviewed++;
+  TRACKER_DATA.feedback_log.push({school:key,type,timestamp:new Date().toISOString(),original_status:TRACKER_DATA.schools[key].status});
+  storeFeedback();
 }
+function overrideStatus(key,ns){TRACKER_DATA.schools[key].status=ns;storeFeedback();renderFull();}
+function storeFeedback(){let el=document.getElementById('feedback-data');if(!el){el=document.createElement('div');el.id='feedback-data';el.style.display='none';document.body.appendChild(el);}el.textContent=JSON.stringify({feedback:TRACKER_DATA.feedback_log,metrics:TRACKER_DATA.performance_metrics,overrides:Object.fromEntries(Object.entries(TRACKER_DATA.schools).map(([k,v])=>[k,v.status]))});}
+function filterSchools(filter,event){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(event&&event.target)event.target.classList.add('active');document.querySelectorAll('.school-card').forEach(card=>{const s=card.dataset.status,t=card.dataset.type;if(filter==='all')card.style.display='';else if(filter==='uc')card.style.display=t==='uc'?'':'none';else if(filter==='csu')card.style.display=t==='csu'?'':'none';else card.style.display=s===filter?'':'none';});}
 
-function renderComparisonMode() {
-    let html = `<div class="card"><h3>⚖️ Side-by-Side Comparison</h3>`;
-    html += `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
-        <button onclick="quickTop3Score()">Top 3 by Score</button>
-        <button class="secondary" onclick="quickTop3Cost()">Top 3 by Cost</button>
-    </div>`;
-
-    if (currentCompareSchools.length > 0) {
-        html += `<div class="comparison-cards">`;
-        const scoresArr = currentCompareSchools.map(id => {
-            const s = window.schools.find(x => x.id === id);
-            if (!s) return null;
-            const sc = s.scores || {};
-            let ws = 0;
-            CRITERIA_KEYS.forEach(k => { let v=sc[k]||5; if(k==='net_cost') v=11-v; ws+=v; });
-            return { id, school: s, weightedScore: ws/CRITERIA_KEYS.length, net: calcNetCost(id) };
-        }).filter(Boolean);
-
-        scoresArr.forEach((d, i) => {
-            const rank = i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉';
-            html += `<div class="comparison-card">
-                <h4>${rank} ${d.school.name}</h4>
-                <div class="comparison-item"><label>Weighted Score</label><div class="value">${d.weightedScore.toFixed(1)}/10</div></div>
-                <div class="comparison-item"><label>Net Cost</label><div class="value" style="color:var(--success);">${fmt(d.net)}</div></div>
-                <div class="comparison-item"><label>Program Quality</label><div class="value">${d.school.scores?.program_quality||5}/10</div></div>
-                <div class="comparison-item"><label>Career Outcomes</label><div class="value">${d.school.scores?.career_outcomes||5}/10</div></div>
-                <div class="comparison-item"><label>Gut Feeling</label><div class="value">${d.school.scores?.gut_feeling||5}/10</div></div>
-            </div>`;
-        });
-        html += `</div>`;
-    }
-    html += `</div>`;
-    return html;
-}
-
-function quickTop3Score() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    const sorted = [...accepted].sort((a,b) => {
-        const sa = Object.values(a.scores||{}).reduce((x,y)=>x+y,0);
-        const sb = Object.values(b.scores||{}).reduce((x,y)=>x+y,0);
-        return sb - sa;
-    });
-    currentCompareSchools = sorted.slice(0,3).map(s=>s.id);
-    renderFull();
-}
-
-function quickTop3Cost() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    const sorted = [...accepted].sort((a,b) => calcNetCost(a.id) - calcNetCost(b.id));
-    currentCompareSchools = sorted.slice(0,3).map(s=>s.id);
-    renderFull();
-}
-
-function renderDealBreakersChecklist() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    if (!accepted.length) return '';
-    let html = `<div class="card"><h3>🚫 Deal-Breakers Checklist</h3>`;
-    accepted.forEach(s => {
-        const db = dealBreakers[s.id] || {};
-        const eliminated = Object.values(db).some(v => v);
-        html += `<div class="dealbreaker-section${eliminated?' eliminated':''}">
-            <h4>${s.name}${eliminated?' — <span style="color:var(--danger);">ELIMINATED</span>':''}</h4>`;
-        const labels = ['Too expensive','Program not strong enough','Too far from home','Campus vibe doesn\'t fit','Career outcomes below expectations','Other'];
-        labels.forEach((lbl, idx) => {
-            const key = `item_${idx}`;
-            html += `<div class="dealbreaker-item">
-                <input type="checkbox" id="db_${s.id}_${idx}" ${db[key]?'checked':''} onchange="updateDB('${s.id}','${key}',this.checked)">
-                <label for="db_${s.id}_${idx}">${lbl}</label>
-            </div>`;
-        });
-        html += `</div>`;
-    });
-    html += `</div>`;
-    return html;
-}
-
-function updateDB(id, key, val) {
-    if (!dealBreakers[id]) dealBreakers[id] = {};
-    dealBreakers[id][key] = val;
-    saveLocalData();
-    renderFull();
-}
-
-function renderDecisionJournal() {
-    let html = `<div class="card"><h3>📓 Decision Journal</h3>
-    <div style="margin-bottom:20px;">
-        <div class="form-group">
-            <label>Tag a School (Optional)</label>
-            <select id="journalSchool" style="width:auto;">
-                <option value="">— None —</option>
-                ${window.schools.filter(s=>s.status==='accepted').map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}
-            </select>
-        </div>
-        <div class="form-group">
-            <label>What are you thinking about today? (max 500 chars)</label>
-            <textarea id="journalText" maxlength="500" style="min-height:100px;" placeholder="Write your thoughts..."></textarea>
-        </div>
-        <button onclick="addJournalEntry()">➕ Add Entry</button>
-    </div>
-    <div>`;
-
-    if (!journalEntries.length) {
-        html += `<p style="color:var(--text-muted);font-style:italic;">No entries yet. Start journaling your decision process!</p>`;
-    }
-    [...journalEntries].reverse().forEach((e, i) => {
-        const realIdx = journalEntries.length - 1 - i;
-        const s = window.schools.find(x => x.id === e.school);
-        html += `<div class="journal-entry">
-            <div class="journal-entry-date">📅 ${e.date}</div>
-            <div class="journal-entry-text">${e.text}</div>
-            ${s ? `<span class="journal-entry-tag">🏫 ${s.name}</span>` : ''}
-            <button class="secondary" style="font-size:0.75em;padding:3px 8px;margin-top:8px;" onclick="deleteJournal(${realIdx})">Delete</button>
-        </div>`;
-    });
-    html += `</div></div>`;
-    return html;
-}
-
-function addJournalEntry() {
-    const text = document.getElementById('journalText')?.value?.trim();
-    const school = document.getElementById('journalSchool')?.value;
-    if (!text) { alert('Please write something first!'); return; }
-    journalEntries.push({ date: todayStr(), text, school: school || null });
-    saveLocalData();
-    renderFull();
-}
-
-function deleteJournal(idx) {
-    journalEntries.splice(idx, 1);
-    saveLocalData();
-    renderFull();
-}
-
-function renderRadarSection() {
-    const accepted = window.schools.filter(s => s.status === 'accepted');
-    if (!accepted.length) return '';
-    const s = accepted[0];
-    const sc = s.scores || {};
-    let html = `<div class="card"><h3>🕸️ Criteria Breakdown — ${s.name}</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">`;
-    CRITERIA_KEYS.forEach(k => {
-        const score = sc[k] || 5;
-        const pct = score * 10;
-        html += `<div style="background:var(--surface-light);padding:12px;border-radius:6px;">
-            <div style="color:var(--text-muted);font-size:0.85em;margin-bottom:8px;">${CRITERIA_LABELS[k]}</div>
-            <div style="width:100%;height:8px;background:rgba(0,212,255,0.15);border-radius:4px;overflow:hidden;">
-                <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent-dark),var(--accent));transition:width 0.3s;"></div>
-            </div>
-            <div style="margin-top:6px;color:var(--accent);font-weight:600;">${score}/10</div>
-        </div>`;
-    });
-    html += `</div></div>`;
-    return html;
-}
-
-// ============================================================
-// SCHOLARSHIP HUNTER TAB — UNCHANGED FROM ORIGINAL
-// ============================================================
-function renderScholarshipTab() {
-    let html = '';
-    html += renderProfileSummary();
-    html += renderScholarshipStats();
-    html += renderScholarshipFilters();
-    html += renderScholarshipTable();
-    return html;
-}
-
-function renderProfileSummary() {
-    return `<div class="scholarship-card">
-        <h3>👤 Your Profile</h3>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">Name</div><div class="scholarship-card-value">Michael Sarmento</div></div>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">Major</div><div class="scholarship-card-value">Business Analytics Transfer</div></div>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">Heritage</div><div class="scholarship-card-value">Filipino / Portuguese</div></div>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">GPA / SAI</div><div class="scholarship-card-value">3.49 / -$1,500</div></div>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">Student Type</div><div class="scholarship-card-value">Community College Transfer · Non-traditional (age 27)</div></div>
-        <div class="scholarship-card-row"><div class="scholarship-card-label">Time Budget</div><div class="scholarship-card-value">~5 hours/week for applications</div></div>
-    </div>`;
-}
-
-function renderScholarshipStats() {
-    const submitted = SCHOLARSHIP_DB.filter(s => s.status==='submitted').length;
-    const won       = SCHOLARSHIP_DB.filter(s => s.status==='won').length;
-    const total     = SCHOLARSHIP_DB.reduce((s,x) => s+x.amount, 0);
-    const wonVal    = SCHOLARSHIP_DB.filter(s=>s.status==='won').reduce((s,x)=>s+x.amount,0);
-    return `<div class="stats-row">
-        <div class="stat-card"><div class="stat-label">Scholarships Found</div><div class="stat-value">${SCHOLARSHIP_DB.length}</div></div>
-        <div class="stat-card"><div class="stat-label">Total Potential Value</div><div class="stat-value amount-currency">$${(total/1000).toFixed(0)}K</div></div>
-        <div class="stat-card"><div class="stat-label">Submitted</div><div class="stat-value">${submitted}</div></div>
-        <div class="stat-card"><div class="stat-label">Won</div><div class="stat-value green">${fmt(wonVal)}</div></div>
-    </div>`;
-}
-
-function renderScholarshipFilters() {
-    return `<div class="scholarship-filters">
-        <div class="scholarship-filters filter-group"><label>Essay?</label>
-            <select id="fEssay"><option value="">All</option><option value="yes">Required</option><option value="no">Not Required</option></select>
-        </div>
-        <div class="scholarship-filters filter-group"><label>Amount</label>
-            <select id="fAmount"><option value="">All</option><option value="5k">$5K+</option><option value="1k5k">$1K–$5K</option><option value="sub1k">&lt;$1K</option></select>
-        </div>
-        <div class="scholarship-filters filter-group"><label>Status</label>
-            <select id="fStatus"><option value="">All</option><option value="not_started">Not Started</option><option value="in_progress">In Progress</option><option value="submitted">Submitted</option><option value="won">Won!</option></select>
-        </div>
-        <button class="secondary" onclick="applySchFilters()">Apply</button>
-    </div>`;
-}
-
-let schFilter = { essay:'', amount:'', status:'' };
-
-function applySchFilters() {
-    schFilter.essay  = document.getElementById('fEssay')?.value  || '';
-    schFilter.amount = document.getElementById('fAmount')?.value || '';
-    schFilter.status = document.getElementById('fStatus')?.value || '';
-    const tbody = document.getElementById('schTableBody');
-    if (!tbody) return;
-    tbody.innerHTML = buildSchRows();
-}
-
-function renderScholarshipTable() {
-    return `<div style="overflow-x:auto;">
-    <table>
-        <thead><tr>
-            <th>Scholarship</th>
-            <th>Amount</th>
-            <th>Deadline</th>
-            <th>Essay?</th>
-            <th>Time</th>
-            <th>Match</th>
-            <th>Status</th>
-            <th>$/hr ROI</th>
-            <th>Link</th>
-        </tr></thead>
-        <tbody id="schTableBody">${buildSchRows()}</tbody>
-    </table></div>`;
-}
-
-function buildSchRows() {
-    let list = [...SCHOLARSHIP_DB];
-    if (schFilter.essay === 'yes')   list = list.filter(s => s.essay);
-    if (schFilter.essay === 'no')    list = list.filter(s => !s.essay);
-    if (schFilter.amount === '5k')   list = list.filter(s => s.amount >= 5000);
-    if (schFilter.amount === '1k5k') list = list.filter(s => s.amount >= 1000 && s.amount < 5000);
-    if (schFilter.amount === 'sub1k')list = list.filter(s => s.amount < 1000);
-    if (schFilter.status)            list = list.filter(s => s.status === schFilter.status);
-    list.sort((a,b) => b.match - a.match);
-
-    return list.map(sch => {
-        const hrs = parseFloat(sch.time) || 1;
-        const roi = Math.round(sch.amount / hrs);
-        const mc  = sch.match >= 70 ? 'match-high' : sch.match >= 40 ? 'match-medium' : 'match-low';
-        return `<tr>
-            <td><strong>${sch.name}</strong></td>
-            <td class="amount-currency">${fmt(sch.amount)}</td>
-            <td>${sch.deadline}</td>
-            <td>${sch.essay ? '✅' : '—'}</td>
-            <td>${sch.time}</td>
-            <td><span class="match-badge ${mc}">${sch.match}%</span></td>
-            <td>
-                <select class="status-select" onchange="updateSchStatus(${sch.id},this.value)">
-                    <option value="not_started" ${sch.status==='not_started'?'selected':''}>Not Started</option>
-                    <option value="in_progress" ${sch.status==='in_progress'?'selected':''}>In Progress</option>
-                    <option value="submitted"   ${sch.status==='submitted'  ?'selected':''}>Submitted</option>
-                    <option value="won"         ${sch.status==='won'        ?'selected':''}>Won! 🎉</option>
-                </select>
-            </td>
-            <td style="color:var(--text-muted);">$${roi}/hr</td>
-            <td><button class="secondary" style="font-size:0.8em;padding:5px 10px;" onclick="window.open('${sch.link}','_blank')">Visit</button></td>
-        </tr>`;
-    }).join('');
-}
-
-function updateSchStatus(id, status) {
-    const sch = SCHOLARSHIP_DB.find(s => s.id === id);
-    if (sch) { sch.status = status; saveLocalData(); renderFull(); }
-}
-
-// ============================================================
-// KICK OFF
-// ============================================================
+// LAUNCH
 boot();
 </script>
 </body>
