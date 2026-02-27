@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-02-27T08:16:28.945Z",
-    "total_scans": 3,
-    "total_emails_processed": 61,
+    "last_scan": "2026-02-27T20:16:26.636Z",
+    "total_scans": 4,
+    "total_emails_processed": 63,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -808,6 +808,24 @@
   },
   "email_log": [
     {
+      "id": "19c9e557d156dae2",
+      "school": "ucla",
+      "date": "2026-02-27",
+      "subject": "Get involved at UCLA",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCLA Undergraduate Admission <applicant@admission.ucla.edu>"
+    },
+    {
+      "id": "19ca0a55b125e48e",
+      "school": "uc_berkeley",
+      "date": "2026-02-27",
+      "subject": "[SP26 TTS - Week 6] Transfer to Success Workshop Series - Recordings + Resources",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
+    {
       "id": "19c9c6f914a50bc7",
       "school": "sjsu",
       "date": "2026-02-27",
@@ -1016,6 +1034,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-27",
+      "scan_timestamp": "2026-02-27T20:16:26.636Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-02-27",
       "scan_timestamp": "2026-02-27T08:16:28.945Z",
