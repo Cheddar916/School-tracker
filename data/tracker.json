@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-02-26T20:16:26.408Z",
-    "total_scans": 2,
-    "total_emails_processed": 58,
+    "last_scan": "2026-02-27T08:16:28.945Z",
+    "total_scans": 3,
+    "total_emails_processed": 61,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -492,8 +492,8 @@
       "short_name": "SJSU",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.99,
-      "decision_date": "2026-02-12",
+      "confidence": 0.5,
+      "decision_date": "2026-02-27",
       "deadlines": [
         {
           "type": "intent",
@@ -522,7 +522,7 @@
         "deadline of March 2"
       ],
       "portal_url": "https://one.sjsu.edu",
-      "notes": "ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49",
+      "notes": "? ADMITTED! Decision email received 2026-02-27",
       "cost_breakdown": {
         "total_coa": 35000,
         "tuition_fees": 8850,
@@ -808,6 +808,33 @@
   },
   "email_log": [
     {
+      "id": "19c9c6f914a50bc7",
+      "school": "sjsu",
+      "date": "2026-02-27",
+      "subject": "SJSU Admitted Student Campus Tours",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "SJSU Student Outreach and Recruitment <outreach@sjsu.edu>"
+    },
+    {
+      "id": "19c9c655f8ca6666",
+      "school": "uc_berkeley",
+      "date": "2026-02-26",
+      "subject": "Fwd: [IMPORTANT] Transfer to Success Workshop Today Link",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
+    {
+      "id": "19c9c0cd96cd9650",
+      "school": "uc_berkeley",
+      "date": "2026-02-26",
+      "subject": "[IMPORTANT] Transfer to Success Workshop Today Link",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
+    {
       "id": "19c922849590d68a",
       "school": "sjsu",
       "date": "2026-02-25",
@@ -989,6 +1016,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-02-27",
+      "scan_timestamp": "2026-02-27T08:16:28.945Z",
+      "emails_found": 3,
+      "new_decisions": 1,
+      "notes": "Found 3 new emails. Decisions: San Jose State: accepted"
+    },
     {
       "scan_date": "2026-02-26",
       "scan_timestamp": "2026-02-26T20:16:26.408Z",
