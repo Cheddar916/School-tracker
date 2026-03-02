@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael's College Application Tracker</title>
+<script>
+  const DATA_URL = 'https://raw.githubusercontent.com/Cheddar916/school-tracker/main/data/tracker.json';
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+  :root{--bg:#0b0d14;--surface:#13161f;--surface2:#1c2030;--surface3:#252a3a;--border:#2a2f42;--border-light:#363d55;--text:#e4e7f1;--text-dim:#7c829b;--text-muted:#555b74;--accent:#6c5ce7;--accent-light:#8577ed;--green:#00b894;--green-dim:rgba(0,184,148,0.15);--red:#e17055;--red-dim:rgba(225,112,85,0.15);--yellow:#fdcb6e;--yellow-dim:rgba(253,203,110,0.15);--blue:#74b9ff;--blue-dim:rgba(116,185,255,0.15);--orange:#f39c12;--orange-dim:rgba(243,156,18,0.15);--purple:#a29bfe;--purple-dim:rgba(162,155,254,0.15);--cyan:#00cec9;--pink:#fd79a8}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,-apple-system,sans-serif;min-height:100vh;line-height:1.5}
+  .container{max-width:1280px;margin:0 auto;padding:20px 24px}
+  .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px}
+  .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-text{color:var(--text-dim);font-size:14px}
+  .header{text-align:center;margin-bottom:8px;padding:16px 0}
+  .header h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+  .header h1 span{color:var(--accent)}
+  .header .subtitle{color:var(--text-dim);font-size:13px;margin-top:2px}
+  .scan-info{color:var(--text-dim);font-size:11px;margin-top:8px;padding:5px 14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .data-source{font-size:10px;color:var(--text-muted);margin-top:4px}
+  .main-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px}
+  .main-tab{flex:1;padding:11px 16px;border-radius:9px;border:none;background:transparent;color:var(--text-dim);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;transition:all .25s ease;display:flex;align-items:center;justify-content:center;gap:8px}
+  .main-tab:hover{color:var(--text);background:var(--surface2)}
+  .main-tab.active{background:var(--accent);color:#fff;font-weight:600;box-shadow:0 2px 12px rgba(108,92,231,.3)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .decision-banner{background:linear-gradient(135deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .decision-banner .banner-left{display:flex;align-items:center;gap:12px}
+  .decision-banner .banner-icon{font-size:24px}
+  .decision-banner .banner-text{font-size:13px;color:var(--text-dim)}
+  .decision-banner .banner-text strong{color:var(--text);font-size:15px;display:block}
+  .decision-banner .days-count{font-size:28px;font-weight:700;color:var(--yellow);min-width:80px;text-align:center}
+  .decision-banner .days-count span{font-size:12px;font-weight:400;color:var(--text-dim);display:block}
+  .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:transform .2s,border-color .2s}
+  .stat-card:hover{transform:translateY(-2px);border-color:var(--border-light)}
+  .stat-card .number{font-size:30px;font-weight:700}
+  .stat-card .label{font-size:11px;color:var(--text-dim);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+  .stat-card.accepted .number{color:var(--green)}.stat-card.pending .number{color:var(--yellow)}.stat-card.rejected .number{color:var(--red)}.stat-card.waitlisted .number{color:var(--orange)}.stat-card.total .number{color:var(--blue)}
+  .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s}
+  .tab:hover{border-color:var(--accent);color:var(--text)}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .schools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:14px;margin-bottom:28px}
+  .school-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:all .2s;position:relative;overflow:hidden}
+  .school-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+  .school-card.status-accepted{border-left:4px solid var(--green)}.school-card.status-pending{border-left:4px solid var(--yellow)}.school-card.status-rejected{border-left:4px solid var(--red)}.school-card.status-waitlisted{border-left:4px solid var(--orange)}.school-card.status-committed{border-left:4px solid var(--accent);background:linear-gradient(135deg,var(--surface),rgba(108,92,231,.08))}
+  .school-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+  .school-name{font-size:16px;font-weight:600}
+  .school-type{font-size:10px;color:var(--text-dim);background:var(--surface2);padding:2px 8px;border-radius:4px}
+  .status-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .status-badge.accepted{background:var(--green-dim);color:var(--green)}.status-badge.pending{background:var(--yellow-dim);color:var(--yellow)}.status-badge.rejected{background:var(--red-dim);color:var(--red)}.status-badge.waitlisted{background:var(--orange-dim);color:var(--orange)}.status-badge.committed{background:var(--purple-dim);color:var(--purple)}.status-badge.declined{background:rgba(85,91,116,.15);color:var(--text-muted)}
+  .detail-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;font-size:13px}
+  .detail-icon{width:16px;flex-shrink:0;text-align:center;margin-top:1px}
+  .detail-text{color:var(--text-dim)}
+  .detail-text a{color:var(--blue);text-decoration:none}
+  .detail-text a:hover{text-decoration:underline}
+  .deadlines{margin-top:10px}
+  .deadline-item{background:var(--surface2);border-radius:8px;padding:7px 12px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .deadline-item.urgent{border-left:3px solid var(--red)}.deadline-item.soon{border-left:3px solid var(--yellow)}.deadline-item.passed{opacity:.5;border-left:3px solid var(--text-muted)}.deadline-item.ok{border-left:3px solid var(--green)}
+  .deadline-date{color:var(--text-dim);font-weight:600}
+  .action-items{margin-top:10px}
+  .action-item{font-size:12px;color:var(--text-dim);padding:3px 0 3px 16px;position:relative}
+  .action-item::before{content:"→";position:absolute;left:0;color:var(--accent)}
+  .confidence-bar{margin-top:10px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-dim)}
+  .conf-track{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+  .conf-fill{height:100%;border-radius:2px;background:var(--green);transition:width .3s}
+  .feedback-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .feedback-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-size:11px;font-family:inherit;margin-right:4px;transition:all .2s}
+  .feedback-btn:hover{border-color:var(--accent);color:var(--text)}.feedback-btn.correct{border-color:var(--green);color:var(--green)}
+  .status-override{margin-top:8px;display:none}
+  .status-override.visible{display:flex;gap:6px;flex-wrap:wrap}
+  .override-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-size:11px;font-family:inherit}
+  .override-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+  .panel h2{font-size:17px;margin-bottom:14px;font-weight:600}
+  .panel h3{font-size:14px;margin-bottom:10px;font-weight:600;color:var(--text-dim)}
+  .deadline-list{list-style:none}
+  .deadline-list li{padding:9px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:13px}
+  .deadline-list li:last-child{border-bottom:none}
+  .deadline-school{font-weight:600;min-width:100px}
+  .deadline-desc{flex:1;color:var(--text-dim);margin:0 12px}
+  .days-until{font-weight:600;min-width:80px;text-align:right}
+  .days-until.urgent{color:var(--red)}.days-until.soon{color:var(--yellow)}.days-until.ok{color:var(--green)}.days-until.passed{color:var(--text-muted)}
+  .log-table{width:100%;border-collapse:collapse}
+  .log-table th{text-align:left;font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;border-bottom:1px solid var(--border)}
+  .log-table td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:12px}
+  .log-table tr:hover{background:var(--surface2)}
+  .cat-badge{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+  .cat-badge.acceptance{background:var(--green-dim);color:var(--green)}.cat-badge.informational{background:var(--blue-dim);color:var(--blue)}.cat-badge.action_required{background:var(--yellow-dim);color:var(--yellow)}.cat-badge.rejection{background:var(--red-dim);color:var(--red)}.cat-badge.waitlist{background:var(--orange-dim);color:var(--orange)}
+  .scan-item{padding:9px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;font-size:13px}
+  .scan-meta{color:var(--text-dim);font-size:11px;margin-top:3px}
+  .metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .metric{text-align:center;padding:12px;background:var(--surface2);border-radius:8px}
+  .metric .val{font-size:22px;font-weight:700;color:var(--accent)}
+  .metric .lbl{font-size:10px;color:var(--text-dim);margin-top:3px}
+  .footer{text-align:center;padding:20px 0;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border);margin-top:8px}
+  .footer a{color:var(--accent);text-decoration:none}
+  .aid-table-wrap{overflow-x:auto;margin-bottom:20px}
+  .aid-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
+  .aid-table th{background:var(--surface2);padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);border-bottom:2px solid var(--border);position:sticky;top:0}
+  .aid-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+  .aid-table tr:hover{background:var(--surface2)}
+  .aid-table tr.cheapest td{background:rgba(0,184,148,.06)}
+  .aid-table .school-col{font-weight:600;min-width:130px;white-space:normal}
+  .aid-table .cost-col{font-weight:700}
+  .net-positive{color:var(--green)}.net-negative{color:var(--red)}.net-zero{color:var(--yellow)}
+  .aid-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:6px;font-size:12px;font-family:inherit;width:90px;text-align:right;transition:border-color .2s}
+  .aid-input:focus{outline:none;border-color:var(--accent)}
+  .btn{padding:9px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+  .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-light);box-shadow:0 2px 12px rgba(108,92,231,.3)}
+  .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--accent)}
+  .btn-danger{background:var(--red);color:#fff}.btn-success{background:var(--green);color:#fff}
+  .btn-sm{padding:5px 12px;font-size:11px}
+  .bar-chart{display:flex;align-items:flex-end;gap:8px;height:220px;padding-bottom:30px}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;height:100%;justify-content:flex-end}
+  .bar{border-radius:6px 6px 0 0;transition:height .5s ease;min-height:4px;width:100%;max-width:60px}
+  .bar-label{font-size:10px;color:var(--text-dim);text-align:center;white-space:nowrap;position:absolute;bottom:-24px;width:100%;overflow:hidden;text-overflow:ellipsis}
+  .bar-value{font-size:10px;font-weight:600;color:var(--text)}
+  .pie-chart-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .pie-svg{width:180px;height:180px}
+  .pie-legend{display:flex;flex-direction:column;gap:6px}
+  .pie-legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+  .pie-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .criteria-grid{display:grid;gap:12px}
+  .criteria-row{display:grid;grid-template-columns:160px 1fr 50px;gap:12px;align-items:center;padding:10px 14px;background:var(--surface2);border-radius:10px}
+  .criteria-label{font-size:13px;font-weight:500}
+  .criteria-label small{font-size:10px;color:var(--text-dim);display:block}
+  input[type="range"]{-webkit-appearance:none;width:100%;height:6px;background:var(--border);border-radius:3px;outline:none}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);box-shadow:0 1px 6px rgba(0,0,0,.3)}
+  .range-value{font-size:14px;font-weight:700;color:var(--accent);text-align:center}
+  .rating-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+  .rating-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .rating-card-title{font-size:15px;font-weight:600}
+  .weighted-score{font-size:22px;font-weight:700;color:var(--accent)}
+  .weighted-score span{font-size:11px;font-weight:400;color:var(--text-dim)}
+  .rating-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .rating-item{display:flex;align-items:center;gap:8px}
+  .rating-item label{font-size:11px;color:var(--text-dim);min-width:80px}
+  .rating-item input[type="range"]{flex:1}
+  .rating-item .rating-val{font-size:12px;font-weight:600;min-width:20px;text-align:center}
+  .radar-wrap{display:flex;justify-content:center;padding:16px 0}
+  .radar-svg{max-width:400px;width:100%}
+  .proscons-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+  .proscons-header{padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+  .proscons-header:hover{background:var(--surface2)}
+  .proscons-header h3{font-size:14px;margin:0}
+  .proscons-chevron{transition:transform .3s;color:var(--text-dim)}
+  .proscons-chevron.open{transform:rotate(180deg)}
+  .proscons-body{padding:0 16px 16px;display:none}
+  .proscons-body.open{display:block}
+  .proscons-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .proscons-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid}
+  .proscons-col.pros-col h4{color:var(--green);border-color:var(--green)}
+  .proscons-col.cons-col h4{color:var(--red);border-color:var(--red)}
+  .proscons-entry{font-size:12px;color:var(--text-dim);padding:5px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+  .proscons-entry .entry-time{font-size:10px;color:var(--text-muted);white-space:nowrap;margin-left:8px}
+  .proscons-input-wrap{display:flex;gap:6px;margin-top:8px}
+  .proscons-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:12px;font-family:inherit}
+  .proscons-input:focus{outline:none;border-color:var(--accent)}
+  .gut-card{background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+  .gut-school{font-size:13px;font-weight:600;min-width:120px}
+  .gut-slider-wrap{flex:1;display:flex;align-items:center;gap:10px}
+  .gut-value{font-size:20px;font-weight:700;min-width:32px;text-align:center}
+  .gut-vs{font-size:11px;color:var(--text-dim);text-align:center;min-width:80px}
+  .gut-vs .discrepancy{font-weight:600}
+  .gut-vs .discrepancy.high{color:var(--red)}.gut-vs .discrepancy.med{color:var(--yellow)}.gut-vs .discrepancy.low{color:var(--green)}
+  .rank-item{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface2);border-radius:10px;margin-bottom:8px;transition:transform .2s}
+  .rank-item:hover{transform:translateX(4px)}
+  .rank-item .rank-num{font-size:22px;font-weight:700;color:var(--accent);min-width:30px}
+  .rank-item .rank-name{font-size:14px;font-weight:600;flex:1}
+  .rank-item .rank-score{font-size:18px;font-weight:700}
+  .rank-item:first-child{border:1px solid var(--accent);background:rgba(108,92,231,.08)}
+  .rank-item:first-child .rank-num{color:var(--yellow)}
+  .commit-section{text-align:center;padding:24px 0}
+  .commit-btn{padding:14px 32px;border-radius:12px;border:2px solid var(--accent);background:transparent;color:var(--accent);font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .3s}
+  .commit-btn:hover{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(108,92,231,.4)}
+  .committed-banner{background:linear-gradient(135deg,rgba(108,92,231,.15),rgba(162,155,254,.1));border:2px solid var(--accent);border-radius:14px;padding:24px;text-align:center;margin-bottom:20px}
+  .committed-banner h2{font-size:22px;color:var(--accent);margin-bottom:4px}
+  .committed-banner p{color:var(--text-dim);font-size:13px}
+  .confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+  @media(max-width:768px){.stats-row{grid-template-columns:repeat(3,1fr)}.schools-grid{grid-template-columns:1fr}.metrics-grid{grid-template-columns:1fr}.main-tabs{flex-direction:column}.proscons-cols{grid-template-columns:1fr}.criteria-row{grid-template-columns:1fr 1fr 40px}.decision-banner{flex-direction:column;text-align:center}.rating-grid{grid-template-columns:1fr}}
+  @media(max-width:480px){.stats-row{grid-template-columns:repeat(2,1fr)}.container{padding:12px}}
+/* Financial Aid Tab Styles */
+.fin-table{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px}
+.fin-table table{width:100%;border-collapse:collapse}
+.fin-table th{background:var(--surface2);padding:12px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.fin-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px}
+.fin-table tr:last-child td{border-bottom:none}
+.fin-table tr:hover{background:var(--surface2)}
+.fin-expand-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.fin-expand-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fin-expanded-row{background:var(--surface3);display:none}
+.fin-expanded-row.show{display:table-row}
+.fin-breakdown{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.fin-breakdown-col h4{font-size:12px;color:var(--text-dim);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.fin-breakdown-item{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.fin-breakdown-item:last-child{border-bottom:none;font-weight:600;padding-top:10px}
+.cost-green{color:var(--green)}.cost-yellow{color:var(--yellow)}.cost-red{color:var(--red)}
+.fin-form-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px}
+.fin-form-card h3{font-size:16px;margin-bottom:16px}
+.fin-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px}
+.fin-input-group{display:flex;flex-direction:column;gap:6px}
+.fin-input-group label{font-size:12px;color:var(--text-dim);font-weight:500}
+.fin-input-group input,.fin-input-group select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:14px;font-family:inherit;transition:border-color .2s}
+.fin-input-group input:focus,.fin-input-group select:focus{outline:none;border-color:var(--accent)}
+.fin-calculated{background:var(--surface3);padding:12px;border-radius:8px;border-left:3px solid var(--accent)}
+.fin-calculated-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+.fin-calculated-value{font-size:24px;font-weight:700;color:var(--text);margin-top:4px}
+.fin-btn-group{display:flex;gap:8px}
+.fin-btn{padding:10px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.fin-btn-primary{background:var(--accent);color:white}
+.fin-btn-primary:hover{background:var(--accent-light)}
+.fin-btn-secondary{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border)}
+.fin-btn-secondary:hover{border-color:var(--border-light);color:var(--text)}
+.insights-panel{background:linear-gradient(135deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px}
+.insights-panel h3{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.insight-item{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-dim)}
+.insight-item:last-child{border-bottom:none}
+.insight-item strong{color:var(--text);font-weight:600}
+.insight-highlight{color:var(--accent);font-weight:700}
+/* Decision Analytics Styles */
+.criteria-matrix{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px}
+.criteria-matrix h3{font-size:16px;margin-bottom:16px}
+.weight-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;padding:16px;background:var(--surface2);border-radius:8px}
+.weight-item{display:flex;flex-direction:column;gap:6px}
+.weight-item label{font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between}
+.weight-item input[type="range"]{width:100%;height:6px;background:var(--surface3);border-radius:3px;outline:none;-webkit-appearance:none}
+.weight-item input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;background:var(--accent);border-radius:50%;cursor:pointer}
+.weight-item input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--accent);border-radius:50%;cursor:pointer;border:none}
+.school-rating-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.school-rating-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.school-rating-name{font-size:15px;font-weight:600}
+.weighted-score{font-size:20px;font-weight:700;color:var(--accent)}
+.rank-badge{background:var(--green);color:white;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-left:8px}
+.rank-badge.rank-2{background:var(--yellow);color:var(--bg)}
+.rank-badge.rank-3{background:var(--orange)}
+.criteria-ratings{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.rating-item{display:flex;flex-direction:column;gap:4px}
+.rating-item label{font-size:11px;color:var(--text-dim)}
+.rating-display{display:flex;align-items:center;gap:8px}
+.rating-display input[type="range"]{flex:1}
+.rating-value{font-weight:600;color:var(--text);min-width:25px;text-align:right}
+.proscons-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.proscons-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;cursor:pointer}
+.proscons-header:hover{color:var(--accent)}
+.proscons-content{display:none;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.proscons-content.show{display:grid}
+.proscons-col h4{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.proscons-list{list-style:none;padding:0;margin:0 0 12px 0}
+.proscons-item{background:var(--surface2);padding:8px 12px;border-radius:6px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.proscons-delete{background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:4px;font-size:14px;transition:color .2s}
+.proscons-delete:hover{color:var(--red)}
+.proscons-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:13px;font-family:inherit;width:100%;margin-bottom:6px}
+.proscons-add-btn{background:var(--accent);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit}
+.proscons-add-btn:hover{background:var(--accent-light)}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading latest application data…</div></div>
+</div>
+
+<script>
+// ==============================================
+// CONSTANTS
+// ==============================================
+const BASE_COSTS = {csuf:2675,uc_berkeley:5895,cal_poly_slo:6476,uc_irvine:6485,ucla:6864,sac_state:7306,uc_santa_barbara:7745,uc_riverside:8240,sjsu:9743,uc_santa_cruz:9472,sdsu:9655};
+const DEFAULT_PELL = 7395;
+const CRITERIA_KEYS = ['net_cost','program_quality','location','career_outcomes','campus_resources','distance_from_home'];
+const CRITERIA_LABELS = {
+  net_cost:{name:'Net Cost',desc:'Financial burden'},
+  program_quality:{name:'Program Quality',desc:'Major strength'},
+  location:{name:'Location / Vibe',desc:'Campus feel'},
+  career_outcomes:{name:'Career Outcomes',desc:'Jobs & alumni'},
+  campus_resources:{name:'Resources',desc:'Clubs & facilities'},
+  distance_from_home:{name:'Distance',desc:'From home'}
+};
+
+const FALLBACK_DATA = {"metadata":{"version":"2.0","last_scan":"2026-02-16T00:00:00Z","total_scans":1,"total_emails_processed":55,"created":"2026-02-16","owner":"Michael Sarmento"},"schools":{"uc_berkeley":{"name":"UC Berkeley","short_name":"UCB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"},{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA by March 2"],"portal_url":null,"notes":"Transfer to Success workshop series ongoing"},"ucla":{"name":"UCLA","short_name":"UCLA","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":["Check MyApplication portal for updates"],"portal_url":"https://www.admission.ucla.edu/MyApplication","notes":"Application received Dec 12, 2025"},"uc_irvine":{"name":"UC Irvine","short_name":"UCI","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001314)"],"portal_url":null,"notes":"UCI school code for FAFSA: 001314"},"uc_santa_barbara":{"name":"UC Santa Barbara","short_name":"UCSB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid + Cal Grant priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001320)"],"portal_url":"https://connect.admissions.ucsb.edu/apply/status","notes":"Applicant Portal open"},"uc_riverside":{"name":"UC Riverside","short_name":"UCR","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Receiving marketing emails, School of Business focus"},"uc_santa_cruz":{"name":"UC Santa Cruz","short_name":"UCSC","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid deadline"},{"type":"decisions","date":"2026-04-01","description":"Transfer decisions begin posting"}],"action_items":["Complete FAFSA (School Code: 001321)","Check Admissions Portal starting April 1"],"portal_url":"https://ucsc.link/adm-portal","notes":"CruzID: mzsarmen. Transfer decisions: April 1-30"},"cal_poly_slo":{"name":"Cal Poly SLO","short_name":"Cal Poly","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Account: sarmento@calpoly.edu. Receiving biweekly newsletters"},"sjsu":{"name":"San Jose State","short_name":"SJSU","type":"CSU","status":"accepted","confidence":0.99,"decision_date":"2026-02-12","deadlines":[{"type":"intent","date":null,"description":"Confirm Intent to Enroll (check MySJSU)"},{"type":"event","date":"2026-04-18","description":"Admitted Spartan Day on campus"},{"type":"deposit","date":null,"description":"$250 enrollment deposit"}],"action_items":["Confirm Intent to Enroll via MySJSU","Pay $250 enrollment deposit","Choose mandatory Orientation session","Send official transcripts","Register for Admitted Spartan Day (April 18)"],"portal_url":"https://one.sjsu.edu","notes":"ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"},"sdsu":{"name":"San Diego State","short_name":"SDSU","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[{"type":"academic_history","date":"2026-01-31","description":"Academic History Update (PASSED)"}],"action_items":["Confirm Academic History Update was completed"],"portal_url":"https://calstate.liaisoncas.com/applicant-ux/#/login","notes":"RedID: 134626697"},"csuf":{"name":"Cal State Fullerton","short_name":"CSUF","type":"CSU","status":"pending","confidence":0.85,"decision_date":null,"deadlines":[],"action_items":["Check CSUF Student Portal for updates"],"portal_url":null,"notes":"CWID: 821713195. Applied Nov 8, 2025"},"sac_state":{"name":"Sacramento State","short_name":"Sac State","type":"CSU","status":"accepted","confidence":0.97,"decision_date":"2025-12-15","deadlines":[{"type":"intent","date":"2026-05-01","description":"Submit Intent to Enroll"},{"type":"business_app","date":"2026-03-16","description":"Business Admin supplemental application"},{"type":"adt","date":"2026-03-15","description":"ADT verification to Admissions"}],"action_items":["Submit Intent to Enroll by May 1","Complete Business supplemental app (Feb 1 - Mar 16)","Email unofficial transcripts to cob-ugrad@csus.edu","Ensure ADT verification by March 15"],"portal_url":"https://idp.csus.edu/idp/profile/cas/login","notes":"ADMITTED! ID: 305148038. Provisional financial aid awarded."}},"email_log":[{"id":"1","school":"sjsu","date":"2026-02-14","subject":"Save the Date: SJSU Admitted Spartan Day","category":"action_required","confidence":0.95},{"id":"2","school":"sjsu","date":"2026-02-12","subject":"Welcome to SJSU for Fall 2026!","category":"acceptance","confidence":0.99}],"scan_history":[{"scan_date":"2026-02-16","scan_timestamp":"2026-02-16T00:00:00Z","emails_found":55,"new_decisions":2,"notes":"Initial scan. Found 2 acceptances (SJSU, Sac State)."}],"feedback_log":[],"performance_metrics":{"total_correct":0,"total_incorrect":0,"total_reviewed":0}};
+
+const OBJECTIVE_DATA={uc_berkeley:{program_quality:{score:10,ranking:"#2 nationally (Haas)",salary:"$77k start, $140k mid-career",employers:"Google, McKinsey, Deloitte"},career_outcomes:{score:10,employment_rate:"95%",avg_salary:76600,mid_career:140000},location:{score:8,city:"Berkeley, CA",col_index:194,job_market:"SF Bay Area - Tech hub"}},ucla:{program_quality:{score:9,ranking:"#15 nationally (Anderson)",salary:"$72k start, $135k mid-career",employers:"Disney, Deloitte, Google"},career_outcomes:{score:9,employment_rate:"93%",avg_salary:72000,mid_career:135000},location:{score:9,city:"Los Angeles, CA",col_index:173,job_market:"LA Metro - Entertainment, Tech, Finance"}},uc_irvine:{program_quality:{score:8,ranking:"#35 business, #10 Analytics (Merage)",salary:"$68k start, $125k mid-career",employers:"Amazon, Deloitte, Big 4"},career_outcomes:{score:8,employment_rate:"91%",avg_salary:68000,mid_career:125000},location:{score:8,city:"Irvine, CA",col_index:185,job_market:"Orange County - Tech, Healthcare"}},uc_santa_barbara:{program_quality:{score:7,ranking:"#45 nationally",salary:"$65k start, $118k mid-career",employers:"Amazon, Google, Deloitte"},career_outcomes:{score:7,employment_rate:"89%",avg_salary:65000,mid_career:118000},location:{score:9,city:"Santa Barbara, CA",col_index:168,job_market:"Santa Barbara - Beach town, Tech"}},uc_riverside:{program_quality:{score:6,ranking:"#55 nationally",salary:"$60k start, $105k mid-career",employers:"Amazon, Kaiser, Target"},career_outcomes:{score:6,employment_rate:"85%",avg_salary:60000,mid_career:105000},location:{score:6,city:"Riverside, CA",col_index:128,job_market:"Inland Empire - Logistics, Healthcare"}},uc_santa_cruz:{program_quality:{score:6,ranking:"#60 nationally",salary:"$63k start, $112k mid-career",employers:"Google, Apple, Adobe"},career_outcomes:{score:7,employment_rate:"87%",avg_salary:63000,mid_career:112000},location:{score:8,city:"Santa Cruz, CA",col_index:178,job_market:"1hr to Silicon Valley"}},cal_poly_slo:{program_quality:{score:8,ranking:"#42 nationally, #1 CSU (Orfalea)",salary:"$72k start, $121k mid-career",employers:"Apple, Google, Amazon"},career_outcomes:{score:9,employment_rate:"94%",avg_salary:72358,mid_career:121000},location:{score:9,city:"San Luis Obispo, CA",col_index:142,job_market:"Central Coast - Perfect weather, Alumni network"}},sjsu:{program_quality:{score:7,ranking:"#127 nationally, #2 CSU (Lucas)",salary:"$75k start, $128k mid-career",employers:"Google, Apple, Cisco"},career_outcomes:{score:9,employment_rate:"92%",avg_salary:75000,mid_career:128000},location:{score:10,city:"San Jose, CA",col_index:214,job_market:"Silicon Valley epicenter"}},sdsu:{program_quality:{score:7,ranking:"#110 nationally (Fowler)",salary:"$68k start, $115k mid-career",employers:"Qualcomm, Deloitte, EY"},career_outcomes:{score:7,employment_rate:"88%",avg_salary:68000,mid_career:115000},location:{score:10,city:"San Diego, CA",col_index:173,job_market:"San Diego - Perfect weather, Biotech"}},sac_state:{program_quality:{score:5,ranking:"#150 nationally",salary:"$51k start, $95k mid-career",employers:"State of CA, Kaiser, Intel"},career_outcomes:{score:6,employment_rate:"82%",avg_salary:51000,mid_career:95000},location:{score:7,city:"Sacramento, CA",col_index:132,job_market:"State capital - Government jobs"}},csuf:{program_quality:{score:6,ranking:"#140 nationally (Mihaylo)",salary:"$49k start, $92k mid-career",employers:"Disney, Boeing, Deloitte"},career_outcomes:{score:6,employment_rate:"80%",avg_salary:49000,mid_career:92000},location:{score:8,city:"Fullerton, CA",col_index:171,job_market:"LA/OC - Entertainment, Aerospace"}}};
+
+// ==============================================
+// STATE
+// ==============================================
+let TRACKER_DATA = FALLBACK_DATA;
+let dataSource = 'embedded (fallback)';
+let currentMainTab = 'applications';
+let aidData = {};
+let analyticsData = {};
+let globalWeights = {};
+let aidSort = 'net';
+
+// ==============================================
+// BOOT
+// ==============================================
+async function boot() {
+  loadLocalData();
+  try {
+    const resp = await fetch(DATA_URL, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    TRACKER_DATA = await resp.json();
+    dataSource = 'live (GitHub \u2014 auto-updated every 12h)';
+  } catch (e) {
+    console.warn('Live fetch failed, using embedded fallback:', e.message);
+    dataSource = 'embedded fallback';
+  }
+  initAidAndAnalytics();
+  renderFull();
+}
+
+function loadLocalData() {
+  try { const a=localStorage.getItem('st_aid'); if(a) aidData=JSON.parse(a); } catch(e){}
+  try { const d=localStorage.getItem('st_analytics'); if(d) analyticsData=JSON.parse(d); } catch(e){}
+  try { const w=localStorage.getItem('st_weights'); if(w) globalWeights=JSON.parse(w); } catch(e){}
+}
+function saveLocalData() {
+  try { localStorage.setItem('st_aid',JSON.stringify(aidData)); localStorage.setItem('st_analytics',JSON.stringify(analyticsData)); localStorage.setItem('st_weights',JSON.stringify(globalWeights)); } catch(e){}
+}
+function initAidAndAnalytics() {
+  Object.keys(TRACKER_DATA.schools).forEach(key => {
+    if(!aidData[key]) aidData[key]={pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,aid_deadline:null};
+    if(!analyticsData[key]) { analyticsData[key]={ratings:{},pros:[],cons:[],gut_feeling:5,gut_history:[]}; CRITERIA_KEYS.forEach(c=>{analyticsData[key].ratings[c]=5;}); }
+  });
+  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:8,location:6,career_outcomes:8,campus_resources:5,distance_from_home:4};
+  if(!analyticsData._committed) analyticsData._committed={locked:false,school:null};
+  saveLocalData();
+}
+
+// ==============================================
+// UTILITIES
+// ==============================================
+function daysUntil(d){if(!d)return null;const t=new Date(d+'T23:59:59');return Math.ceil((t-new Date())/(864e5));}
+function daysClass(d){if(d===null)return'';if(d<0)return'passed';if(d<=7)return'urgent';if(d<=21)return'soon';return'ok';}
+function daysLabel(d){if(d===null)return'TBD';if(d<0)return Math.abs(d)+'d ago';if(d===0)return'TODAY';if(d===1)return'Tomorrow';return d+' days';}
+function countByStatus(s){return Object.values(TRACKER_DATA.schools).filter(x=>x.status===s).length;}
+function fmt$(n){if(n==null)return'--';return'$'+Math.abs(n).toLocaleString('en-US');}
+function getNetCost(k){const b=BASE_COSTS[k]||0;const a=aidData[k]||{};return b-(a.pell_grant||0)-(a.cal_grant||0)-(a.school_grants||0)-(a.work_study||0);}
+function getWeightedScore(k){const r=analyticsData[k]?.ratings||{};let t=0,m=0;CRITERIA_KEYS.forEach(c=>{const w=globalWeights[c]||0;t+=w*(r[c]||0);m+=w*10;});return{score:t,max:m,pct:m>0?Math.round(t/m*100):0};}
+function getAcceptedSchools(){return Object.entries(TRACKER_DATA.schools).filter(([k,s])=>s.status==='accepted'||s.status==='committed');}
+function getSchoolStatus(k){const c=analyticsData._committed;if(c.locked&&c.school===k)return'committed';if(c.locked&&TRACKER_DATA.schools[k]?.status==='accepted')return'declined';return TRACKER_DATA.schools[k]?.status||'pending';}
+function may1Days(){return daysUntil('2026-05-01');}
+
+// ==============================================
+// RENDER FULL APP
+// ==============================================
+function renderFull() {
+  const m1=may1Days();const schools=TRACKER_DATA.schools;const committed=analyticsData._committed;
+  let html=`<div class="header"><h1>College Application <span>Tracker</span></h1>
+    <div class="subtitle">Fall 2026 Transfer Applications \u2014 ${Object.keys(schools).length} Schools \u2014 Michael Sarmento</div>
+    <div class="scan-info"><span class="live-dot"></span>
+    Last scan: ${new Date(TRACKER_DATA.metadata.last_scan).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+    \u00b7 Scan #${TRACKER_DATA.metadata.total_scans} \u00b7 ${TRACKER_DATA.metadata.total_emails_processed} emails</div>
+    <div class="data-source">Data: ${dataSource}</div></div>`;
+  if(!committed.locked) html+=`<div class="decision-banner"><div class="banner-left"><div class="banner-icon">\ud83c\udf93</div><div class="banner-text"><strong>Intent to Enroll Deadline</strong>Commit to your school by May 1, 2026</div></div><div class="days-count ${daysClass(m1)}">${m1!==null?m1:'?'}<span>days left</span></div></div>`;
+  html+=`<div class="main-tabs">
+    <button class="main-tab ${currentMainTab==='applications'?'active':''}" onclick="switchMainTab('applications')"><span class="tab-icon">\ud83d\udccb</span> Applications</button>
+    <button class="main-tab ${currentMainTab==='financial'?'active':''}" onclick="switchMainTab('financial')"><span class="tab-icon">\ud83d\udcb0</span> Financial Aid</button>
+    <button class="main-tab ${currentMainTab==='analytics'?'active':''}" onclick="switchMainTab('analytics')"><span class="tab-icon">\ud83d\udcca</span> Decision Analytics</button></div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='applications'?'active':''}">${renderApplicationsTab()}</div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='financial'?'active':''}">${renderFinancialTab()}</div>`;
+  html+=`<div class="tab-panel ${currentMainTab==='analytics'?'active':''}">${renderAnalyticsTab()}</div>`;
+  html+=`<div class="footer">Michael Sarmento \u00b7 Fall 2026 Transfer Applications \u00b7 Auto-updated by <a href="https://script.google.com" target="_blank">Google Apps Script</a> every 12h \u00b7 Hosted on <a href="https://vercel.com" target="_blank">Vercel</a></div>`;
+  document.getElementById('app').innerHTML=html;
+}
+function switchMainTab(t){currentMainTab=t;renderFull();}
+
+// ==============================================
+// TAB 1: APPLICATIONS
+// ==============================================
+function renderApplicationsTab() {
+  const schools=TRACKER_DATA.schools,keys=Object.keys(schools);
+  const accepted=countByStatus('accepted'),pending=countByStatus('pending'),rejected=countByStatus('rejected'),waitlisted=countByStatus('waitlisted');
+  const allDl=[];
+  keys.forEach(k=>{(schools[k].deadlines||[]).forEach(d=>{if(d.date)allDl.push({school:schools[k].short_name,...d,days:daysUntil(d.date)});});});
+  allDl.sort((a,b)=>{if(a.days===null)return 1;if(b.days===null)return-1;return a.days-b.days;});
+  let html='';
+  const com=analyticsData._committed;
+  if(com.locked&&com.school){const s=schools[com.school];html+=`<div class="committed-banner"><h2>\ud83c\udf89 Committed to ${s?.name||com.school}!</h2><p>You've made your decision. Good luck!</p></div>`;}
+  html+=`<div class="stats-row">
+    <div class="stat-card total"><div class="number">${keys.length}</div><div class="label">Total</div></div>
+    <div class="stat-card accepted"><div class="number">${accepted}</div><div class="label">Accepted</div></div>
+    <div class="stat-card pending"><div class="number">${pending}</div><div class="label">Pending</div></div>
+    <div class="stat-card waitlisted"><div class="number">${waitlisted}</div><div class="label">Waitlisted</div></div>
+    <div class="stat-card rejected"><div class="number">${rejected}</div><div class="label">Rejected</div></div></div>`;
+  const future=allDl.filter(d=>d.days!==null&&d.days>=0);
+  if(future.length>0){html+=`<div class="panel"><h2>\u23f0 Upcoming Deadlines</h2><ul class="deadline-list">`;future.slice(0,8).forEach(d=>{html+=`<li><span class="deadline-school">${d.school}</span><span class="deadline-desc">${d.description}</span><span class="days-until ${daysClass(d.days)}">${daysLabel(d.days)}</span></li>`;});html+=`</ul></div>`;}
+  html+=`<div class="tabs"><div class="tab active" onclick="filterSchools('all',event)">All</div><div class="tab" onclick="filterSchools('accepted',event)">Accepted (${accepted})</div><div class="tab" onclick="filterSchools('pending',event)">Pending (${pending})</div><div class="tab" onclick="filterSchools('uc',event)">UC</div><div class="tab" onclick="filterSchools('csu',event)">CSU</div></div>`;
+  const sorted=[...keys].sort((a,b)=>{const o={committed:0,accepted:0,waitlisted:1,pending:2,rejected:3,declined:4};return(o[getSchoolStatus(a)]||2)-(o[getSchoolStatus(b)]||2);});
+  html+=`<div class="schools-grid" id="schools-grid">`;sorted.forEach(k=>{html+=renderCard(k,schools[k]);});html+=`</div>`;
+  // Email log
+  const emails=[...TRACKER_DATA.email_log].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,15);
+  html+=`<div class="panel"><h2>\ud83d\udceb Recent Emails</h2><div style="overflow-x:auto"><table class="log-table"><thead><tr><th>Date</th><th>School</th><th>Subject</th><th>Category</th><th>Conf</th></tr></thead><tbody>`;
+  emails.forEach(e=>{const sn=schools[e.school]?.short_name||e.school;html+=`<tr><td>${e.date}</td><td>${sn}</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.subject}</td><td><span class="cat-badge ${e.category}">${e.category.replace('_',' ')}</span></td><td>${Math.round((e.confidence||0)*100)}%</td></tr>`;});
+  html+=`</tbody></table></div></div>`;
+  // Scan history
+  if((TRACKER_DATA.scan_history||[]).length>0){html+=`<div class="panel"><h2>\ud83d\udd0d Scan History</h2>`;TRACKER_DATA.scan_history.slice(0,5).forEach(s=>{html+=`<div class="scan-item"><strong>${s.scan_date}</strong> \u2014 ${s.emails_found} email${s.emails_found!==1?'s':''}${s.new_decisions>0?` <strong style="color:var(--green)">\u00b7 ${s.new_decisions} decision(s)!</strong>`:''}<div class="scan-meta">${s.notes||''}</div></div>`;});html+=`</div>`;}
+  // Metrics
+  const pm=TRACKER_DATA.performance_metrics||{};const rev=pm.total_reviewed||0;const acc=rev>0?Math.round((pm.total_correct/rev)*100)+'%':'--';
+  html+=`<div class="panel"><h2>\u2699\ufe0f System Performance</h2><div class="metrics-grid"><div class="metric"><div class="val">${TRACKER_DATA.metadata.total_scans}</div><div class="lbl">Total Scans</div></div><div class="metric"><div class="val">${TRACKER_DATA.metadata.total_emails_processed}</div><div class="lbl">Emails</div></div><div class="metric"><div class="val">${acc}</div><div class="lbl">Accuracy</div></div></div></div>`;
+  return html;
+}
+
+function renderCard(key,s) {
+  const status=getSchoolStatus(key);
+  let dHtml='';
+  if(s.deadlines&&s.deadlines.length>0){dHtml='<div class="deadlines">';s.deadlines.forEach(d=>{const days=daysUntil(d.date);dHtml+=`<div class="deadline-item ${daysClass(days)}"><span>${d.description}</span><span class="deadline-date">${d.date||'TBD'} ${days!==null?'('+daysLabel(days)+')':''}</span></div>`;});dHtml+='</div>';}
+  let aHtml='';
+  if(s.action_items&&s.action_items.length>0){aHtml='<div class="action-items">';s.action_items.forEach(a=>{aHtml+=`<div class="action-item">${a}</div>`;});aHtml+='</div>';}
+  return `<div class="school-card status-${status}" data-status="${s.status}" data-type="${s.type.toLowerCase()}">
+    <div class="school-header"><div><div class="school-name">${s.name}</div><span class="school-type">${s.type}</span></div>
+    <span class="status-badge ${status}">${status}${s.decision_date?' \u00b7 '+s.decision_date:''}</span></div>
+    ${s.notes?`<div class="detail-row"><span class="detail-icon">\ud83d\udccb</span><span class="detail-text">${s.notes}</span></div>`:''}
+    ${s.portal_url?`<div class="detail-row"><span class="detail-icon">\ud83d\udd17</span><span class="detail-text"><a href="${s.portal_url}" target="_blank">Open Portal</a></span></div>`:''}
+    ${dHtml}${aHtml}
+    <div class="confidence-bar"><span>Confidence: ${Math.round(s.confidence*100)}%</span><div class="conf-track"><div class="conf-fill" style="width:${s.confidence*100}%"></div></div></div>
+    <div class="feedback-section"><span style="font-size:11px;color:var(--text-dim);margin-right:8px">Is this correct?</span>
+    <button class="feedback-btn" onclick="giveFeedback('${key}','correct',this)">\u2713 Correct</button>
+    <button class="feedback-btn" onclick="giveFeedback('${key}','wrong',this)">\u2717 Wrong</button>
+    <div class="status-override" id="override-${key}">
+    <button class="override-btn" onclick="overrideStatus('${key}','accepted')">Accepted</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','pending')">Pending</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','waitlisted')">Waitlisted</button>
+    <button class="override-btn" onclick="overrideStatus('${key}','rejected')">Rejected</button></div></div></div>`;
+}
+
+// ==============================================
+// TAB 2: FINANCIAL AID
+// ==============================================
+function renderFinancialTab() {
+  const schools=TRACKER_DATA.schools,keys=Object.keys(schools);
+  let html=`<h2 style="font-size:24px;margin-bottom:24px">\ud83d\udcb0 Financial Aid Comparison</h2>`;
+  
+  // Cost Breakdown Table with expandable rows
+  html+=`<div class="fin-table"><table><thead><tr><th>School</th><th>Total COA</th><th>Status</th><th>Net Cost</th><th></th></tr></thead><tbody>`;
+  
+  keys.forEach(key=>{
+    const s=schools[key];
+    const cost=s.cost_breakdown||{};
+    const aid=s.financial_aid||{};
+    const netCost=(cost.total_coa||0)-(aid.pell_grant+aid.cal_grant+aid.school_grants+aid.other_aid);
+    const costClass=cost.total_coa<34000?'cost-green':cost.total_coa<40000?'cost-yellow':'cost-red';
+    
+    html+=`<tr><td><strong>${s.name}</strong></td>
+      <td class="${costClass}">$${(cost.total_coa||0).toLocaleString()}</td>
+      <td><span class="status-badge ${s.status}">${s.status}</span></td>
+      <td><strong>$${netCost.toLocaleString()}</strong></td>
+      <td><button class="fin-expand-btn" onclick="toggleFinRow('${key}')">Details</button></td></tr>`;
+    
+    html+=`<tr class="fin-expanded-row" id="fin-row-${key}"><td colspan="5"><div class="fin-breakdown">
+      <div class="fin-breakdown-col"><h4>Cost Breakdown</h4>
+        <div class="fin-breakdown-item"><span>Tuition & Fees</span><span>$${(cost.tuition_fees||0).toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Housing & Food</span><span>$${(cost.housing_food||0).toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Books & Supplies</span><span>$${(cost.books_supplies||0).toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Transportation</span><span>$${(cost.transportation||0).toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Personal Expenses</span><span>$${(cost.personal||0).toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Total COA</span><span><strong>$${(cost.total_coa||0).toLocaleString()}</strong></span></div>
+      </div>
+      <div class="fin-breakdown-col"><h4>Financial Aid Package</h4>
+        <div class="fin-breakdown-item"><span>Federal Pell Grant</span><span class="cost-green">-$${aid.pell_grant.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Cal Grant</span><span class="cost-green">-$${aid.cal_grant.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>School Grants</span><span class="cost-green">-$${aid.school_grants.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Work-Study</span><span class="cost-yellow">-$${aid.work_study.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Federal Loans</span><span class="cost-yellow">-$${aid.federal_loans.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Other Aid</span><span class="cost-green">-$${aid.other_aid.toLocaleString()}</span></div>
+        <div class="fin-breakdown-item"><span>Net Cost</span><span><strong>$${netCost.toLocaleString()}</strong></span></div>
+      </div></div></td></tr>`;
+  });
+  
+  html+=`</tbody></table></div>`;
+  
+  // Aid Package Entry Form
+  html+=`<div class="fin-form-card"><h3>\ud83d\udcdd Enter/Update Aid Package</h3>
+    <div class="fin-form-grid">
+      <div class="fin-input-group"><label>School</label>
+        <select id="fin-school-select" onchange="loadAidPackage()">
+          <option value="">Select a school...</option>`;
+  keys.forEach(key=>{html+=`<option value="${key}">${schools[key].name}</option>`;});
+  html+=`</select></div>
+      <div class="fin-input-group"><label>Federal Pell Grant</label><input type="number" id="fin-pell" value="7395" oninput="calculateAidTotals()"/></div>
+      <div class="fin-input-group"><label>Cal Grant</label><input type="number" id="fin-cal-grant" value="0" oninput="calculateAidTotals()"/></div>
+      <div class="fin-input-group"><label>School Grants/Scholarships</label><input type="number" id="fin-school-grants" value="0" oninput="calculateAidTotals()"/></div>
+      <div class="fin-input-group"><label>Federal Work-Study</label><input type="number" id="fin-work-study" value="0" oninput="calculateAidTotals()"/></div>
+      <div class="fin-input-group"><label>Federal Direct Loans</label><input type="number" id="fin-loans" value="0" oninput="calculateAidTotals()"/></div>
+      <div class="fin-input-group"><label>Other Aid (Private Scholarships)</label><input type="number" id="fin-other-aid" value="0" oninput="calculateAidTotals()"/></div>
+    </div>
+    <div class="fin-form-grid" style="grid-template-columns:repeat(3,1fr);margin-top:16px">
+      <div class="fin-calculated"><div class="fin-calculated-label">Total Aid</div><div class="fin-calculated-value" id="fin-total-aid">$0</div></div>
+      <div class="fin-calculated"><div class="fin-calculated-label">Net Cost</div><div class="fin-calculated-value" id="fin-net-cost">$0</div></div>
+      <div class="fin-calculated"><div class="fin-calculated-label">Out-of-Pocket</div><div class="fin-calculated-value" id="fin-out-of-pocket">$0</div></div>
+    </div>
+    <div class="fin-btn-group" style="margin-top:16px">
+      <button class="fin-btn fin-btn-primary" onclick="saveAidPackage()">Save Aid Package</button>
+      <button class="fin-btn fin-btn-secondary" onclick="clearAidForm()">Clear</button>
+    </div></div>`;
+  
+  // Smart Insights
+  const withCosts=keys.filter(k=>schools[k].cost_breakdown&&schools[k].cost_breakdown.total_coa>0);
+  if(withCosts.length>0){
+    const cheapestCOA=withCosts.reduce((min,curr)=>schools[curr].cost_breakdown.total_coa<schools[min].cost_breakdown.total_coa?curr:min);
+    const mostExpCOA=withCosts.reduce((max,curr)=>schools[curr].cost_breakdown.total_coa>schools[max].cost_breakdown.total_coa?curr:max);
+    const priceDiff=schools[mostExpCOA].cost_breakdown.total_coa-schools[cheapestCOA].cost_breakdown.total_coa;
+    html+=`<div class="insights-panel"><h3>\ud83d\udca1 Smart Insights</h3>`;
+    html+=`<div class="insight-item">Cheapest Total COA: <strong>${schools[cheapestCOA].name}</strong> at <span class="insight-highlight">$${schools[cheapestCOA].cost_breakdown.total_coa.toLocaleString()}</span></div>`;
+    html+=`<div class="insight-item">Most Expensive: <strong>${schools[mostExpCOA].name}</strong> costs <span class="insight-highlight">$${priceDiff.toLocaleString()}</span> more than cheapest</div>`;
+    html+=`<div class="insight-item">With <strong>Pell Grant ($7,395)</strong> and <strong>Cal Grant ($9,084)</strong>, UCs would cost approximately <span class="insight-highlight">$25,000+</span> net</div>`;
+    html+=`<div class="insight-item">If you max federal loans ($12,500), you could reduce out-of-pocket by <span class="insight-highlight">$12,500</span> per year</div>`;
+    html+=`</div>`;
+  }
+  return html;
+}
+
+// Financial Aid Helper Functions
+function toggleFinRow(schoolKey){const row=document.getElementById('fin-row-'+schoolKey);if(row)row.classList.toggle('show');}
+function loadAidPackage(){const select=document.getElementById('fin-school-select');if(!select||!select.value)return;const s=TRACKER_DATA.schools[select.value];if(!s||!s.financial_aid)return;const aid=s.financial_aid;document.getElementById('fin-pell').value=aid.pell_grant||7395;document.getElementById('fin-cal-grant').value=aid.cal_grant||0;document.getElementById('fin-school-grants').value=aid.school_grants||0;document.getElementById('fin-work-study').value=aid.work_study||0;document.getElementById('fin-loans').value=aid.federal_loans||0;document.getElementById('fin-other-aid').value=aid.other_aid||0;calculateAidTotals();}
+function calculateAidTotals(){const select=document.getElementById('fin-school-select');if(!select||!select.value)return;const s=TRACKER_DATA.schools[select.value];if(!s||!s.cost_breakdown)return;const pell=parseInt(document.getElementById('fin-pell').value)||0;const calGrant=parseInt(document.getElementById('fin-cal-grant').value)||0;const schoolGrants=parseInt(document.getElementById('fin-school-grants').value)||0;const workStudy=parseInt(document.getElementById('fin-work-study').value)||0;const loans=parseInt(document.getElementById('fin-loans').value)||0;const otherAid=parseInt(document.getElementById('fin-other-aid').value)||0;const totalAid=pell+calGrant+schoolGrants+workStudy+loans+otherAid;const netCost=s.cost_breakdown.total_coa-(pell+calGrant+schoolGrants+otherAid);const outOfPocket=netCost-workStudy-loans;document.getElementById('fin-total-aid').textContent='$'+totalAid.toLocaleString();document.getElementById('fin-net-cost').textContent='$'+netCost.toLocaleString();document.getElementById('fin-out-of-pocket').textContent='$'+outOfPocket.toLocaleString();}
+function saveAidPackage(){const select=document.getElementById('fin-school-select');if(!select||!select.value){alert('Please select a school first');return;}const key=select.value;const s=TRACKER_DATA.schools[key];if(!s)return;if(!s.financial_aid)s.financial_aid={};s.financial_aid.pell_grant=parseInt(document.getElementById('fin-pell').value)||0;s.financial_aid.cal_grant=parseInt(document.getElementById('fin-cal-grant').value)||0;s.financial_aid.school_grants=parseInt(document.getElementById('fin-school-grants').value)||0;s.financial_aid.work_study=parseInt(document.getElementById('fin-work-study').value)||0;s.financial_aid.federal_loans=parseInt(document.getElementById('fin-loans').value)||0;s.financial_aid.other_aid=parseInt(document.getElementById('fin-other-aid').value)||0;alert('Aid package saved for '+s.name);renderFull();}
+function clearAidForm(){document.getElementById('fin-school-select').value='';document.getElementById('fin-pell').value=7395;document.getElementById('fin-cal-grant').value=0;document.getElementById('fin-school-grants').value=0;document.getElementById('fin-work-study').value=0;document.getElementById('fin-loans').value=0;document.getElementById('fin-other-aid').value=0;document.getElementById('fin-total-aid').textContent='$0';document.getElementById('fin-net-cost').textContent='$0';document.getElementById('fin-out-of-pocket').textContent='$0';}
+
+// ==============================================
+// TAB 3: DECISION ANALYTICS
+// ==============================================
+function renderAnalyticsTab() {
+  const schools=TRACKER_DATA.schools;
+  const allSchools=Object.entries(schools);
+  const accepted=allSchools.filter(([k,s])=>s.status==='accepted');
+  const committed=TRACKER_DATA.final_decision||{committed:false,school_key:null};
+  let html=`<h2 style="font-size:24px;margin-bottom:24px">\ud83c\udfaf Decision Analytics</h2>`;
+  
+  const daysUntilMay1=Math.ceil((new Date('2026-05-01')-new Date())/(1000*60*60*24));
+  const bannerColor=daysUntilMay1<15?'var(--red)':daysUntilMay1<30?'var(--yellow)':'var(--green)';
+  html+=`<div class="decision-banner"><div class="banner-left"><div class="banner-icon">\u23f0</div><div class="banner-text"><strong>Intent to Enroll Deadline</strong>May 1, 2026</div></div><div class="days-count" style="color:${bannerColor}">${daysUntilMay1}<span>days left</span></div></div>`;
+  
+  html+=`<div class="criteria-matrix"><h3>\u2696\ufe0f Weighted Decision Matrix</h3><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><p style="color:var(--text-dim);font-size:13px;margin:0">Rate each school on these criteria, then adjust the weights based on what matters most to you.</p><label style="font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="analytics-accepted-only" onchange="renderFull()"> Show accepted only (${accepted.length})</label></div><button class="fin-btn fin-btn-primary" style="margin-bottom:16px" onclick="autoFillObjectiveRatings()">📊 Auto-Fill from Research Data</button>`;
+  
+  const criteria=['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];
+  const criteriaLabels={'net_cost':'\ud83d\udcb0 Net Cost','program_quality':'\ud83d\udcda Program Quality','career_outcomes':'\ud83d\udcbc Career Outcomes','location_vibe':'\ud83d\udccd Location & Vibe','gut_feeling':'\u2764\ufe0f Gut Feeling'};
+  html+=`<div class="weight-controls">`;
+  const firstSchool=allSchools[0]||accepted[0];
+  criteria.forEach(c=>{const w=(schools[firstSchool[0]].decision_analytics?.criteria_weights||{})[c]||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6}[c];html+=`<div class="weight-item"><label><span>${criteriaLabels[c]}</span><span id="weight-${c}">${w}</span></label><input type="range" min="0" max="10" value="${w}" onchange="updateGlobalWeight('${c}',this.value)"/></div>`;});
+  html+=`</div>`;
+  
+  const acceptedOnly=typeof document!=='undefined'&&document.getElementById('analytics-accepted-only')?.checked;
+  const displaySchools=acceptedOnly?accepted:allSchools;
+  
+  const scoredSchools=displaySchools.map(([key,s])=>{const analytics=s.decision_analytics||{};const ratings=analytics.criteria_ratings||{};const weights=analytics.criteria_weights||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};const score=criteria.reduce((sum,c)=>(sum+(ratings[c]||0)*weights[c]),0);return [key,s,score,ratings,weights];}).sort((a,b)=>b[2]-a[2]);
+  
+  html+=`<div id="school-ratings">`;
+  scoredSchools.forEach(([key,s,score,ratings,weights],index)=>{const rank=index+1;const rankBadge=rank<=3?`<span class="rank-badge rank-${rank}">#${rank}</span>`:'';const objData=OBJECTIVE_DATA[key]||{};const statusBadge=s.status!=='accepted'?`<span class="status-badge ${s.status}" style="font-size:11px;margin-left:8px">${s.status}</span>`:'';html+=`<div class="school-rating-card"><div class="school-rating-header"><div><span class="school-rating-name">${s.name}</span>${rankBadge}${statusBadge}</div><div class="weighted-score">${Math.round(score)}</div></div>`;if(objData.program_quality){html+=`<div class="proscons-header" onclick="toggleResearchData('${key}')" style="font-size:13px;margin:8px 0;cursor:pointer;color:var(--text-dim)">📊 View Research Data <span id="research-chevron-${key}">\u25bc</span></div><div class="proscons-content" id="research-${key}" style="background:var(--surface3);padding:12px;border-radius:8px;font-size:12px"><strong>Program Quality:</strong> ${objData.program_quality.ranking} | ${objData.program_quality.salary}<br><strong>Career Outcomes:</strong> ${objData.career_outcomes.employment_rate} employed within 6mo | Top employers: ${objData.program_quality.employers}<br><strong>Location:</strong> ${objData.location.city} | ${objData.location.job_market}</div>`;}html+=`<div class="criteria-ratings">`;criteria.forEach(c=>{const v=ratings[c]||0;html+=`<div class="rating-item"><label>${criteriaLabels[c].replace(/[\ud83d\udcb0\ud83d\udcda\ud83d\udcbc\ud83d\udccd\u2764\ufe0f] /,'')}</label><div class="rating-display"><input type="range" min="0" max="10" value="${v}" onchange="updateSchoolRating('${key}','${c}',this.value)"/><span class="rating-value" id="rating-${key}-${c}">${v}</span></div></div>`;});html+=`</div></div>`;});
+  html+=`</div></div>`;
+  
+  html+=`<h3 style="font-size:18px;margin-bottom:12px;margin-top:24px">\ud83d\udcdd Pros & Cons</h3>`;
+  displaySchools.forEach(([key,s])=>{const analytics=s.decision_analytics||{};const pros=analytics.pros||[];const cons=analytics.cons||[];html+=`<div class="proscons-section"><div class="proscons-header" onclick="toggleProscons('${key}')"><strong>${s.name}</strong>${s.status!=='accepted'?`<span class="status-badge ${s.status}" style="font-size:10px;margin-left:8px">${s.status}</span>`:''}<span id="chevron-${key}">\u25bc</span></div><div class="proscons-content" id="proscons-${key}"><div class="proscons-col"><h4>\u2705 Pros</h4><ul class="proscons-list" id="pros-list-${key}">`;pros.forEach((p,idx)=>{html+=`<li class="proscons-item"><span>${p.text||p}</span><button class="proscons-delete" onclick="deletePro('${key}',${idx})">\u00d7</button></li>`;});html+=`</ul><input type="text" class="proscons-input" id="pro-input-${key}" placeholder="Add a pro..."/><button class="proscons-add-btn" onclick="addProItem('${key}')">+ Add Pro</button></div><div class="proscons-col"><h4>\u274c Cons</h4><ul class="proscons-list" id="cons-list-${key}">`;cons.forEach((c,idx)=>{html+=`<li class="proscons-item"><span>${c.text||c}</span><button class="proscons-delete" onclick="deleteCon('${key}',${idx})">\u00d7</button></li>`;});html+=`</ul><input type="text" class="proscons-input" id="con-input-${key}" placeholder="Add a con..."/><button class="proscons-add-btn" onclick="addConItem('${key}')">+ Add Con</button></div></div></div>`;});
+  return html;
+}
+
+// ==============================================
+// ANALYTICS ACTIONS
+// ==============================================
+function updateGlobalWeight(criterion,value){document.getElementById('weight-'+criterion).textContent=value;Object.keys(TRACKER_DATA.schools).forEach(key=>{if(TRACKER_DATA.schools[key].decision_analytics)TRACKER_DATA.schools[key].decision_analytics.criteria_weights[criterion]=parseInt(value);});renderFull();}
+function updateSchoolRating(schoolKey,criterion,value){const s=TRACKER_DATA.schools[schoolKey];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[],gut_feeling_history:[],deal_breakers:[]};s.decision_analytics.criteria_ratings[criterion]=parseInt(value);document.getElementById('rating-'+schoolKey+'-'+criterion).textContent=value;renderFull();}
+function toggleProscons(schoolKey){const content=document.getElementById('proscons-'+schoolKey);const chevron=document.getElementById('chevron-'+schoolKey);if(content){content.classList.toggle('show');chevron.textContent=content.classList.contains('show')?'\u25b2':'\u25bc';}}
+function addProItem(schoolKey){const input=document.getElementById('pro-input-'+schoolKey);if(!input||!input.value.trim())return;const s=TRACKER_DATA.schools[schoolKey];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[],gut_feeling_history:[],deal_breakers:[]};if(!s.decision_analytics.pros)s.decision_analytics.pros=[];s.decision_analytics.pros.push({text:input.value.trim(),date:new Date().toLocaleDateString()});input.value='';renderFull();}
+function deletePro(schoolKey,index){const s=TRACKER_DATA.schools[schoolKey];if(s.decision_analytics&&s.decision_analytics.pros){s.decision_analytics.pros.splice(index,1);renderFull();}}
+function addConItem(schoolKey){const input=document.getElementById('con-input-'+schoolKey);if(!input||!input.value.trim())return;const s=TRACKER_DATA.schools[schoolKey];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[],gut_feeling_history:[],deal_breakers:[]};if(!s.decision_analytics.cons)s.decision_analytics.cons=[];s.decision_analytics.cons.push({text:input.value.trim(),date:new Date().toLocaleDateString()});input.value='';renderFull();}
+function deleteCon(schoolKey,index){const s=TRACKER_DATA.schools[schoolKey];if(s.decision_analytics&&s.decision_analytics.cons){s.decision_analytics.cons.splice(index,1);renderFull();}}
+function toggleResearchData(schoolKey){const content=document.getElementById('research-'+schoolKey);const chevron=document.getElementById('research-chevron-'+schoolKey);if(content){content.classList.toggle('show');chevron.textContent=content.classList.contains('show')?'\u25b2':'\u25bc';}}
+function autoFillObjectiveRatings(){if(!confirm('This will auto-fill Program Quality, Career Outcomes, and Location ratings based on research data for ALL schools. Net Cost will be calculated from your Financial Aid tab. Gut Feeling will remain at 5 (you control this). Continue?'))return;Object.keys(TRACKER_DATA.schools).forEach(key=>{const s=TRACKER_DATA.schools[key];const objData=OBJECTIVE_DATA[key];if(!objData){console.log('No objective data for:',key);return;}if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6},pros:[],cons:[],gut_feeling_history:[],deal_breakers:[]};const netCost=s.cost_breakdown&&s.financial_aid?(s.cost_breakdown.total_coa-(s.financial_aid.pell_grant+s.financial_aid.cal_grant+s.financial_aid.school_grants+s.financial_aid.other_aid)):0;const netCostScore=netCost>0?(netCost<=25000?10:netCost<=30000?9:netCost<=35000?8:netCost<=40000?6:netCost<=45000?4:2):0;s.decision_analytics.criteria_ratings.net_cost=netCostScore;s.decision_analytics.criteria_ratings.program_quality=objData.program_quality.score;s.decision_analytics.criteria_ratings.career_outcomes=objData.career_outcomes.score;s.decision_analytics.criteria_ratings.location_vibe=objData.location.score;s.decision_analytics.criteria_ratings.gut_feeling=5;});alert('Auto-filled objective ratings for all 11 schools! Review and adjust as needed.');renderFull();}
+
+function commitToSchool(){
+  const sel=document.getElementById('commit-select');
+  if(!sel||!sel.value){alert('Please select a school first.');return;}
+  const name=TRACKER_DATA.schools[sel.value]?.name||sel.value;
+  if(!confirm('Are you sure you want to commit to '+name+'? This will mark all other acceptances as declined.'))return;
+  analyticsData._committed={locked:true,school:sel.value};saveLocalData();launchConfetti();setTimeout(()=>renderFull(),1500);
+}
+function unlockDecision(){if(!confirm('Unlock your decision? You can re-commit anytime before May 1.'))return;analyticsData._committed={locked:false,school:null};saveLocalData();renderFull();}
+
+// ==============================================
+// CONFETTI
+// ==============================================
+function launchConfetti(){
+  const canvas=document.createElement('canvas');canvas.className='confetti-canvas';document.body.appendChild(canvas);
+  const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[],colors=['#6c5ce7','#00b894','#fdcb6e','#74b9ff','#e17055','#a29bfe','#fd79a8','#00cec9'];
+  for(let i=0;i<150;i++)pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,w:Math.random()*10+5,h:Math.random()*6+3,color:colors[Math.floor(Math.random()*colors.length)],vy:Math.random()*3+2,vx:Math.random()*2-1,rot:Math.random()*360,vr:Math.random()*6-3});
+  let frame=0;
+  function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.rot+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});frame++;if(frame<180)requestAnimationFrame(animate);else canvas.remove();}
+  animate();
+}
+
+// ==============================================
+// FEEDBACK & FILTERS (existing)
+// ==============================================
+function giveFeedback(key,type,btn){
+  if(type==='correct'){btn.classList.add('correct');btn.textContent='\u2713 Marked Correct';btn.disabled=true;TRACKER_DATA.performance_metrics.total_correct++;}
+  else{document.getElementById('override-'+key).classList.add('visible');TRACKER_DATA.performance_metrics.total_incorrect++;}
+  TRACKER_DATA.performance_metrics.total_reviewed++;
+  TRACKER_DATA.feedback_log.push({school:key,type,timestamp:new Date().toISOString(),original_status:TRACKER_DATA.schools[key].status});
+  storeFeedback();
+}
+function overrideStatus(key,ns){TRACKER_DATA.schools[key].status=ns;storeFeedback();renderFull();}
+function storeFeedback(){let el=document.getElementById('feedback-data');if(!el){el=document.createElement('div');el.id='feedback-data';el.style.display='none';document.body.appendChild(el);}el.textContent=JSON.stringify({feedback:TRACKER_DATA.feedback_log,metrics:TRACKER_DATA.performance_metrics,overrides:Object.fromEntries(Object.entries(TRACKER_DATA.schools).map(([k,v])=>[k,v.status]))});}
+function filterSchools(filter,event){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(event&&event.target)event.target.classList.add('active');document.querySelectorAll('.school-card').forEach(card=>{const s=card.dataset.status,t=card.dataset.type;if(filter==='all')card.style.display='';else if(filter==='uc')card.style.display=t==='uc'?'':'none';else if(filter==='csu')card.style.display=t==='csu'?'':'none';else card.style.display=s===filter?'':'none';});}
+
+// LAUNCH
+boot();
+</script>
+</body>
+</html>
