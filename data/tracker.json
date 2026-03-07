@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-06T20:16:28.541Z",
-    "total_scans": 18,
-    "total_emails_processed": 67,
+    "last_scan": "2026-03-07T08:16:26.887Z",
+    "total_scans": 19,
+    "total_emails_processed": 68,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -492,8 +492,8 @@
       "short_name": "SJSU",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.5,
-      "decision_date": "2026-02-27",
+      "confidence": 0.75,
+      "decision_date": "2026-03-06",
       "deadlines": [
         {
           "type": "intent",
@@ -522,7 +522,7 @@
         "deadline of March 2"
       ],
       "portal_url": "https://one.sjsu.edu",
-      "notes": "? ADMITTED! Decision email received 2026-02-27",
+      "notes": "? ADMITTED! Decision email received 2026-03-06",
       "cost_breakdown": {
         "total_coa": 35000,
         "tuition_fees": 8850,
@@ -808,6 +808,15 @@
   },
   "email_log": [
     {
+      "id": "19cc583b8def1f60",
+      "school": "sjsu",
+      "date": "2026-03-06",
+      "subject": "RSVP | SJSU Admitted Spartan Day",
+      "category": "acceptance",
+      "confidence": 0.75,
+      "from": "Student Outreach and Recruitment <outreach@sjsu.edu>"
+    },
+    {
       "id": "19cbbbdc081a646d",
       "school": "cal_poly_slo",
       "date": "2026-03-05",
@@ -1070,6 +1079,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-07",
+      "scan_timestamp": "2026-03-07T08:16:26.887Z",
+      "emails_found": 1,
+      "new_decisions": 1,
+      "notes": "Found 1 new emails. Decisions: San Jose State: accepted"
+    },
     {
       "scan_date": "2026-03-06",
       "scan_timestamp": "2026-03-06T20:16:28.541Z",
