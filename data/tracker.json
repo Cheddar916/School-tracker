@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-09T19:16:26.594Z",
-    "total_scans": 24,
-    "total_emails_processed": 68,
+    "last_scan": "2026-03-10T07:16:27.177Z",
+    "total_scans": 25,
+    "total_emails_processed": 72,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -808,6 +808,42 @@
   },
   "email_log": [
     {
+      "id": "19cd4cef309b780e",
+      "school": "sjsu",
+      "date": "2026-03-09",
+      "subject": "Document Received by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
+      "id": "19cd46530a8bbb92",
+      "school": "sjsu",
+      "date": "2026-03-09",
+      "subject": "Document Received by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
+      "id": "19cd464224d2d29d",
+      "school": "sjsu",
+      "date": "2026-03-09",
+      "subject": "Document Received by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
+      "id": "19cd464209ed8f18",
+      "school": "sjsu",
+      "date": "2026-03-09",
+      "subject": "Document Received by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
       "id": "19cc583b8def1f60",
       "school": "sjsu",
       "date": "2026-03-06",
@@ -1079,6 +1115,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-10",
+      "scan_timestamp": "2026-03-10T07:16:27.177Z",
+      "emails_found": 4,
+      "new_decisions": 0,
+      "notes": "Found 4 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-09",
       "scan_timestamp": "2026-03-09T19:16:26.594Z",
