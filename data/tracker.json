@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-10T19:16:24.641Z",
-    "total_scans": 26,
-    "total_emails_processed": 72,
+    "last_scan": "2026-03-11T07:16:35.623Z",
+    "total_scans": 27,
+    "total_emails_processed": 74,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -660,7 +660,8 @@
       "decision_date": null,
       "deadlines": [],
       "action_items": [
-        "Check CSUF Student Portal for updates"
+        "Check CSUF Student Portal for updates",
+        "pay your enrollment administrative charge is May 1"
       ],
       "portal_url": null,
       "notes": "CWID: 821713195. Applied Nov 8, 2025",
@@ -807,6 +808,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19cd92f278c0da43",
+      "school": "csuf",
+      "date": "2026-03-10",
+      "subject": "Ready to take your next steps, Michael?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSUF Admissions <admissions@fullerton.edu>"
+    },
+    {
+      "id": "19cdaa2a2b3ab3d2",
+      "school": "csuf",
+      "date": "2026-03-11",
+      "subject": "Visit CSUF?s College of Business and Economics",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSUF Campus Tours <tours@fullerton.edu>"
+    },
     {
       "id": "19cd4cef309b780e",
       "school": "sjsu",
@@ -1115,6 +1134,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-11",
+      "scan_timestamp": "2026-03-11T07:16:35.623Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-10",
       "scan_timestamp": "2026-03-10T19:16:24.641Z",
