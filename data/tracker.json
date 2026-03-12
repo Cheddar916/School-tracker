@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-12T07:16:25.382Z",
-    "total_scans": 29,
-    "total_emails_processed": 74,
+    "last_scan": "2026-03-12T19:16:26.413Z",
+    "total_scans": 30,
+    "total_emails_processed": 77,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -809,6 +809,33 @@
   },
   "email_log": [
     {
+      "id": "19ce354f525f3639",
+      "school": "sac_state",
+      "date": "2026-03-12",
+      "subject": "Sac State Transfer Connect",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Sac State Recruiter <sacstaterecruiter@csus.edu>"
+    },
+    {
+      "id": "19ce11b0da2feb15",
+      "school": "sjsu",
+      "date": "2026-03-12",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
+    {
+      "id": "19ce3129706a5024",
+      "school": "sjsu",
+      "date": "2026-03-12",
+      "subject": "Document Verified by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
       "id": "19cd92f278c0da43",
       "school": "csuf",
       "date": "2026-03-10",
@@ -1134,6 +1161,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-12",
+      "scan_timestamp": "2026-03-12T19:16:26.413Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-12",
       "scan_timestamp": "2026-03-12T07:16:25.383Z",
