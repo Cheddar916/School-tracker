@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-12T19:16:26.413Z",
-    "total_scans": 30,
-    "total_emails_processed": 77,
+    "last_scan": "2026-03-13T07:16:26.352Z",
+    "total_scans": 31,
+    "total_emails_processed": 78,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -809,6 +809,15 @@
   },
   "email_log": [
     {
+      "id": "19ce37ae86000f68",
+      "school": "csuf",
+      "date": "2026-03-12",
+      "subject": "You're Invited To Experience: CSUF Become a Titan!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
       "id": "19ce354f525f3639",
       "school": "sac_state",
       "date": "2026-03-12",
@@ -1161,6 +1170,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-13",
+      "scan_timestamp": "2026-03-13T07:16:26.352Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-12",
       "scan_timestamp": "2026-03-12T19:16:26.413Z",
