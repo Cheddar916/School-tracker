@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-13T07:16:26.352Z",
-    "total_scans": 31,
-    "total_emails_processed": 78,
+    "last_scan": "2026-03-13T19:16:27.588Z",
+    "total_scans": 32,
+    "total_emails_processed": 79,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -742,7 +742,8 @@
         "Submit Intent to Enroll by May 1",
         "Complete Business supplemental app (Feb 1 - Mar 16)",
         "Email unofficial transcripts to cob-ugrad@csus.edu",
-        "Ensure ADT verification by March 15"
+        "Ensure ADT verification by March 15",
+        "submit your ITE before May 1"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
       "notes": "ADMITTED! ID: 305148038. Provisional financial aid awarded. Must complete Business supplemental.",
@@ -808,6 +809,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19ce86443b18849f",
+      "school": "sac_state",
+      "date": "2026-03-13",
+      "subject": "Housing Application Available for Transfer Students!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Sacramento State University Housing Services <housing@csus.e"
+    },
     {
       "id": "19ce37ae86000f68",
       "school": "csuf",
@@ -1170,6 +1180,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-13",
+      "scan_timestamp": "2026-03-13T19:16:27.588Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-13",
       "scan_timestamp": "2026-03-13T07:16:26.352Z",
