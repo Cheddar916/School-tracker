@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-13T19:16:27.588Z",
-    "total_scans": 32,
-    "total_emails_processed": 79,
+    "last_scan": "2026-03-14T07:16:25.527Z",
+    "total_scans": 33,
+    "total_emails_processed": 82,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -519,7 +519,8 @@
         "Register for Admitted Spartan Day (April 18)",
         "complete the FAFSA or CADAA before the priority deadline of March 2",
         "Submit your FAFSA or CADAA by March 2",
-        "deadline of March 2"
+        "deadline of March 2",
+        "register/WN_I2wJNuxPQfekqDriopeLGg> RSVP - Open Lab - Thursday, April 9"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "? ADMITTED! Decision email received 2026-03-06",
@@ -655,16 +656,16 @@
       "name": "Cal State Fullerton",
       "short_name": "CSUF",
       "type": "CSU",
-      "status": "pending",
-      "confidence": 0.85,
-      "decision_date": null,
+      "status": "accepted",
+      "confidence": 0.5,
+      "decision_date": "2026-03-14",
       "deadlines": [],
       "action_items": [
         "Check CSUF Student Portal for updates",
         "pay your enrollment administrative charge is May 1"
       ],
       "portal_url": null,
-      "notes": "CWID: 821713195. Applied Nov 8, 2025",
+      "notes": "? ADMITTED! Decision email received 2026-03-14",
       "cost_breakdown": {
         "total_coa": 32000,
         "tuition_fees": 7900,
@@ -719,8 +720,8 @@
       "short_name": "Sac State",
       "type": "CSU",
       "status": "accepted",
-      "confidence": 0.97,
-      "decision_date": "2025-12-15",
+      "confidence": 0.5,
+      "decision_date": "2026-03-13",
       "deadlines": [
         {
           "type": "intent",
@@ -746,7 +747,7 @@
         "submit your ITE before May 1"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
-      "notes": "ADMITTED! ID: 305148038. Provisional financial aid awarded. Must complete Business supplemental.",
+      "notes": "? ADMITTED! Decision email received 2026-03-13",
       "cost_breakdown": {
         "total_coa": 33500,
         "tuition_fees": 8450,
@@ -809,6 +810,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19ce8e74eed63b1b",
+      "school": "sac_state",
+      "date": "2026-03-13",
+      "subject": "Your Next Step at Sac State: Admitted Student Day & Receptions",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "Admitted Student Day <admittedstudentday@csus.edu>"
+    },
+    {
+      "id": "19cea17aa376a199",
+      "school": "csuf",
+      "date": "2026-03-14",
+      "subject": "Accept Your Offer of Admission and Get Titan Gear!",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
+      "id": "19ce91f855b9af2b",
+      "school": "sjsu",
+      "date": "2026-03-13",
+      "subject": "Ready to be a Spartan?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "SJSU Student Outreach and Recruitment <outreach@sjsu.edu>"
+    },
     {
       "id": "19ce86443b18849f",
       "school": "sac_state",
@@ -1180,6 +1208,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-14",
+      "scan_timestamp": "2026-03-14T07:16:25.527Z",
+      "emails_found": 3,
+      "new_decisions": 2,
+      "notes": "Found 3 new emails. Decisions: Cal State Fullerton: accepted, Sacramento State: accepted"
+    },
     {
       "scan_date": "2026-03-13",
       "scan_timestamp": "2026-03-13T19:16:27.588Z",
