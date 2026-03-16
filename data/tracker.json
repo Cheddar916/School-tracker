@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-16T07:16:24.996Z",
-    "total_scans": 37,
-    "total_emails_processed": 83,
+    "last_scan": "2026-03-16T19:16:25.498Z",
+    "total_scans": 38,
+    "total_emails_processed": 86,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -812,6 +812,33 @@
   },
   "email_log": [
     {
+      "id": "19cf7f048befd28d",
+      "school": "sjsu",
+      "date": "2026-03-16",
+      "subject": "Document Verified by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
+      "id": "19cf7f047c3e617a",
+      "school": "sjsu",
+      "date": "2026-03-16",
+      "subject": "Document Verified by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
+      "id": "19cf7ef377c35118",
+      "school": "sjsu",
+      "date": "2026-03-16",
+      "subject": "Document Verified by SJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "noreply@sjsu.edu"
+    },
+    {
       "id": "19cedc89129bebb5",
       "school": "csuf",
       "date": "2026-03-14",
@@ -1218,6 +1245,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-16",
+      "scan_timestamp": "2026-03-16T19:16:25.498Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-16",
       "scan_timestamp": "2026-03-16T07:16:24.996Z",
