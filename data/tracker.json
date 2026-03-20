@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-19T19:16:32.219Z",
-    "total_scans": 44,
-    "total_emails_processed": 92,
+    "last_scan": "2026-03-20T07:16:24.842Z",
+    "total_scans": 45,
+    "total_emails_processed": 94,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -30,7 +30,8 @@
       ],
       "action_items": [
         "Submit TAU by March 15",
-        "Complete FAFSA by March 2"
+        "Complete FAFSA by March 2",
+        "sending confirmation emails the week of April 6"
       ],
       "portal_url": null,
       "notes": "Transfer to Success workshop series ongoing",
@@ -812,6 +813,24 @@
   },
   "email_log": [
     {
+      "id": "19d087e1388b676e",
+      "school": "sdsu",
+      "date": "2026-03-19",
+      "subject": "Update to Your Admission Status",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "SDSU Office of Admissions <admissions@sdsu.edu>"
+    },
+    {
+      "id": "19d07ceae8676799",
+      "school": "uc_berkeley",
+      "date": "2026-03-19",
+      "subject": "[RSVP Today!] Bridging the Gap Event for Community College Students",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
+    {
       "id": "19d07786f5724bf9",
       "school": "sac_state",
       "date": "2026-03-19",
@@ -1299,6 +1318,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-20",
+      "scan_timestamp": "2026-03-20T07:16:24.842Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-19",
       "scan_timestamp": "2026-03-19T19:16:32.219Z",
