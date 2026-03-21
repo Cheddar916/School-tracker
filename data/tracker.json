@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-20T19:16:33.109Z",
-    "total_scans": 46,
-    "total_emails_processed": 98,
+    "last_scan": "2026-03-21T07:16:25.971Z",
+    "total_scans": 47,
+    "total_emails_processed": 100,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -664,7 +664,8 @@
       "action_items": [
         "Check CSUF Student Portal for updates",
         "pay your enrollment administrative charge is May 1",
-        "pay your enrollment deposit is May 1"
+        "pay your enrollment deposit is May 1",
+        "register today! *April 18"
       ],
       "portal_url": null,
       "notes": "? ADMITTED! Decision email received 2026-03-18",
@@ -813,6 +814,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d0e23e2b1073cd",
+      "school": "csuf",
+      "date": "2026-03-21",
+      "subject": "Better Understand Your Financial Aid Package at Experience CSUF",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
+      "id": "19d0db304d343e52",
+      "school": "uc_santa_barbara",
+      "date": "2026-03-21",
+      "subject": "Michael, You're Invited to Open House!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
+    },
     {
       "id": "19d0c4e73b37e7f4",
       "school": "sac_state",
@@ -1355,6 +1374,13 @@
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-03-21",
+      "scan_timestamp": "2026-03-21T07:16:25.971Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-03-20",
       "scan_timestamp": "2026-03-20T19:16:33.109Z",
