@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-26T19:16:31.471Z",
-    "total_scans": 58,
+    "last_scan": "2026-03-27T07:16:27.800Z",
+    "total_scans": 59,
     "total_emails_processed": 102,
     "created": "2026-02-16",
     "updated": "2026-02-26",
@@ -1393,6 +1393,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-03-27",
+      "scan_timestamp": "2026-03-27T07:16:27.800Z",
+      "emails_found": 0,
+      "new_decisions": 0,
+      "notes": "No new emails since last scan."
+    },
+    {
       "scan_date": "2026-03-26",
       "scan_timestamp": "2026-03-26T19:16:31.471Z",
       "emails_found": 1,
@@ -1731,13 +1738,6 @@
     {
       "scan_date": "2026-03-02",
       "scan_timestamp": "2026-03-02T20:16:28.786Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-02",
-      "scan_timestamp": "2026-03-02T08:16:28.818Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
