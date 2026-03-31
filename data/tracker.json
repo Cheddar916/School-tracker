@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-31T07:16:26.615Z",
-    "total_scans": 67,
+    "last_scan": "2026-03-31T19:16:30.259Z",
+    "total_scans": 68,
     "total_emails_processed": 109,
     "created": "2026-02-16",
     "updated": "2026-02-26",
@@ -1457,6 +1457,13 @@
   "scan_history": [
     {
       "scan_date": "2026-03-31",
+      "scan_timestamp": "2026-03-31T19:16:30.260Z",
+      "emails_found": 0,
+      "new_decisions": 0,
+      "notes": "No new emails since last scan."
+    },
+    {
+      "scan_date": "2026-03-31",
       "scan_timestamp": "2026-03-31T07:16:26.615Z",
       "emails_found": 4,
       "new_decisions": 1,
@@ -1797,13 +1804,6 @@
       "emails_found": 1,
       "new_decisions": 1,
       "notes": "Found 1 new emails. Decisions: San Jose State: accepted"
-    },
-    {
-      "scan_date": "2026-03-06",
-      "scan_timestamp": "2026-03-06T20:16:28.541Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
     }
   ],
   "feedback_log": [],
