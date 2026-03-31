@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-03-30T19:16:25.465Z",
-    "total_scans": 66,
-    "total_emails_processed": 105,
+    "last_scan": "2026-03-31T07:16:26.615Z",
+    "total_scans": 67,
+    "total_emails_processed": 109,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -724,7 +724,7 @@
       "type": "CSU",
       "status": "accepted",
       "confidence": 0.5,
-      "decision_date": "2026-03-13",
+      "decision_date": "2026-03-30",
       "deadlines": [
         {
           "type": "intent",
@@ -751,7 +751,7 @@
         "Submit your Intent to Enroll (ITE) today, but no later than May 1"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
-      "notes": "? ADMITTED! Decision email received 2026-03-13",
+      "notes": "? ADMITTED! Decision email received 2026-03-30",
       "cost_breakdown": {
         "total_coa": 33500,
         "tuition_fees": 8450,
@@ -814,6 +814,42 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d40d22b8cc3e7b",
+      "school": "sac_state",
+      "date": "2026-03-30",
+      "subject": "Your financial aid letter has arrived!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"Sacramento State Financial Aid & Scholarships\" <ssc@csus.ed"
+    },
+    {
+      "id": "19d40e5a1cb253e9",
+      "school": "sac_state",
+      "date": "2026-03-30",
+      "subject": "Shaq Invites You to Admitted Student Day!",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "Admitted Student Day <admittedstudentday@csus.edu>"
+    },
+    {
+      "id": "19d412a1d74eeb85",
+      "school": "cal_poly_slo",
+      "date": "2026-03-30",
+      "subject": "Michael, your admission status has been updated.",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19d416e04dfcd5ad",
+      "school": "cal_poly_slo",
+      "date": "2026-03-31",
+      "subject": "?Michael?, meet other transfer students at Open House!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
     {
       "id": "19d3b31a00a0919c",
       "school": "sac_state",
@@ -1420,6 +1456,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-03-31",
+      "scan_timestamp": "2026-03-31T07:16:26.615Z",
+      "emails_found": 4,
+      "new_decisions": 1,
+      "notes": "Found 4 new emails. Decisions: Sacramento State: accepted"
+    },
+    {
       "scan_date": "2026-03-30",
       "scan_timestamp": "2026-03-30T19:16:25.466Z",
       "emails_found": 0,
@@ -1758,13 +1801,6 @@
     {
       "scan_date": "2026-03-06",
       "scan_timestamp": "2026-03-06T20:16:28.541Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-06",
-      "scan_timestamp": "2026-03-06T08:16:29.757Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
