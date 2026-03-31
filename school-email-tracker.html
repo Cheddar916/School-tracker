@@ -359,10 +359,39 @@ function initPending() {
 }
 function initAidAndAnalytics() {
   Object.keys(TRACKER_DATA.schools).forEach(key => {
-    if(!aidData[key]) aidData[key]={pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,aid_deadline:null};
-    if(!analyticsData[key]) { analyticsData[key]={ratings:{},pros:[],cons:[],gut_feeling:5,gut_history:[]}; CRITERIA_KEYS.forEach(c=>{analyticsData[key].ratings[c]=5;}); }
+    const s = TRACKER_DATA.schools[key];
+    
+    // Initialize or restore financial aid from localStorage
+    if(aidData[key]) {
+      if(!s.financial_aid) s.financial_aid = {};
+      s.financial_aid = {...aidData[key]};
+    } else {
+      aidData[key] = {pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,aid_deadline:null};
+      if(!s.financial_aid) s.financial_aid = {...aidData[key]};
+    }
+    
+    // Initialize or restore decision analytics from localStorage
+    if(analyticsData[key]) {
+      if(!s.decision_analytics) s.decision_analytics = {};
+      s.decision_analytics.criteria_ratings = {...(analyticsData[key].ratings || {})};
+      s.decision_analytics.criteria_weights = {...(analyticsData[key].weights || {})};
+      s.decision_analytics.pros = analyticsData[key].pros || [];
+      s.decision_analytics.cons = analyticsData[key].cons || [];
+    } else {
+      analyticsData[key] = {ratings:{},weights:{},pros:[],cons:[],gut_feeling:5,gut_history:[]};
+      CRITERIA_KEYS.forEach(c => {analyticsData[key].ratings[c] = 5;});
+      analyticsData[key].weights = {net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};
+      if(!s.decision_analytics) {
+        s.decision_analytics = {
+          criteria_ratings: {...analyticsData[key].ratings},
+          criteria_weights: {...analyticsData[key].weights},
+          pros: [],
+          cons: []
+        };
+      }
+    }
   });
-  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:8,location:6,career_outcomes:8,campus_resources:5,distance_from_home:4};
+  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};
   if(!analyticsData._committed) analyticsData._committed={locked:false,school:null};
   saveLocalData();
 }
@@ -576,7 +605,7 @@ function renderFinancialTab() {
 function toggleFinRow(schoolKey){const row=document.getElementById('fin-row-'+schoolKey);if(row)row.classList.toggle('show');}
 function loadAidPackage(){const select=document.getElementById('fin-school-select');if(!select||!select.value)return;const s=TRACKER_DATA.schools[select.value];if(!s||!s.financial_aid)return;const aid=s.financial_aid;document.getElementById('fin-pell').value=aid.pell_grant||7395;document.getElementById('fin-cal-grant').value=aid.cal_grant||0;document.getElementById('fin-school-grants').value=aid.school_grants||0;document.getElementById('fin-work-study').value=aid.work_study||0;document.getElementById('fin-loans').value=aid.federal_loans||0;document.getElementById('fin-other-aid').value=aid.other_aid||0;calculateAidTotals();}
 function calculateAidTotals(){const select=document.getElementById('fin-school-select');if(!select||!select.value)return;const s=TRACKER_DATA.schools[select.value];if(!s||!s.cost_breakdown)return;const pell=parseInt(document.getElementById('fin-pell').value)||0;const calGrant=parseInt(document.getElementById('fin-cal-grant').value)||0;const schoolGrants=parseInt(document.getElementById('fin-school-grants').value)||0;const workStudy=parseInt(document.getElementById('fin-work-study').value)||0;const loans=parseInt(document.getElementById('fin-loans').value)||0;const otherAid=parseInt(document.getElementById('fin-other-aid').value)||0;const totalAid=pell+calGrant+schoolGrants+workStudy+loans+otherAid;const netCost=s.cost_breakdown.total_coa-(pell+calGrant+schoolGrants+otherAid);const outOfPocket=netCost-workStudy-loans;document.getElementById('fin-total-aid').textContent='$'+totalAid.toLocaleString();document.getElementById('fin-net-cost').textContent='$'+netCost.toLocaleString();document.getElementById('fin-out-of-pocket').textContent='$'+outOfPocket.toLocaleString();}
-function saveAidPackage(){const select=document.getElementById('fin-school-select');if(!select||!select.value){alert('Please select a school first');return;}const key=select.value;const s=TRACKER_DATA.schools[key];if(!s)return;if(!s.financial_aid)s.financial_aid={};s.financial_aid.pell_grant=parseInt(document.getElementById('fin-pell').value)||0;s.financial_aid.cal_grant=parseInt(document.getElementById('fin-cal-grant').value)||0;s.financial_aid.school_grants=parseInt(document.getElementById('fin-school-grants').value)||0;s.financial_aid.work_study=parseInt(document.getElementById('fin-work-study').value)||0;s.financial_aid.federal_loans=parseInt(document.getElementById('fin-loans').value)||0;s.financial_aid.other_aid=parseInt(document.getElementById('fin-other-aid').value)||0;alert('Aid package saved for '+s.name);renderFull();}
+function saveAidPackage(){const select=document.getElementById('fin-school-select');if(!select||!select.value){alert('Please select a school first');return;}const key=select.value;const s=TRACKER_DATA.schools[key];if(!s)return;const pell=parseInt(document.getElementById('fin-pell').value)||0;const calGrant=parseInt(document.getElementById('fin-cal-grant').value)||0;const schoolGrants=parseInt(document.getElementById('fin-school-grants').value)||0;const workStudy=parseInt(document.getElementById('fin-work-study').value)||0;const loans=parseInt(document.getElementById('fin-loans').value)||0;const otherAid=parseInt(document.getElementById('fin-other-aid').value)||0;if(!s.financial_aid)s.financial_aid={};s.financial_aid.pell_grant=pell;s.financial_aid.cal_grant=calGrant;s.financial_aid.school_grants=schoolGrants;s.financial_aid.work_study=workStudy;s.financial_aid.federal_loans=loans;s.financial_aid.other_aid=otherAid;if(!aidData[key])aidData[key]={};aidData[key]={pell_grant:pell,cal_grant:calGrant,school_grants:schoolGrants,work_study:workStudy,federal_loans:loans,other_aid:otherAid,aid_deadline:null};saveLocalData();alert('Aid package saved for '+s.name);renderFull();}
 function clearAidForm(){document.getElementById('fin-school-select').value='';document.getElementById('fin-pell').value=7395;document.getElementById('fin-cal-grant').value=0;document.getElementById('fin-school-grants').value=0;document.getElementById('fin-work-study').value=0;document.getElementById('fin-loans').value=0;document.getElementById('fin-other-aid').value=0;document.getElementById('fin-total-aid').textContent='$0';document.getElementById('fin-net-cost').textContent='$0';document.getElementById('fin-out-of-pocket').textContent='$0';}
 
 // ==============================================
@@ -619,10 +648,11 @@ function renderAnalyticsTab() {
 // ==============================================
 // PENDING CHANGES & COMPARE FUNCTIONS
 // ==============================================
-function updatePendingWeight(criterion,value){document.getElementById('weight-'+criterion).textContent=value;Object.keys(TRACKER_DATA.schools).forEach(key=>{if(!pendingWeights[key])pendingWeights[key]={};pendingWeights[key][criterion]=parseInt(value);});updateCompareButton();renderAnalyticsTabOnly();}
-function updatePendingRating(schoolKey,criterion,value){if(!pendingRatings[schoolKey])pendingRatings[schoolKey]={};pendingRatings[schoolKey][criterion]=parseInt(value);document.getElementById('rating-'+schoolKey+'-'+criterion).textContent=value;updateCompareButton();renderAnalyticsTabOnly();}
-function renderAnalyticsTabOnly(){const panel=document.querySelector('.tab-panel.active');if(panel&&currentMainTab==='analytics'){panel.innerHTML=renderAnalyticsTab();}}
-function saveAnalyticsChanges(){Object.keys(pendingRatings).forEach(key=>{const s=TRACKER_DATA.schools[key];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};s.decision_analytics.criteria_ratings={...pendingRatings[key]};s.decision_analytics.criteria_weights={...(pendingWeights[key]||{})};});saveLocalData();alert('Changes saved!');renderFull();}
+function updatePendingWeight(criterion,value){document.getElementById('weight-'+criterion).textContent=value;Object.keys(TRACKER_DATA.schools).forEach(key=>{if(!pendingWeights[key])pendingWeights[key]={};pendingWeights[key][criterion]=parseInt(value);});updateCompareButton();updateAllScoresOnly();}
+function updatePendingRating(schoolKey,criterion,value){if(!pendingRatings[schoolKey])pendingRatings[schoolKey]={};pendingRatings[schoolKey][criterion]=parseInt(value);document.getElementById('rating-'+schoolKey+'-'+criterion).textContent=value;updateCompareButton();updateSingleSchoolScore(schoolKey);}
+function updateSingleSchoolScore(schoolKey){const criteria=['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];const ratings=pendingRatings[schoolKey]||{};const weights=pendingWeights[schoolKey]||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};const score=criteria.reduce((sum,c)=>(sum+(ratings[c]||0)*weights[c]),0);const scoreEl=document.querySelector(`.school-rating-card:has(#rating-${schoolKey}-net_cost) .weighted-score`);if(scoreEl)scoreEl.textContent=Math.round(score);}
+function updateAllScoresOnly(){const criteria=['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];Object.keys(TRACKER_DATA.schools).forEach(key=>{const ratings=pendingRatings[key]||{};const weights=pendingWeights[key]||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};const score=criteria.reduce((sum,c)=>(sum+(ratings[c]||0)*weights[c]),0);const scoreEl=document.querySelector(`.school-rating-card:has(#rating-${key}-net_cost) .weighted-score`);if(scoreEl)scoreEl.textContent=Math.round(score);});}
+function saveAnalyticsChanges(){Object.keys(pendingRatings).forEach(key=>{const s=TRACKER_DATA.schools[key];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};s.decision_analytics.criteria_ratings={...pendingRatings[key]};s.decision_analytics.criteria_weights={...(pendingWeights[key]||{})};if(!analyticsData[key])analyticsData[key]={ratings:{},weights:{},pros:[],cons:[]};analyticsData[key].ratings={...pendingRatings[key]};analyticsData[key].weights={...(pendingWeights[key]||{})};});saveLocalData();alert('Changes saved!');renderFull();}
 function cancelAnalyticsChanges(){initPending();renderFull();}
 function toggleSchoolSelection(schoolKey){const idx=selectedSchools.indexOf(schoolKey);if(idx===-1){if(selectedSchools.length>=3){alert('You can compare up to 3 schools at once');return;}selectedSchools.push(schoolKey);}else{selectedSchools.splice(idx,1);}const checkbox=document.getElementById('select-'+schoolKey);if(checkbox)checkbox.checked=selectedSchools.includes(schoolKey);updateCompareButton();}
 function updateCompareButton(){const btn=document.getElementById('compare-btn');if(btn){btn.textContent=`\ud83d\udd0d Compare Selected (${selectedSchools.length})`;btn.disabled=selectedSchools.length<2;}}
