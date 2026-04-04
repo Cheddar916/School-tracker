@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-03T19:16:26.989Z",
-    "total_scans": 74,
-    "total_emails_processed": 120,
+    "last_scan": "2026-04-04T07:16:25.917Z",
+    "total_scans": 75,
+    "total_emails_processed": 126,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -298,13 +298,13 @@
       "name": "UC Riverside",
       "short_name": "UCR",
       "type": "UC",
-      "status": "pending",
-      "confidence": 0.95,
-      "decision_date": null,
+      "status": "accepted",
+      "confidence": 0.99,
+      "decision_date": "2026-04-04",
       "deadlines": [],
       "action_items": [],
       "portal_url": null,
-      "notes": "Receiving marketing emails, School of Business focus",
+      "notes": "? ADMITTED! Decision email received 2026-04-04",
       "cost_breakdown": {
         "total_coa": 43000,
         "tuition_fees": 15100,
@@ -816,6 +816,60 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d55fc31d85fa19",
+      "school": "cal_poly_slo",
+      "date": "2026-04-03",
+      "subject": "Don?t miss Open House, ?Michael?. RSVP before April 9!?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19d5597d21f7c334",
+      "school": "uc_santa_cruz",
+      "date": "2026-04-03",
+      "subject": "Michael, Important Message from Undergraduate Admissions",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
+    {
+      "id": "19d5503127e13c33",
+      "school": "uc_riverside",
+      "date": "2026-04-03",
+      "subject": "Your admission decision is ready",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19d55d07c2ae5abb",
+      "school": "uc_riverside",
+      "date": "2026-04-04",
+      "subject": "Congrats, you?ve been admitted to UCR ??",
+      "category": "acceptance",
+      "confidence": 0.99,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19d55e190e3dff5c",
+      "school": "uc_irvine",
+      "date": "2026-04-04",
+      "subject": "Update to your application",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Irvine Undergraduate Admissions <admissions@uci.edu>"
+    },
+    {
+      "id": "19d559aec6b4cdef",
+      "school": "uc_berkeley",
+      "date": "2026-04-03",
+      "subject": "[SP26 TTS - Week 11] Transfer to Success Workshop Series - Recordings + Resources",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
     {
       "id": "19d5265d47664783",
       "school": "sjsu",
@@ -1557,6 +1611,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-04-04",
+      "scan_timestamp": "2026-04-04T07:16:25.917Z",
+      "emails_found": 6,
+      "new_decisions": 1,
+      "notes": "Found 6 new emails. Decisions: UC Riverside: accepted"
+    },
+    {
       "scan_date": "2026-04-03",
       "scan_timestamp": "2026-04-03T19:16:26.989Z",
       "emails_found": 3,
@@ -1898,13 +1959,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-10",
-      "scan_timestamp": "2026-03-10T07:16:27.177Z",
-      "emails_found": 4,
-      "new_decisions": 0,
-      "notes": "Found 4 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
