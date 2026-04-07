@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-07T07:16:36.013Z",
-    "total_scans": 81,
-    "total_emails_processed": 131,
+    "last_scan": "2026-04-07T19:16:30.328Z",
+    "total_scans": 82,
+    "total_emails_processed": 132,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -303,7 +303,8 @@
       "decision_date": "2026-04-04",
       "deadlines": [],
       "action_items": [
-        "Register (SIR) by June 1 and your Campus Apartments application by May 10"
+        "Register (SIR) by June 1 and your Campus Apartments application by May 10",
+        "DEADLINE: SUNDAY, MAY 3"
       ],
       "portal_url": null,
       "notes": "? ADMITTED! Decision email received 2026-04-04",
@@ -819,6 +820,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d6955b7c4ee88a",
+      "school": "uc_riverside",
+      "date": "2026-04-07",
+      "subject": "Apply for University Honors at UCR",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside <no-reply@admissions.ucr.edu>"
+    },
     {
       "id": "19d65ae6291decfe",
       "school": "csuf",
@@ -1660,6 +1670,13 @@
   "scan_history": [
     {
       "scan_date": "2026-04-07",
+      "scan_timestamp": "2026-04-07T19:16:30.328Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
+    {
+      "scan_date": "2026-04-07",
       "scan_timestamp": "2026-04-07T07:16:36.013Z",
       "emails_found": 2,
       "new_decisions": 0,
@@ -2000,13 +2017,6 @@
       "emails_found": 3,
       "new_decisions": 2,
       "notes": "Found 3 new emails. Decisions: Cal State Fullerton: accepted, Sacramento State: accepted"
-    },
-    {
-      "scan_date": "2026-03-13",
-      "scan_timestamp": "2026-03-13T19:16:27.588Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
