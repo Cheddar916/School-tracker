@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-06T19:16:28.563Z",
-    "total_scans": 80,
-    "total_emails_processed": 129,
+    "last_scan": "2026-04-07T07:16:36.013Z",
+    "total_scans": 81,
+    "total_emails_processed": 131,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -525,7 +525,8 @@
         "complete the FAFSA or CADAA before the priority deadline of March 2",
         "Submit your FAFSA or CADAA by March 2",
         "deadline of March 2",
-        "register/WN_I2wJNuxPQfekqDriopeLGg> RSVP - Open Lab - Thursday, April 9"
+        "register/WN_I2wJNuxPQfekqDriopeLGg> RSVP - Open Lab - Thursday, April 9",
+        "by May 8th! Questions? Contact Mike Garcia <mailto:mike"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "? ADMITTED! Decision email received 2026-03-26",
@@ -818,6 +819,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d65ae6291decfe",
+      "school": "csuf",
+      "date": "2026-04-07",
+      "subject": "Veterans and Military families: Don?t miss this!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
+      "id": "19d64da58bed3347",
+      "school": "sjsu",
+      "date": "2026-04-06",
+      "subject": "Jumpstart Your Career This Summer: FREE 3-Credit SJSU Course for Transfer Students!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"San Jos? State University\" <admissions@sjsu.edu>"
+    },
     {
       "id": "19d6414be5d90209",
       "school": "uc_riverside",
@@ -1640,6 +1659,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-04-07",
+      "scan_timestamp": "2026-04-07T07:16:36.013Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
+    {
       "scan_date": "2026-04-06",
       "scan_timestamp": "2026-04-06T19:16:28.563Z",
       "emails_found": 2,
@@ -1978,13 +2004,6 @@
     {
       "scan_date": "2026-03-13",
       "scan_timestamp": "2026-03-13T19:16:27.588Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-03-13",
-      "scan_timestamp": "2026-03-13T07:16:26.352Z",
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
