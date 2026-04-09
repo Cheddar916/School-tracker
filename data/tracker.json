@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-08T19:16:25.776Z",
-    "total_scans": 84,
-    "total_emails_processed": 138,
+    "last_scan": "2026-04-09T07:16:25.171Z",
+    "total_scans": 85,
+    "total_emails_processed": 140,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -732,7 +732,7 @@
       "type": "CSU",
       "status": "accepted",
       "confidence": 0.5,
-      "decision_date": "2026-03-30",
+      "decision_date": "2026-04-08",
       "deadlines": [
         {
           "type": "intent",
@@ -756,10 +756,12 @@
         "Email unofficial transcripts to cob-ugrad@csus.edu",
         "Ensure ADT verification by March 15",
         "submit your ITE before May 1",
-        "Submit your Intent to Enroll (ITE) today, but no later than May 1"
+        "Submit your Intent to Enroll (ITE) today, but no later than May 1",
+        "submit your Intent to Enroll by May 1",
+        "by May 1 <https://idp"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
-      "notes": "? ADMITTED! Decision email received 2026-03-30",
+      "notes": "? ADMITTED! Decision email received 2026-04-08",
       "cost_breakdown": {
         "total_coa": 33500,
         "tuition_fees": 8450,
@@ -822,6 +824,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d6f57c76ebae97",
+      "school": "sac_state",
+      "date": "2026-04-08",
+      "subject": "A Message from the College of Business",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
+    {
+      "id": "19d6f0b77ad500cd",
+      "school": "csuf",
+      "date": "2026-04-08",
+      "subject": "Michael Accept your Admission to CSUF, No Payment Required",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSUF Admissions <admissions@fullerton.edu>"
+    },
     {
       "id": "19d6c25e03056b42",
       "school": "sjsu",
@@ -1703,27 +1723,16 @@
       "category": "informational",
       "confidence": 0.85,
       "from": "fullerton.edu"
-    },
-    {
-      "id": "16",
-      "school": "sac_state",
-      "date": "2026-02-03",
-      "subject": "Fall 2026 Business Impaction Notice",
-      "category": "acceptance",
-      "confidence": 0.97,
-      "from": "csus.edu"
-    },
-    {
-      "id": "17",
-      "school": "sac_state",
-      "date": "2026-01-27",
-      "subject": "Supporting Culture, Community at Sacramento State",
-      "category": "informational",
-      "confidence": 0.85,
-      "from": "csus.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-09",
+      "scan_timestamp": "2026-04-09T07:16:25.171Z",
+      "emails_found": 2,
+      "new_decisions": 1,
+      "notes": "Found 2 new emails. Decisions: Sacramento State: accepted"
+    },
     {
       "scan_date": "2026-04-08",
       "scan_timestamp": "2026-04-08T19:16:25.776Z",
@@ -2066,13 +2075,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-15",
-      "scan_timestamp": "2026-03-15T07:16:31.774Z",
-      "emails_found": 1,
-      "new_decisions": 1,
-      "notes": "Found 1 new emails. Decisions: Cal State Fullerton: accepted"
     }
   ],
   "feedback_log": [],
