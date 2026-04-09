@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-09T07:16:25.171Z",
-    "total_scans": 85,
-    "total_emails_processed": 140,
+    "last_scan": "2026-04-09T19:16:24.996Z",
+    "total_scans": 86,
+    "total_emails_processed": 141,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -365,7 +365,7 @@
       "type": "UC",
       "status": "accepted",
       "confidence": 0.5,
-      "decision_date": "2026-04-04",
+      "decision_date": "2026-04-09",
       "deadlines": [
         {
           "type": "FAFSA",
@@ -383,7 +383,7 @@
         "Check Admissions Portal starting April 1"
       ],
       "portal_url": "https://ucsc.link/adm-portal",
-      "notes": "? ADMITTED! Decision email received 2026-04-04",
+      "notes": "? ADMITTED! Decision email received 2026-04-09",
       "cost_breakdown": {
         "total_coa": 43500,
         "tuition_fees": 15500,
@@ -824,6 +824,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d73a188e3717a1",
+      "school": "uc_santa_cruz",
+      "date": "2026-04-09",
+      "subject": "You?re Invited, Michael: Transfer Day for admitted students! ??",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
     {
       "id": "19d6f57c76ebae97",
       "school": "sac_state",
@@ -1714,18 +1723,16 @@
       "category": "action_required",
       "confidence": 0.92,
       "from": "sdsu.edu"
-    },
-    {
-      "id": "15",
-      "school": "csuf",
-      "date": "2026-02-02",
-      "subject": "CSUF's 3rd Annual Pathway Conference",
-      "category": "informational",
-      "confidence": 0.85,
-      "from": "fullerton.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-09",
+      "scan_timestamp": "2026-04-09T19:16:24.996Z",
+      "emails_found": 1,
+      "new_decisions": 1,
+      "notes": "Found 1 new emails. Decisions: UC Santa Cruz: accepted"
+    },
     {
       "scan_date": "2026-04-09",
       "scan_timestamp": "2026-04-09T07:16:25.171Z",
@@ -2065,13 +2072,6 @@
     {
       "scan_date": "2026-03-16",
       "scan_timestamp": "2026-03-16T07:16:24.996Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-15",
-      "scan_timestamp": "2026-03-15T19:16:26.249Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
