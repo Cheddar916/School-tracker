@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-10T19:16:25.052Z",
-    "total_scans": 88,
-    "total_emails_processed": 146,
+    "last_scan": "2026-04-11T07:16:24.771Z",
+    "total_scans": 89,
+    "total_emails_processed": 149,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -380,7 +380,8 @@
       ],
       "action_items": [
         "Complete FAFSA (School Code: 001321)",
-        "Check Admissions Portal starting April 1"
+        "Check Admissions Portal starting April 1",
+        "by May 15! UC Santa Cruz - Application Received"
       ],
       "portal_url": "https://ucsc.link/adm-portal",
       "notes": "? ADMITTED! Decision email received 2026-04-09",
@@ -825,6 +826,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d7a490d1c6cc43",
+      "school": "csuf",
+      "date": "2026-04-11",
+      "subject": "Get Ready to Engage with the College of Business and Economics at Experience CSUF",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
+      "id": "19d7aba299967e8a",
+      "school": "cal_poly_slo",
+      "date": "2026-04-10",
+      "subject": "The Cal Poly campus housing application is open!?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19d78ff5c3169d81",
+      "school": "uc_santa_cruz",
+      "date": "2026-04-10",
+      "subject": "[UCSC STARRS] Join the Transfer Mentorship Program at UC Santa Cruz",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
     {
       "id": "19d78c62b5220124",
       "school": "sac_state",
@@ -1697,36 +1725,16 @@
       "category": "action_required",
       "confidence": 0.92,
       "from": "uci.edu"
-    },
-    {
-      "id": "7",
-      "school": "uc_santa_barbara",
-      "date": "2026-02-09",
-      "subject": "UCSB Family Student Housing",
-      "category": "informational",
-      "confidence": 0.85,
-      "from": "ucsb.edu"
-    },
-    {
-      "id": "8",
-      "school": "uc_santa_barbara",
-      "date": "2026-02-06",
-      "subject": "UCSB Financial Aid Update",
-      "category": "action_required",
-      "confidence": 0.9,
-      "from": "ucsb.edu"
-    },
-    {
-      "id": "9",
-      "school": "uc_riverside",
-      "date": "2026-02-12",
-      "subject": "Real-world experience, industry connections",
-      "category": "informational",
-      "confidence": 0.85,
-      "from": "ucr.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-11",
+      "scan_timestamp": "2026-04-11T07:16:24.771Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-10",
       "scan_timestamp": "2026-04-10T19:16:25.052Z",
@@ -2069,13 +2077,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-17",
-      "scan_timestamp": "2026-03-17T07:16:27.945Z",
-      "emails_found": 2,
-      "new_decisions": 1,
-      "notes": "Found 2 new emails. Decisions: Cal State Fullerton: accepted"
     }
   ],
   "feedback_log": [],
