@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-11T19:16:25.457Z",
-    "total_scans": 90,
+    "last_scan": "2026-04-12T07:16:24.640Z",
+    "total_scans": 91,
     "total_emails_processed": 150,
     "created": "2026-02-16",
     "updated": "2026-02-26",
@@ -1729,6 +1729,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-04-12",
+      "scan_timestamp": "2026-04-12T07:16:24.640Z",
+      "emails_found": 0,
+      "new_decisions": 0,
+      "notes": "No new emails since last scan."
+    },
+    {
       "scan_date": "2026-04-11",
       "scan_timestamp": "2026-04-11T19:16:25.457Z",
       "emails_found": 1,
@@ -2070,13 +2077,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-18",
-      "scan_timestamp": "2026-03-18T07:16:24.680Z",
-      "emails_found": 1,
-      "new_decisions": 1,
-      "notes": "Found 1 new emails. Decisions: Cal State Fullerton: accepted"
     }
   ],
   "feedback_log": [],
