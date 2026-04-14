@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-13T19:16:24.783Z",
-    "total_scans": 94,
-    "total_emails_processed": 151,
+    "last_scan": "2026-04-14T07:16:27.829Z",
+    "total_scans": 95,
+    "total_emails_processed": 154,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -306,7 +306,8 @@
         "Register (SIR) by June 1 and your Campus Apartments application by May 10",
         "DEADLINE: SUNDAY, MAY 3",
         "submitted by May 10",
-        "by May 10, 2026"
+        "by May 10, 2026",
+        "Register: Highlander Day for Transfers (May 9"
       ],
       "portal_url": null,
       "notes": "? ADMITTED! Decision email received 2026-04-07",
@@ -826,6 +827,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d895d1135ad249",
+      "school": "uc_riverside",
+      "date": "2026-04-14",
+      "subject": "Congrats from your college dean!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19d88ddc5ec69d80",
+      "school": "uc_santa_barbara",
+      "date": "2026-04-13",
+      "subject": "UCSB Decision Release 2026 Details",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
+    },
+    {
+      "id": "19d899704db89e94",
+      "school": "uc_berkeley",
+      "date": "2026-04-14",
+      "subject": "[Opportunity for CC students!] HBSA x CC Shark Tank Competition",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
     {
       "id": "19d82df668c9b0bd",
       "school": "uc_riverside",
@@ -1698,36 +1726,16 @@
       "category": "action_required",
       "confidence": 0.95,
       "from": "sjsu.edu"
-    },
-    {
-      "id": "2",
-      "school": "sjsu",
-      "date": "2026-02-12",
-      "subject": "Welcome to SJSU for Fall 2026!",
-      "category": "acceptance",
-      "confidence": 0.99,
-      "from": "sjsu.edu"
-    },
-    {
-      "id": "3",
-      "school": "sjsu",
-      "date": "2026-02-12",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.8,
-      "from": "sjsu.edu"
-    },
-    {
-      "id": "4",
-      "school": "uc_berkeley",
-      "date": "2026-02-13",
-      "subject": "[SP26 TTS - Week 4] Transfer to Success Workshop Series",
-      "category": "informational",
-      "confidence": 0.9,
-      "from": "berkeley.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-14",
+      "scan_timestamp": "2026-04-14T07:16:27.829Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-13",
       "scan_timestamp": "2026-04-13T19:16:24.783Z",
@@ -2070,13 +2078,6 @@
       "emails_found": 4,
       "new_decisions": 0,
       "notes": "Found 4 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-03-20",
-      "scan_timestamp": "2026-03-20T07:16:24.842Z",
-      "emails_found": 2,
-      "new_decisions": 0,
-      "notes": "Found 2 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
