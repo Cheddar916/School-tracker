@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-14T19:16:24.600Z",
-    "total_scans": 96,
-    "total_emails_processed": 154,
+    "last_scan": "2026-04-15T07:16:24.758Z",
+    "total_scans": 97,
+    "total_emails_processed": 157,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -827,6 +827,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d8db4b9103521f",
+      "school": "sac_state",
+      "date": "2026-04-14",
+      "subject": "Save the Date! RSVP to Sac State Spring Sting on April 16",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Mitzi Felix <mitzi.felix@csus.edu>"
+    },
+    {
+      "id": "19d8e3a622890eb4",
+      "school": "cal_poly_slo",
+      "date": "2026-04-14",
+      "subject": "Action needed: Complete your checklist item(s).?",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19d8faa79dd7242b",
+      "school": "uc_santa_cruz",
+      "date": "2026-04-15",
+      "subject": "UCSC Financial Aid- Conditional Aid Offer 2027",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"UCSC Financial Aid & Scholarships\" <fin-aid-do-not-reply@uc"
+    },
     {
       "id": "19d895d1135ad249",
       "school": "uc_riverside",
@@ -1699,36 +1726,16 @@
       "category": "action_required",
       "confidence": 0.5,
       "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
-    },
-    {
-      "id": "19c9419eb3f83cee",
-      "school": "sjsu",
-      "date": "2026-02-25",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19c9940516d7785b",
-      "school": "sjsu",
-      "date": "2026-02-26",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "1",
-      "school": "sjsu",
-      "date": "2026-02-14",
-      "subject": "Save the Date: SJSU Admitted Spartan Day",
-      "category": "action_required",
-      "confidence": 0.95,
-      "from": "sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-15",
+      "scan_timestamp": "2026-04-15T07:16:24.758Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-14",
       "scan_timestamp": "2026-04-14T19:16:24.600Z",
@@ -2071,13 +2078,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-21",
-      "scan_timestamp": "2026-03-21T07:16:25.971Z",
-      "emails_found": 2,
-      "new_decisions": 0,
-      "notes": "Found 2 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
