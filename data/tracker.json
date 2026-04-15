@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-15T07:16:24.758Z",
-    "total_scans": 97,
-    "total_emails_processed": 157,
+    "last_scan": "2026-04-15T19:16:25.886Z",
+    "total_scans": 98,
+    "total_emails_processed": 160,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -827,6 +827,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d903329346187a",
+      "school": "sjsu",
+      "date": "2026-04-15",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
+    {
+      "id": "19d915aef6f82578",
+      "school": "cal_poly_slo",
+      "date": "2026-04-15",
+      "subject": "Please review your Cal Poly financial aid portal",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "financialaid@calpoly.edu"
+    },
+    {
+      "id": "19d9176000bdd6e5",
+      "school": "cal_poly_slo",
+      "date": "2026-04-15",
+      "subject": "Your Financial Aid Offer is Ready!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Financial Aid and Scholarship Office <financialaid@"
+    },
     {
       "id": "19d8db4b9103521f",
       "school": "sac_state",
@@ -1699,36 +1726,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "SJSU Student Outreach and Recruitment <outreach@sjsu.edu>"
-    },
-    {
-      "id": "19c9c655f8ca6666",
-      "school": "uc_berkeley",
-      "date": "2026-02-26",
-      "subject": "Fwd: [IMPORTANT] Transfer to Success Workshop Today Link",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Melanie Ly <lym@berkeley.edu>"
-    },
-    {
-      "id": "19c9c0cd96cd9650",
-      "school": "uc_berkeley",
-      "date": "2026-02-26",
-      "subject": "[IMPORTANT] Transfer to Success Workshop Today Link",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Melanie Ly <lym@berkeley.edu>"
-    },
-    {
-      "id": "19c922849590d68a",
-      "school": "sjsu",
-      "date": "2026-02-25",
-      "subject": "FAFSA and CADAA Application March 2 priority deadline",
-      "category": "action_required",
-      "confidence": 0.5,
-      "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-15",
+      "scan_timestamp": "2026-04-15T19:16:25.886Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-15",
       "scan_timestamp": "2026-04-15T07:16:24.758Z",
@@ -2068,13 +2075,6 @@
     {
       "scan_date": "2026-03-22",
       "scan_timestamp": "2026-03-22T07:16:24.550Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-21",
-      "scan_timestamp": "2026-03-21T19:16:24.792Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
