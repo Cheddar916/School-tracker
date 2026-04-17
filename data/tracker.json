@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-17T07:16:29.816Z",
-    "total_scans": 101,
-    "total_emails_processed": 170,
+    "last_scan": "2026-04-17T19:16:31.369Z",
+    "total_scans": 102,
+    "total_emails_processed": 172,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -762,7 +762,10 @@
         "Submit your Intent to Enroll (ITE) today, but no later than May 1",
         "submit your Intent to Enroll by May 1",
         "by May 1 <https://idp",
-        "deadline is May 1"
+        "deadline is May 1",
+        "complete the application by April 30",
+        "Deadline: Thursday, April 30",
+        "by April 30th will receive notification of acceptance by June"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
       "notes": "? ADMITTED! Decision email received 2026-04-15",
@@ -828,6 +831,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d9c6060b6f39a6",
+      "school": "sac_state",
+      "date": "2026-04-17",
+      "subject": "Apply Now: Free 6-week EOP Transfer Bridge Summer Program at Sacramento State University Summer 2026",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"Educational Opportunity Program, SA-06\" <eop-06@skymail.csu"
+    },
+    {
+      "id": "19d9cc31449d38b5",
+      "school": "uc_riverside",
+      "date": "2026-04-17",
+      "subject": "Live your best life in Riverside, CA",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
     {
       "id": "19d981a8954d53fc",
       "school": "csuf",
@@ -1709,27 +1730,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "CSUF Campus Tours <tours@fullerton.edu>"
-    },
-    {
-      "id": "19cd4cef309b780e",
-      "school": "sjsu",
-      "date": "2026-03-09",
-      "subject": "Document Received by SJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "noreply@sjsu.edu"
-    },
-    {
-      "id": "19cd46530a8bbb92",
-      "school": "sjsu",
-      "date": "2026-03-09",
-      "subject": "Document Received by SJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "noreply@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-17",
+      "scan_timestamp": "2026-04-17T19:16:31.369Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-17",
       "scan_timestamp": "2026-04-17T07:16:29.816Z",
@@ -2069,13 +2079,6 @@
     {
       "scan_date": "2026-03-24",
       "scan_timestamp": "2026-03-24T07:16:28.632Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-23",
-      "scan_timestamp": "2026-03-23T19:16:35.078Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
