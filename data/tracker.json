@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-16T19:16:25.520Z",
-    "total_scans": 100,
-    "total_emails_processed": 163,
+    "last_scan": "2026-04-17T07:16:29.816Z",
+    "total_scans": 101,
+    "total_emails_processed": 170,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -503,7 +503,7 @@
       "type": "CSU",
       "status": "accepted",
       "confidence": 0.5,
-      "decision_date": "2026-04-08",
+      "decision_date": "2026-04-16",
       "deadlines": [
         {
           "type": "intent",
@@ -531,10 +531,11 @@
         "Submit your FAFSA or CADAA by March 2",
         "deadline of March 2",
         "register/WN_I2wJNuxPQfekqDriopeLGg> RSVP - Open Lab - Thursday, April 9",
-        "by May 8th! Questions? Contact Mike Garcia <mailto:mike"
+        "by May 8th! Questions? Contact Mike Garcia <mailto:mike",
+        "by May 1, 2026, at midnight:"
       ],
       "portal_url": "https://one.sjsu.edu",
-      "notes": "? ADMITTED! Decision email received 2026-04-08",
+      "notes": "? ADMITTED! Decision email received 2026-04-16",
       "cost_breakdown": {
         "total_coa": 35000,
         "tuition_fees": 8850,
@@ -827,6 +828,69 @@
     }
   },
   "email_log": [
+    {
+      "id": "19d981a8954d53fc",
+      "school": "csuf",
+      "date": "2026-04-16",
+      "subject": "Low Tuition ? + scholarships ? = ?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSUF Dean Sridhar Sundaram <cbereceptionist@fullerton.edu>"
+    },
+    {
+      "id": "19d97d77bba052cb",
+      "school": "sjsu",
+      "date": "2026-04-16",
+      "subject": "SJSU Intent to Enroll - Save your Spot!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "SJSU Undergraduate Admissions <nextsteps@sjsu.edu>"
+    },
+    {
+      "id": "19d98960d9354cd9",
+      "school": "sjsu",
+      "date": "2026-04-16",
+      "subject": "There's still time! | RSVP for SJSU Admitted Spartan Day",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "Student Outreach and Recruitment <outreach@sjsu.edu>"
+    },
+    {
+      "id": "19d98d62dfc8b531",
+      "school": "uc_riverside",
+      "date": "2026-04-17",
+      "subject": "Explore internships for Asian Pacific students",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19d98d6edd6900c3",
+      "school": "uc_riverside",
+      "date": "2026-04-17",
+      "subject": "Find your community at UCR",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19d98809424966a5",
+      "school": "uc_berkeley",
+      "date": "2026-04-16",
+      "subject": "Re: [IMPORTANT] Transfer to Success Workshop Today Link",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
+    {
+      "id": "19d9822569de5ab6",
+      "school": "uc_berkeley",
+      "date": "2026-04-16",
+      "subject": "[IMPORTANT] Transfer to Success Workshop Today Link",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
     {
       "id": "19d936325256c21c",
       "school": "sac_state",
@@ -1663,72 +1727,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "noreply@sjsu.edu"
-    },
-    {
-      "id": "19cd464224d2d29d",
-      "school": "sjsu",
-      "date": "2026-03-09",
-      "subject": "Document Received by SJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "noreply@sjsu.edu"
-    },
-    {
-      "id": "19cd464209ed8f18",
-      "school": "sjsu",
-      "date": "2026-03-09",
-      "subject": "Document Received by SJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "noreply@sjsu.edu"
-    },
-    {
-      "id": "19cc583b8def1f60",
-      "school": "sjsu",
-      "date": "2026-03-06",
-      "subject": "RSVP | SJSU Admitted Spartan Day",
-      "category": "acceptance",
-      "confidence": 0.75,
-      "from": "Student Outreach and Recruitment <outreach@sjsu.edu>"
-    },
-    {
-      "id": "19cbbbdc081a646d",
-      "school": "cal_poly_slo",
-      "date": "2026-03-05",
-      "subject": "#CalPolyProud Newsletter ??",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
-    },
-    {
-      "id": "19cb81fcdcaa13a5",
-      "school": "sjsu",
-      "date": "2026-03-04",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19cb0851dcf8a900",
-      "school": "sac_state",
-      "date": "2026-03-02",
-      "subject": "Urgent Reminder: Submit Your Final Official Transcripts",
-      "category": "action_required",
-      "confidence": 0.99,
-      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
-    },
-    {
-      "id": "19ca3843a3c7b2bd",
-      "school": "sjsu",
-      "date": "2026-02-28",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-17",
+      "scan_timestamp": "2026-04-17T07:16:29.816Z",
+      "emails_found": 7,
+      "new_decisions": 1,
+      "notes": "Found 7 new emails. Decisions: San Jose State: accepted"
+    },
     {
       "scan_date": "2026-04-16",
       "scan_timestamp": "2026-04-16T19:16:25.520Z",
@@ -2068,13 +2076,6 @@
     {
       "scan_date": "2026-03-23",
       "scan_timestamp": "2026-03-23T19:16:35.078Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-23",
-      "scan_timestamp": "2026-03-23T07:16:24.858Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
