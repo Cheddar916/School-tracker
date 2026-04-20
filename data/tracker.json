@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-20T07:16:25.872Z",
-    "total_scans": 107,
-    "total_emails_processed": 179,
+    "last_scan": "2026-04-20T19:16:24.865Z",
+    "total_scans": 108,
+    "total_emails_processed": 180,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -832,6 +832,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dac44e420da643",
+      "school": "uc_riverside",
+      "date": "2026-04-20",
+      "subject": "Michael, explore UCR at Highlander Day (May 9)",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Highlander Day <admissions@ucr.edu>"
+    },
     {
       "id": "19da644ddf3e2805",
       "school": "sac_state",
@@ -1722,18 +1731,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
-    },
-    {
-      "id": "19ce91f855b9af2b",
-      "school": "sjsu",
-      "date": "2026-03-13",
-      "subject": "Ready to be a Spartan?",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "SJSU Student Outreach and Recruitment <outreach@sjsu.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-20",
+      "scan_timestamp": "2026-04-20T19:16:24.865Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-20",
       "scan_timestamp": "2026-04-20T07:16:25.872Z",
@@ -2076,13 +2083,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-26",
-      "scan_timestamp": "2026-03-26T19:16:31.471Z",
-      "emails_found": 1,
-      "new_decisions": 1,
-      "notes": "Found 1 new emails. Decisions: San Jose State: accepted"
     }
   ],
   "feedback_log": [],
