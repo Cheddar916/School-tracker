@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-21T07:16:25.209Z",
-    "total_scans": 109,
-    "total_emails_processed": 180,
+    "last_scan": "2026-04-21T19:16:26.886Z",
+    "total_scans": 110,
+    "total_emails_processed": 181,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -832,6 +832,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19db146db909bfea",
+      "school": "uc_riverside",
+      "date": "2026-04-21",
+      "subject": "Michael, watch our campus tour video",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
     {
       "id": "19dac44e420da643",
       "school": "uc_riverside",
@@ -1722,18 +1731,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "Admitted Student Day <admittedstudentday@csus.edu>"
-    },
-    {
-      "id": "19cea17aa376a199",
-      "school": "csuf",
-      "date": "2026-03-14",
-      "subject": "Accept Your Offer of Admission and Get Titan Gear!",
-      "category": "acceptance",
-      "confidence": 0.5,
-      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-21",
+      "scan_timestamp": "2026-04-21T19:16:26.886Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-21",
       "scan_timestamp": "2026-04-21T07:16:25.209Z",
@@ -2073,13 +2080,6 @@
     {
       "scan_date": "2026-03-28",
       "scan_timestamp": "2026-03-28T07:16:24.382Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-03-27",
-      "scan_timestamp": "2026-03-27T19:16:26.947Z",
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
