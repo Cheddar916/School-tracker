@@ -284,6 +284,16 @@ const CRITERIA_LABELS = {
   campus_resources:{name:'Resources',desc:'Clubs & facilities'},
   distance_from_home:{name:'Distance',desc:'From home'}
 };
+// Criteria actually used by the Decision Analytics tab (must match keys in live JSON).
+const ANALYTICS_CRITERIA = ['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];
+const ANALYTICS_CRITERIA_LABELS = {
+  net_cost: '\ud83d\udcb0 Net Cost',
+  program_quality: '\ud83d\udcda Program Quality',
+  career_outcomes: '\ud83d\udcbc Career Outcomes',
+  location_vibe: '\ud83d\udccd Location & Vibe',
+  gut_feeling: '\u2764\ufe0f Gut Feeling'
+};
+const DEFAULT_WEIGHTS = {net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};
 
 const FALLBACK_DATA = {"metadata":{"version":"2.0","last_scan":"2026-02-16T00:00:00Z","total_scans":1,"total_emails_processed":55,"created":"2026-02-16","owner":"Michael Sarmento"},"schools":{"uc_berkeley":{"name":"UC Berkeley","short_name":"UCB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"},{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA by March 2"],"portal_url":null,"notes":"Transfer to Success workshop series ongoing"},"ucla":{"name":"UCLA","short_name":"UCLA","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":["Check MyApplication portal for updates"],"portal_url":"https://www.admission.ucla.edu/MyApplication","notes":"Application received Dec 12, 2025"},"uc_irvine":{"name":"UC Irvine","short_name":"UCI","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001314)"],"portal_url":null,"notes":"UCI school code for FAFSA: 001314"},"uc_santa_barbara":{"name":"UC Santa Barbara","short_name":"UCSB","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid + Cal Grant priority deadline"},{"type":"TAU","date":"2026-03-15","description":"Transfer Academic Update final deadline"}],"action_items":["Submit TAU by March 15","Complete FAFSA (School Code: 001320)"],"portal_url":"https://connect.admissions.ucsb.edu/apply/status","notes":"Applicant Portal open"},"uc_riverside":{"name":"UC Riverside","short_name":"UCR","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Receiving marketing emails, School of Business focus"},"uc_santa_cruz":{"name":"UC Santa Cruz","short_name":"UCSC","type":"UC","status":"pending","confidence":0.95,"decision_date":null,"deadlines":[{"type":"FAFSA","date":"2026-03-02","description":"Financial aid deadline"},{"type":"decisions","date":"2026-04-01","description":"Transfer decisions begin posting"}],"action_items":["Complete FAFSA (School Code: 001321)","Check Admissions Portal starting April 1"],"portal_url":"https://ucsc.link/adm-portal","notes":"CruzID: mzsarmen. Transfer decisions: April 1-30"},"cal_poly_slo":{"name":"Cal Poly SLO","short_name":"Cal Poly","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[],"action_items":[],"portal_url":null,"notes":"Account: sarmento@calpoly.edu. Receiving biweekly newsletters"},"sjsu":{"name":"San Jose State","short_name":"SJSU","type":"CSU","status":"accepted","confidence":0.99,"decision_date":"2026-02-12","deadlines":[{"type":"intent","date":null,"description":"Confirm Intent to Enroll (check MySJSU)"},{"type":"event","date":"2026-04-18","description":"Admitted Spartan Day on campus"},{"type":"deposit","date":null,"description":"$250 enrollment deposit"}],"action_items":["Confirm Intent to Enroll via MySJSU","Pay $250 enrollment deposit","Choose mandatory Orientation session","Send official transcripts","Register for Admitted Spartan Day (April 18)"],"portal_url":"https://one.sjsu.edu","notes":"ADMITTED Feb 12! Major: Business Admin/Business Analytics. GPA: 3.49"},"sdsu":{"name":"San Diego State","short_name":"SDSU","type":"CSU","status":"pending","confidence":0.9,"decision_date":null,"deadlines":[{"type":"academic_history","date":"2026-01-31","description":"Academic History Update (PASSED)"}],"action_items":["Confirm Academic History Update was completed"],"portal_url":"https://calstate.liaisoncas.com/applicant-ux/#/login","notes":"RedID: 134626697"},"csuf":{"name":"Cal State Fullerton","short_name":"CSUF","type":"CSU","status":"pending","confidence":0.85,"decision_date":null,"deadlines":[],"action_items":["Check CSUF Student Portal for updates"],"portal_url":null,"notes":"CWID: 821713195. Applied Nov 8, 2025"},"sac_state":{"name":"Sacramento State","short_name":"Sac State","type":"CSU","status":"accepted","confidence":0.97,"decision_date":"2025-12-15","deadlines":[{"type":"intent","date":"2026-05-01","description":"Submit Intent to Enroll"},{"type":"business_app","date":"2026-03-16","description":"Business Admin supplemental application"},{"type":"adt","date":"2026-03-15","description":"ADT verification to Admissions"}],"action_items":["Submit Intent to Enroll by May 1","Complete Business supplemental app (Feb 1 - Mar 16)","Email unofficial transcripts to cob-ugrad@csus.edu","Ensure ADT verification by March 15"],"portal_url":"https://idp.csus.edu/idp/profile/cas/login","notes":"ADMITTED! ID: 305148038. Provisional financial aid awarded."}},"email_log":[{"id":"1","school":"sjsu","date":"2026-02-14","subject":"Save the Date: SJSU Admitted Spartan Day","category":"action_required","confidence":0.95},{"id":"2","school":"sjsu","date":"2026-02-12","subject":"Welcome to SJSU for Fall 2026!","category":"acceptance","confidence":0.99}],"scan_history":[{"scan_date":"2026-02-16","scan_timestamp":"2026-02-16T00:00:00Z","emails_found":55,"new_decisions":2,"notes":"Initial scan. Found 2 acceptances (SJSU, Sac State)."}],"feedback_log":[],"performance_metrics":{"total_correct":0,"total_incorrect":0,"total_reviewed":0}};
 
@@ -347,28 +357,60 @@ function updateSchoolStatus(schoolKey, newStatus) {
 function initAidAndAnalytics() {
   Object.keys(TRACKER_DATA.schools).forEach(key => {
     const s = TRACKER_DATA.schools[key];
-    
-    // Restore financial aid from localStorage
-    if(aidData[key]) {
-      if(!s.financial_aid) s.financial_aid = {};
-      Object.assign(s.financial_aid, aidData[key]);
-    } else {
-      aidData[key] = {pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,aid_deadline:null};
+
+    // Ensure financial_aid exists. Prefer fetched data; only fill missing fields from localStorage.
+    if(!s.financial_aid) s.financial_aid = {};
+    const defaultAid = {pell_grant:DEFAULT_PELL,cal_grant:0,school_grants:0,work_study:0,federal_loans:0,other_aid:0,aid_deadline:null};
+    const storedAid = aidData[key] || {};
+    Object.keys(defaultAid).forEach(k => {
+      if(s.financial_aid[k] === undefined || s.financial_aid[k] === null) {
+        s.financial_aid[k] = (storedAid[k] !== undefined ? storedAid[k] : defaultAid[k]);
+      }
+    });
+    aidData[key] = {
+      pell_grant:s.financial_aid.pell_grant||0,
+      cal_grant:s.financial_aid.cal_grant||0,
+      school_grants:s.financial_aid.school_grants||0,
+      work_study:s.financial_aid.work_study||0,
+      federal_loans:s.financial_aid.federal_loans||0,
+      other_aid:s.financial_aid.other_aid||0,
+      aid_deadline:s.financial_aid.aid_deadline||null
+    };
+
+    // Ensure cost_breakdown exists so Financial Aid tab has something to show with fallback data.
+    if(!s.cost_breakdown) s.cost_breakdown = {total_coa:0,tuition_fees:0,housing_food:0,books_supplies:0,transportation:0,personal:0};
+
+    // Ensure decision_analytics exists. Prefer fetched data; only merge localStorage into missing fields.
+    if(!s.decision_analytics) s.decision_analytics = {criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};
+    if(!s.decision_analytics.criteria_ratings) s.decision_analytics.criteria_ratings = {};
+    if(!s.decision_analytics.criteria_weights) s.decision_analytics.criteria_weights = {};
+    if(!s.decision_analytics.pros) s.decision_analytics.pros = [];
+    if(!s.decision_analytics.cons) s.decision_analytics.cons = [];
+    const stored = analyticsData[key];
+    if(stored) {
+      if(stored.ratings) Object.keys(stored.ratings).forEach(c => {
+        if(s.decision_analytics.criteria_ratings[c] === undefined) s.decision_analytics.criteria_ratings[c] = stored.ratings[c];
+      });
+      if(stored.weights) Object.keys(stored.weights).forEach(c => {
+        if(s.decision_analytics.criteria_weights[c] === undefined) s.decision_analytics.criteria_weights[c] = stored.weights[c];
+      });
+      if(stored.pros && stored.pros.length && !s.decision_analytics.pros.length) s.decision_analytics.pros = stored.pros;
+      if(stored.cons && stored.cons.length && !s.decision_analytics.cons.length) s.decision_analytics.cons = stored.cons;
     }
-    
-    // Restore decision analytics from localStorage
-    if(analyticsData[key]) {
-      if(!s.decision_analytics) s.decision_analytics = {criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};
-      if(analyticsData[key].ratings) s.decision_analytics.criteria_ratings = {...analyticsData[key].ratings};
-      if(analyticsData[key].weights) s.decision_analytics.criteria_weights = {...analyticsData[key].weights};
-      if(analyticsData[key].pros) s.decision_analytics.pros = analyticsData[key].pros;
-      if(analyticsData[key].cons) s.decision_analytics.cons = analyticsData[key].cons;
-    } else {
-      analyticsData[key] = {ratings:{},weights:{},pros:[],cons:[],gut_feeling:5,gut_history:[]};
-      CRITERIA_KEYS.forEach(c => {analyticsData[key].ratings[c] = 5;});
-    }
+    // Default any still-missing ratings to a neutral 5.
+    ANALYTICS_CRITERIA.forEach(c => {
+      if(s.decision_analytics.criteria_ratings[c] === undefined) s.decision_analytics.criteria_ratings[c] = 5;
+    });
+    analyticsData[key] = {
+      ratings: {...s.decision_analytics.criteria_ratings},
+      weights: {...s.decision_analytics.criteria_weights},
+      pros: s.decision_analytics.pros,
+      cons: s.decision_analytics.cons
+    };
   });
-  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:8,location:6,career_outcomes:8,campus_resources:5,distance_from_home:4};
+  if(!globalWeights||Object.keys(globalWeights).length===0) globalWeights={net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};
+  // Ensure globalWeights has every criterion used in rendering.
+  ANALYTICS_CRITERIA.forEach(c => { if(globalWeights[c] === undefined) globalWeights[c] = DEFAULT_WEIGHTS[c]; });
   if(!analyticsData._committed) analyticsData._committed={locked:false,school:null};
   saveLocalData();
 }
@@ -376,6 +418,7 @@ function initAidAndAnalytics() {
 // ==============================================
 // UTILITIES
 // ==============================================
+function escapeHtml(s){if(s==null)return'';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function daysUntil(d){if(!d)return null;const t=new Date(d+'T23:59:59');return Math.ceil((t-new Date())/(864e5));}
 function daysClass(d){if(d===null)return'';if(d<0)return'passed';if(d<=7)return'urgent';if(d<=21)return'soon';return'ok';}
 function daysLabel(d){if(d===null)return'TBD';if(d<0)return Math.abs(d)+'d ago';if(d===0)return'TODAY';if(d===1)return'Tomorrow';return d+' days';}
@@ -482,14 +525,14 @@ function renderApplicationsTab() {
 function renderCard(key,s) {
   const status=getSchoolStatus(key);
   let dHtml='';
-  if(s.deadlines&&s.deadlines.length>0){dHtml='<div class="deadlines">';s.deadlines.forEach(d=>{const days=daysUntil(d.date);dHtml+=`<div class="deadline-item ${daysClass(days)}"><span>${d.description}</span><span class="deadline-date">${d.date||'TBD'} ${days!==null?'('+daysLabel(days)+')':''}</span></div>`;});dHtml+='</div>';}
+  if(s.deadlines&&s.deadlines.length>0){dHtml='<div class="deadlines">';s.deadlines.forEach(d=>{const days=daysUntil(d.date);dHtml+=`<div class="deadline-item ${daysClass(days)}"><span>${escapeHtml(d.description)}</span><span class="deadline-date">${escapeHtml(d.date||'TBD')} ${days!==null?'('+daysLabel(days)+')':''}</span></div>`;});dHtml+='</div>';}
   let aHtml='';
-  if(s.action_items&&s.action_items.length>0){aHtml='<div class="action-items">';s.action_items.forEach(a=>{aHtml+=`<div class="action-item">${a}</div>`;});aHtml+='</div>';}
-  return `<div class="school-card status-${status}" data-status="${s.status}" data-type="${s.type.toLowerCase()}">
-    <div class="school-header"><div><div class="school-name">${s.name}</div><span class="school-type">${s.type}</span></div>
-    <span class="status-badge ${status}">${status}${s.decision_date?' \u00b7 '+s.decision_date:''}</span></div>
-    ${s.notes?`<div class="detail-row"><span class="detail-icon">\ud83d\udccb</span><span class="detail-text">${s.notes}</span></div>`:''}
-    ${s.portal_url?`<div class="detail-row"><span class="detail-icon">\ud83d\udd17</span><span class="detail-text"><a href="${s.portal_url}" target="_blank">Open Portal</a></span></div>`:''}
+  if(s.action_items&&s.action_items.length>0){aHtml='<div class="action-items">';s.action_items.forEach(a=>{aHtml+=`<div class="action-item">${escapeHtml(a)}</div>`;});aHtml+='</div>';}
+  return `<div class="school-card status-${status}" data-status="${escapeHtml(s.status)}" data-type="${s.type.toLowerCase()}">
+    <div class="school-header"><div><div class="school-name">${escapeHtml(s.name)}</div><span class="school-type">${escapeHtml(s.type)}</span></div>
+    <span class="status-badge ${status}">${status}${s.decision_date?' \u00b7 '+escapeHtml(s.decision_date):''}</span></div>
+    ${s.notes?`<div class="detail-row"><span class="detail-icon">\ud83d\udccb</span><span class="detail-text">${escapeHtml(s.notes)}</span></div>`:''}
+    ${s.portal_url?`<div class="detail-row"><span class="detail-icon">\ud83d\udd17</span><span class="detail-text"><a href="${encodeURI(s.portal_url)}" target="_blank">Open Portal</a></span></div>`:''}
     ${dHtml}${aHtml}
     <div class="confidence-bar"><span>Confidence: ${Math.round(s.confidence*100)}%</span><div class="conf-track"><div class="conf-fill" style="width:${s.confidence*100}%"></div></div></div>
     <div class="feedback-section"><span style="font-size:11px;color:var(--text-dim);margin-right:8px">Is this correct?</span>
@@ -602,48 +645,117 @@ function clearAidForm(){document.getElementById('fin-school-select').value='';do
 // TAB 3: DECISION ANALYTICS
 // ==============================================
 function renderAnalyticsTab() {
-  console.log('🎯 renderAnalyticsTab called');
+  console.log('\ud83c\udfaf renderAnalyticsTab called');
   const schools=TRACKER_DATA.schools;
   const allSchools=Object.entries(schools);
   console.log('All schools:', allSchools.length);
+  if(allSchools.length===0) return `<div style="padding:40px;text-align:center;color:var(--text-dim)">No schools loaded yet.</div>`;
   const accepted=allSchools.filter(([k,s])=>s.status==='accepted');
-  const committed=TRACKER_DATA.final_decision||{committed:false,school_key:null};
   let html=`<h2 style="font-size:24px;margin-bottom:24px">\ud83c\udfaf Decision Analytics</h2>`;
-  
+
   const daysUntilMay1=Math.ceil((new Date('2026-05-01')-new Date())/(1000*60*60*24));
   const bannerColor=daysUntilMay1<15?'var(--red)':daysUntilMay1<30?'var(--yellow)':'var(--green)';
   html+=`<div class="decision-banner"><div class="banner-left"><div class="banner-icon">\u23f0</div><div class="banner-text"><strong>Intent to Enroll Deadline</strong>May 1, 2026</div></div><div class="days-count" style="color:${bannerColor}">${daysUntilMay1}<span>days left</span></div></div>`;
-  
-  html+=`<div class="criteria-matrix"><h3>\u2696\ufe0f Weighted Decision Matrix</h3><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><p style="color:var(--text-dim);font-size:13px;margin:0">Adjust ratings and weights. Click Save to apply changes.</p><label style="font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="analytics-accepted-only" onchange="renderFull()"> Show accepted only (${accepted.length})</label></div><div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap"><button class="fin-btn fin-btn-primary" onclick="autoFillObjectiveRatings()">\ud83d\udcca Auto-Fill from Research Data</button><button id="compare-btn" class="fin-btn" onclick="showCompareModal()" style="background:var(--blue)">\ud83d\udd0d Compare Selected (${selectedSchools.length})</button><button class="fin-btn" onclick="saveAnalyticsChanges()" style="background:var(--green)">\u2705 Save Changes</button></div>`;
-  
-  const criteria=['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];
-  const criteriaLabels={'net_cost':'\ud83d\udcb0 Net Cost','program_quality':'\ud83d\udcda Program Quality','career_outcomes':'\ud83d\udcbc Career Outcomes','location_vibe':'\ud83d\udccd Location & Vibe','gut_feeling':'\u2764\ufe0f Gut Feeling'};
+
+  html+=`<div class="criteria-matrix"><h3>\u2696\ufe0f Weighted Decision Matrix</h3><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px"><p style="color:var(--text-dim);font-size:13px;margin:0">Adjust ratings and weights. Click Save to apply changes.</p><label style="font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="analytics-accepted-only" onchange="renderFull()"> Show accepted only (${accepted.length})</label></div><div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap"><button class="fin-btn fin-btn-primary" onclick="autoFillObjectiveRatings()">\ud83d\udcca Auto-Fill from Research Data</button><button id="compare-btn" class="fin-btn" onclick="showCompareModal()" style="background:var(--blue);color:#fff">\ud83d\udd0d Compare Selected (${selectedSchools.length})</button><button class="fin-btn" onclick="saveAnalyticsChanges()" style="background:var(--green);color:#fff">\u2705 Save Changes</button></div>`;
+
+  // Global weight controls — sourced from state (globalWeights), not per-school data.
   html+=`<div class="weight-controls">`;
-  const firstSchool=allSchools[0]||accepted[0];
-  criteria.forEach(c=>{const w=(schools[firstSchool[0]].decision_analytics?.criteria_weights||{})[c]||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6}[c];html+=`<div class="weight-item"><label><span>${criteriaLabels[c]}</span><span id="weight-${c}">${w}</span></label><input type="range" min="0" max="10" value="${w}" onchange="updateGlobalWeight('${c}',this.value)"/></div>`;});
+  ANALYTICS_CRITERIA.forEach(c=>{
+    const w = (globalWeights[c] !== undefined) ? globalWeights[c] : DEFAULT_WEIGHTS[c];
+    html+=`<div class="weight-item"><label><span>${ANALYTICS_CRITERIA_LABELS[c]}</span><span id="weight-${c}">${w}</span></label><input type="range" min="0" max="10" value="${w}" oninput="updateGlobalWeight('${c}',this.value)"/></div>`;
+  });
   html+=`</div>`;
-  
-  const acceptedOnly=typeof document!=='undefined'&&document.getElementById('analytics-accepted-only')?.checked;
-  const displaySchools=acceptedOnly?accepted:allSchools;
-  
-  const scoredSchools=displaySchools.map(([key,s])=>{const analytics=s.decision_analytics||{};const ratings=analytics.criteria_ratings||{};const weights=analytics.criteria_weights||{net_cost:10,program_quality:9,career_outcomes:8,location_vibe:7,gut_feeling:6};const score=criteria.reduce((sum,c)=>(sum+(ratings[c]||0)*weights[c]),0);return [key,s,score,ratings,weights];}).sort((a,b)=>b[2]-a[2]);
-  
+
+  const acceptedOnly = (typeof document!=='undefined') && !!document.getElementById('analytics-accepted-only')?.checked;
+  const displaySchools = acceptedOnly ? accepted : allSchools;
+
+  const scoredSchools = displaySchools.map(([key,s])=>{
+    const analytics = s.decision_analytics || {};
+    const ratings = analytics.criteria_ratings || {};
+    const score = ANALYTICS_CRITERIA.reduce((sum,c)=>{
+      const r = Number(ratings[c]) || 0;
+      const w = Number(globalWeights[c] !== undefined ? globalWeights[c] : DEFAULT_WEIGHTS[c]) || 0;
+      return sum + r*w;
+    },0);
+    return [key,s,score,ratings];
+  }).sort((a,b)=>b[2]-a[2]);
+
   html+=`<div id="school-ratings">`;
-  scoredSchools.forEach(([key,s,score,ratings,weights],index)=>{const rank=index+1;const rankBadge=rank<=3?`<span class="rank-badge rank-${rank}">#${rank}</span>`:'';const objData=OBJECTIVE_DATA[key]||{};const statusBadge=s.status!=='accepted'?`<span class="status-badge ${s.status}" style="font-size:11px;margin-left:8px">${s.status}</span>`:'';const isSelected=selectedSchools.includes(key);html+=`<div class="school-rating-card"><div class="school-rating-header"><div><span class="school-rating-name">${s.name}</span>${rankBadge}${statusBadge}</div><div class="weighted-score">${Math.round(score)}</div></div><label style="display:flex;align-items:center;gap:6px;font-size:13px;margin-top:8px;cursor:pointer;color:var(--text-dim)"><input type="checkbox" ${isSelected?'checked':''} onchange="toggleSchoolSelection('${key}')"/><span>Compare this school</span></label>`;if(objData.program_quality){html+=`<div class="proscons-header" onclick="toggleResearchData('${key}')" style="font-size:13px;margin:8px 0;cursor:pointer;color:var(--text-dim)">📊 View Research Data <span id="research-chevron-${key}">\u25bc</span></div><div class="proscons-content" id="research-${key}" style="background:var(--surface3);padding:12px;border-radius:8px;font-size:12px"><strong>Program Quality:</strong> ${objData.program_quality.ranking} | ${objData.program_quality.salary}<br><strong>Career Outcomes:</strong> ${objData.career_outcomes.employment_rate} employed within 6mo | Top employers: ${objData.program_quality.employers}<br><strong>Location:</strong> ${objData.location.city} | ${objData.location.job_market}</div>`;}html+=`<div class="criteria-ratings">`;criteria.forEach(c=>{const v=ratings[c]||0;html+=`<div class="rating-item"><label>${criteriaLabels[c].replace(/[\ud83d\udcb0\ud83d\udcda\ud83d\udcbc\ud83d\udccd\u2764\ufe0f] /,'')}</label><div class="rating-display"><input type="range" min="0" max="10" value="${v}" onchange="updateSchoolRating('${key}','${c}',this.value)"/><span class="rating-value" id="rating-${key}-${c}">${v}</span></div></div>`;});html+=`</div></div>`;});
+  if(scoredSchools.length===0){
+    html+=`<div style="padding:20px;text-align:center;color:var(--text-dim)">No schools to show. Uncheck "Show accepted only" above.</div>`;
+  }
+  scoredSchools.forEach(([key,s,score,ratings],index)=>{
+    const rank = index+1;
+    const rankBadge = rank<=3 ? `<span class="rank-badge rank-${rank}">#${rank}</span>` : '';
+    const objData = OBJECTIVE_DATA[key] || {};
+    const statusBadge = s.status!=='accepted' ? `<span class="status-badge ${s.status}" style="font-size:11px;margin-left:8px">${s.status}</span>` : '';
+    const isSelected = selectedSchools.includes(key);
+    html+=`<div class="school-rating-card"><div class="school-rating-header"><div><span class="school-rating-name">${s.name}</span>${rankBadge}${statusBadge}</div><div class="weighted-score">${Math.round(score)}</div></div><label style="display:flex;align-items:center;gap:6px;font-size:13px;margin-top:8px;cursor:pointer;color:var(--text-dim)"><input type="checkbox" ${isSelected?'checked':''} onchange="toggleSchoolSelection('${key}')"/><span>Compare this school</span></label>`;
+    if(objData.program_quality && objData.career_outcomes && objData.location){
+      html+=`<div class="proscons-header" onclick="toggleResearchData('${key}')" style="font-size:13px;margin:8px 0;cursor:pointer;color:var(--text-dim)">\ud83d\udcca View Research Data <span id="research-chevron-${key}">\u25bc</span></div><div class="proscons-content" id="research-${key}" style="background:var(--surface3);padding:12px;border-radius:8px;font-size:12px"><strong>Program Quality:</strong> ${objData.program_quality.ranking} | ${objData.program_quality.salary}<br><strong>Career Outcomes:</strong> ${objData.career_outcomes.employment_rate} employed within 6mo | Top employers: ${objData.program_quality.employers}<br><strong>Location:</strong> ${objData.location.city} | ${objData.location.job_market}</div>`;
+    }
+    html+=`<div class="criteria-ratings">`;
+    ANALYTICS_CRITERIA.forEach(c=>{
+      const v = Number(ratings[c]) || 0;
+      const labelText = ANALYTICS_CRITERIA_LABELS[c].replace(/^\S+\s*/, '');
+      html+=`<div class="rating-item"><label>${labelText}</label><div class="rating-display"><input type="range" min="0" max="10" value="${v}" oninput="updateSchoolRating('${key}','${c}',this.value)"/><span class="rating-value" id="rating-${key}-${c}">${v}</span></div></div>`;
+    });
+    html+=`</div></div>`;
+  });
   html+=`</div></div>`;
-  
+
   html+=`<h3 style="font-size:18px;margin-bottom:12px;margin-top:24px">\ud83d\udcdd Pros & Cons</h3>`;
-  displaySchools.forEach(([key,s])=>{const analytics=s.decision_analytics||{};const pros=analytics.pros||[];const cons=analytics.cons||[];html+=`<div class="proscons-section"><div class="proscons-header" onclick="toggleProscons('${key}')"><strong>${s.name}</strong>${s.status!=='accepted'?`<span class="status-badge ${s.status}" style="font-size:10px;margin-left:8px">${s.status}</span>`:''}<span id="chevron-${key}">\u25bc</span></div><div class="proscons-content" id="proscons-${key}"><div class="proscons-col"><h4>\u2705 Pros</h4><ul class="proscons-list" id="pros-list-${key}">`;pros.forEach((p,idx)=>{html+=`<li class="proscons-item"><span>${p.text||p}</span><button class="proscons-delete" onclick="deletePro('${key}',${idx})">\u00d7</button></li>`;});html+=`</ul><input type="text" class="proscons-input" id="pro-input-${key}" placeholder="Add a pro..."/><button class="proscons-add-btn" onclick="addProItem('${key}')">+ Add Pro</button></div><div class="proscons-col"><h4>\u274c Cons</h4><ul class="proscons-list" id="cons-list-${key}">`;cons.forEach((c,idx)=>{html+=`<li class="proscons-item"><span>${c.text||c}</span><button class="proscons-delete" onclick="deleteCon('${key}',${idx})">\u00d7</button></li>`;});html+=`</ul><input type="text" class="proscons-input" id="con-input-${key}" placeholder="Add a con..."/><button class="proscons-add-btn" onclick="addConItem('${key}')">+ Add Con</button></div></div></div>`;});
-  console.log('✅ renderAnalyticsTab complete, html length:', html.length);
+  displaySchools.forEach(([key,s])=>{
+    const analytics = s.decision_analytics || {};
+    const pros = analytics.pros || [];
+    const cons = analytics.cons || [];
+    const statusBadge = s.status!=='accepted' ? `<span class="status-badge ${s.status}" style="font-size:10px;margin-left:8px">${s.status}</span>` : '';
+    html+=`<div class="proscons-section"><div class="proscons-header" onclick="toggleProscons('${key}')"><strong>${s.name}</strong>${statusBadge}<span id="chevron-${key}">\u25bc</span></div><div class="proscons-content" id="proscons-${key}"><div class="proscons-col"><h4>\u2705 Pros</h4><ul class="proscons-list" id="pros-list-${key}">`;
+    pros.forEach((p,idx)=>{
+      const text = (p && typeof p === 'object') ? (p.text || '') : String(p);
+      html+=`<li class="proscons-item"><span>${text}</span><button class="proscons-delete" onclick="deletePro('${key}',${idx})">\u00d7</button></li>`;
+    });
+    html+=`</ul><input type="text" class="proscons-input" id="pro-input-${key}" placeholder="Add a pro..."/><button class="proscons-add-btn" onclick="addProItem('${key}')">+ Add Pro</button></div><div class="proscons-col"><h4>\u274c Cons</h4><ul class="proscons-list" id="cons-list-${key}">`;
+    cons.forEach((c,idx)=>{
+      const text = (c && typeof c === 'object') ? (c.text || '') : String(c);
+      html+=`<li class="proscons-item"><span>${text}</span><button class="proscons-delete" onclick="deleteCon('${key}',${idx})">\u00d7</button></li>`;
+    });
+    html+=`</ul><input type="text" class="proscons-input" id="con-input-${key}" placeholder="Add a con..."/><button class="proscons-add-btn" onclick="addConItem('${key}')">+ Add Con</button></div></div></div>`;
+  });
+  console.log('\u2705 renderAnalyticsTab complete, html length:', html.length);
   return html;
 }
 
 // ==============================================
 // ANALYTICS ACTIONS
 // ==============================================
-function updateGlobalWeight(criterion,value){document.getElementById('weight-'+criterion).textContent=value;hasUnsavedChanges=true;}
-function updateSchoolRating(schoolKey,criterion,value){document.getElementById('rating-'+schoolKey+'-'+criterion).textContent=value;hasUnsavedChanges=true;}
-function saveAnalyticsChanges(){Object.keys(TRACKER_DATA.schools).forEach(key=>{const s=TRACKER_DATA.schools[key];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};const criteria=['net_cost','program_quality','career_outcomes','location_vibe','gut_feeling'];criteria.forEach(c=>{const displaySpan=document.getElementById('rating-'+key+'-'+c);if(displaySpan){const sliderInput=displaySpan.previousElementSibling;if(sliderInput&&sliderInput.tagName==='INPUT'){s.decision_analytics.criteria_ratings[c]=parseInt(sliderInput.value)||0;}}});criteria.forEach(c=>{const wEl=document.getElementById('weight-'+c);if(wEl)s.decision_analytics.criteria_weights[c]=parseInt(wEl.textContent)||0;});if(!analyticsData[key])analyticsData[key]={ratings:{},weights:{},pros:[],cons:[]};analyticsData[key].ratings={...s.decision_analytics.criteria_ratings};analyticsData[key].weights={...s.decision_analytics.criteria_weights};});saveLocalData();hasUnsavedChanges=false;alert('Changes saved!');renderFull();}
+function updateGlobalWeight(criterion,value){const n=parseInt(value)||0;const el=document.getElementById('weight-'+criterion);if(el)el.textContent=n;globalWeights[criterion]=n;hasUnsavedChanges=true;}
+function updateSchoolRating(schoolKey,criterion,value){const n=parseInt(value)||0;const el=document.getElementById('rating-'+schoolKey+'-'+criterion);if(el)el.textContent=n;const s=TRACKER_DATA.schools[schoolKey];if(s){if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};if(!s.decision_analytics.criteria_ratings)s.decision_analytics.criteria_ratings={};s.decision_analytics.criteria_ratings[criterion]=n;}hasUnsavedChanges=true;}
+function saveAnalyticsChanges(){
+  ANALYTICS_CRITERIA.forEach(c=>{const wEl=document.getElementById('weight-'+c);if(wEl)globalWeights[c]=parseInt(wEl.textContent)||0;});
+  Object.keys(TRACKER_DATA.schools).forEach(key=>{
+    const s=TRACKER_DATA.schools[key];
+    if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[]};
+    ANALYTICS_CRITERIA.forEach(c=>{
+      const displaySpan=document.getElementById('rating-'+key+'-'+c);
+      if(displaySpan){
+        const sliderInput=displaySpan.previousElementSibling;
+        if(sliderInput&&sliderInput.tagName==='INPUT'){
+          s.decision_analytics.criteria_ratings[c]=parseInt(sliderInput.value)||0;
+        }
+      }
+    });
+    s.decision_analytics.criteria_weights={...globalWeights};
+    if(!analyticsData[key])analyticsData[key]={ratings:{},weights:{},pros:[],cons:[]};
+    analyticsData[key].ratings={...s.decision_analytics.criteria_ratings};
+    analyticsData[key].weights={...s.decision_analytics.criteria_weights};
+  });
+  saveLocalData();
+  hasUnsavedChanges=false;
+  alert('Changes saved!');
+  renderFull();
+}
 function toggleProscons(schoolKey){const content=document.getElementById('proscons-'+schoolKey);const chevron=document.getElementById('chevron-'+schoolKey);if(content){content.classList.toggle('show');chevron.textContent=content.classList.contains('show')?'\u25b2':'\u25bc';}}
 function addProItem(schoolKey){const input=document.getElementById('pro-input-'+schoolKey);if(!input||!input.value.trim())return;const s=TRACKER_DATA.schools[schoolKey];if(!s.decision_analytics)s.decision_analytics={criteria_ratings:{},criteria_weights:{},pros:[],cons:[],gut_feeling_history:[],deal_breakers:[]};if(!s.decision_analytics.pros)s.decision_analytics.pros=[];s.decision_analytics.pros.push({text:input.value.trim(),date:new Date().toLocaleDateString()});input.value='';renderFull();}
 function deletePro(schoolKey,index){const s=TRACKER_DATA.schools[schoolKey];if(s.decision_analytics&&s.decision_analytics.pros){s.decision_analytics.pros.splice(index,1);renderFull();}}
