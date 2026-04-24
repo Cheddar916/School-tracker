@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-23T19:16:24.334Z",
-    "total_scans": 114,
-    "total_emails_processed": 186,
+    "last_scan": "2026-04-24T07:16:26.161Z",
+    "total_scans": 115,
+    "total_emails_processed": 190,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -837,6 +837,42 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dbcd9c089e16e5",
+      "school": "uc_riverside",
+      "date": "2026-04-24",
+      "subject": "Make friends and get involved",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
+    {
+      "id": "19dbbef2c5e90aba",
+      "school": "uc_santa_barbara",
+      "date": "2026-04-23",
+      "subject": "UCSB Applicant Portal Temporary Closure Reminder",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
+    },
+    {
+      "id": "19dbc5c7c0571806",
+      "school": "uc_santa_barbara",
+      "date": "2026-04-23",
+      "subject": "Michael, You're Invited to UCSB's Transfer Open House!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
+    },
+    {
+      "id": "19dbccbd11c0ffc9",
+      "school": "uc_berkeley",
+      "date": "2026-04-24",
+      "subject": "Interested in UC Berkeley? Learn more",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Berkeley Admissions <admissions@berkeley.edu>"
+    },
     {
       "id": "19db70568de71b03",
       "school": "csuf",
@@ -1700,45 +1736,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19d03f1df944e819",
-      "school": "cal_poly_slo",
-      "date": "2026-03-19",
-      "subject": "#CalPolyProud Newsletter ??",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
-    },
-    {
-      "id": "19cfeaeded22e86f",
-      "school": "csuf",
-      "date": "2026-03-18",
-      "subject": "You?re Admitted to CBE ? Join Your Exclusive Webinar",
-      "category": "acceptance",
-      "confidence": 0.75,
-      "from": "CBE Business Advising <businessadvising@fullerton.edu>"
-    },
-    {
-      "id": "19cf8e3b828cc029",
-      "school": "sac_state",
-      "date": "2026-03-16",
-      "subject": "Join Us: Sac State Fall 2026 ?What?s Next? at Sacramento City College",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Mitzi Felix <mitzi.felix@csus.edu>"
-    },
-    {
-      "id": "19cf81651aad9c08",
-      "school": "csuf",
-      "date": "2026-03-16",
-      "subject": "Welcome to CSUF | Next Steps for Admitted Transfers",
-      "category": "acceptance",
-      "confidence": 0.99,
-      "from": "CSUF Transfer Services <transfer@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-24",
+      "scan_timestamp": "2026-04-24T07:16:26.161Z",
+      "emails_found": 4,
+      "new_decisions": 0,
+      "notes": "Found 4 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-23",
       "scan_timestamp": "2026-04-23T19:16:24.334Z",
@@ -2081,13 +2088,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-30",
-      "scan_timestamp": "2026-03-30T07:16:27.235Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
