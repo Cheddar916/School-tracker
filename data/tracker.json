@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-24T07:16:26.161Z",
-    "total_scans": 115,
-    "total_emails_processed": 190,
+    "last_scan": "2026-04-24T19:16:25.801Z",
+    "total_scans": 116,
+    "total_emails_processed": 191,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -837,6 +837,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dbfcd5b73a8c56",
+      "school": "uc_santa_barbara",
+      "date": "2026-04-24",
+      "subject": "UCSB: Your Next Steps to Enrollment",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
+    },
     {
       "id": "19dbcd9c089e16e5",
       "school": "uc_riverside",
@@ -1727,18 +1736,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "Sac State Recruiter <sacstaterecruiter@csus.edu>"
-    },
-    {
-      "id": "19d05269d7f63250",
-      "school": "sjsu",
-      "date": "2026-03-19",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-24",
+      "scan_timestamp": "2026-04-24T19:16:25.801Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-24",
       "scan_timestamp": "2026-04-24T07:16:26.161Z",
@@ -2081,13 +2088,6 @@
       "emails_found": 4,
       "new_decisions": 1,
       "notes": "Found 4 new emails. Decisions: Sacramento State: accepted"
-    },
-    {
-      "scan_date": "2026-03-30",
-      "scan_timestamp": "2026-03-30T19:16:25.466Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
     }
   ],
   "feedback_log": [],
