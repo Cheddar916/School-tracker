@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-24T19:16:25.801Z",
-    "total_scans": 116,
-    "total_emails_processed": 191,
+    "last_scan": "2026-04-25T07:16:28.779Z",
+    "total_scans": 117,
+    "total_emails_processed": 197,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -88,15 +88,15 @@
       "name": "UCLA",
       "short_name": "UCLA",
       "type": "UC",
-      "status": "pending",
-      "confidence": 0.95,
-      "decision_date": null,
+      "status": "waitlisted",
+      "confidence": 0.75,
+      "decision_date": "2026-04-25",
       "deadlines": [],
       "action_items": [
         "Check MyApplication portal for updates"
       ],
       "portal_url": "https://www.admission.ucla.edu/MyApplication",
-      "notes": "Application received Dec 12, 2025",
+      "notes": "Decision email received 2026-04-25",
       "cost_breakdown": {
         "total_coa": 42000,
         "tuition_fees": 14700,
@@ -224,9 +224,9 @@
       "name": "UC Santa Barbara",
       "short_name": "UCSB",
       "type": "UC",
-      "status": "pending",
-      "confidence": 0.95,
-      "decision_date": null,
+      "status": "accepted",
+      "confidence": 0.5,
+      "decision_date": "2026-04-24",
       "deadlines": [
         {
           "type": "FAFSA",
@@ -244,7 +244,7 @@
         "Complete FAFSA (School Code: 001320)"
       ],
       "portal_url": "https://connect.admissions.ucsb.edu/apply/status",
-      "notes": "Applicant Portal open",
+      "notes": "? ADMITTED! Decision email received 2026-04-24",
       "cost_breakdown": {
         "total_coa": 43500,
         "tuition_fees": 15200,
@@ -382,7 +382,9 @@
       "action_items": [
         "Complete FAFSA (School Code: 001321)",
         "Check Admissions Portal starting April 1",
-        "by May 15! UC Santa Cruz - Application Received"
+        "by May 15! UC Santa Cruz - Application Received",
+        "Register) deadline is May 1",
+        "deadline is May 1"
       ],
       "portal_url": "https://ucsc.link/adm-portal",
       "notes": "? ADMITTED! Decision email received 2026-04-09",
@@ -538,7 +540,8 @@
         "register/mJWa74S5T6KtXd9Nbv3WDQ> RSVP - Open lab - Friday, May 1",
         "deadline of May 1",
         "complete your intent to enroll by May 1",
-        "by May 1! We can't wa"
+        "by May 1! We can't wa",
+        "by May 1! As we plan fo"
       ],
       "portal_url": "https://one.sjsu.edu",
       "notes": "? ADMITTED! Decision email received 2026-04-16",
@@ -771,7 +774,8 @@
         "deadline is May 1",
         "complete the application by April 30",
         "Deadline: Thursday, April 30",
-        "by April 30th will receive notification of acceptance by June"
+        "by April 30th will receive notification of acceptance by June",
+        "Submit your Intent to Enroll (ITE) today, no later than May 1"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
       "notes": "? ADMITTED! Decision email received 2026-04-17",
@@ -837,6 +841,60 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dc1be1c6f79761",
+      "school": "sac_state",
+      "date": "2026-04-24",
+      "subject": "Sac State: This Is Your College Experience",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
+    {
+      "id": "19dc22a83b809e37",
+      "school": "csuf",
+      "date": "2026-04-25",
+      "subject": "Future Titans: Join Us for Last-Minute Support",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
+    },
+    {
+      "id": "19dc1899d57cf5e5",
+      "school": "sjsu",
+      "date": "2026-04-24",
+      "subject": "SJSU Fall 2026 Intent to Enroll Due May 1",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "SJSU Undergraduate Admissions <nextsteps@sjsu.edu>"
+    },
+    {
+      "id": "19dc11ba9c318aee",
+      "school": "uc_santa_cruz",
+      "date": "2026-04-24",
+      "subject": "Your Admissions Portal has been updated",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
+    {
+      "id": "19dc1823110bba50",
+      "school": "uc_santa_barbara",
+      "date": "2026-04-24",
+      "subject": "Start Your Gaucho Journey in the Summer",
+      "category": "acceptance",
+      "confidence": 0.5,
+      "from": "UCSB Summer Sessions <admissions@sa.ucsb.edu>"
+    },
+    {
+      "id": "19dc2b779cd10304",
+      "school": "ucla",
+      "date": "2026-04-25",
+      "subject": "UCLA Waitlist",
+      "category": "waitlist",
+      "confidence": 0.75,
+      "from": "UCLA Undergraduate Admission <applicant@admission.ucla.edu>"
+    },
     {
       "id": "19dbfcd5b73a8c56",
       "school": "uc_santa_barbara",
@@ -1682,63 +1740,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
-    },
-    {
-      "id": "19d0c8dab6bb5754",
-      "school": "sdsu",
-      "date": "2026-03-20",
-      "subject": "Update to Your Admission Status",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "SDSU Office of Admissions <admissions@sdsu.edu>"
-    },
-    {
-      "id": "19d0a4c53d12d938",
-      "school": "sjsu",
-      "date": "2026-03-20",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19d0c53bc5573b33",
-      "school": "uc_berkeley",
-      "date": "2026-03-20",
-      "subject": "Recording & Resources - UC Berkeley Edge, FPF, & Summer Opportunities Information Session",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Edge Program <summeredge@berkeley.edu>"
-    },
-    {
-      "id": "19d087e1388b676e",
-      "school": "sdsu",
-      "date": "2026-03-19",
-      "subject": "Update to Your Admission Status",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "SDSU Office of Admissions <admissions@sdsu.edu>"
-    },
-    {
-      "id": "19d07ceae8676799",
-      "school": "uc_berkeley",
-      "date": "2026-03-19",
-      "subject": "[RSVP Today!] Bridging the Gap Event for Community College Students",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Melanie Ly <lym@berkeley.edu>"
-    },
-    {
-      "id": "19d07786f5724bf9",
-      "school": "sac_state",
-      "date": "2026-03-19",
-      "subject": "Sac State Transfer Connect",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Sac State Recruiter <sacstaterecruiter@csus.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-25",
+      "scan_timestamp": "2026-04-25T07:16:28.779Z",
+      "emails_found": 6,
+      "new_decisions": 2,
+      "notes": "Found 6 new emails. Decisions: UCLA: waitlisted, UC Santa Barbara: accepted"
+    },
     {
       "scan_date": "2026-04-24",
       "scan_timestamp": "2026-04-24T19:16:25.801Z",
@@ -2081,13 +2092,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-03-31",
-      "scan_timestamp": "2026-03-31T07:16:26.615Z",
-      "emails_found": 4,
-      "new_decisions": 1,
-      "notes": "Found 4 new emails. Decisions: Sacramento State: accepted"
     }
   ],
   "feedback_log": [],
