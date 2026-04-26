@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-26T07:16:24.366Z",
-    "total_scans": 119,
-    "total_emails_processed": 197,
+    "last_scan": "2026-04-26T19:16:24.852Z",
+    "total_scans": 120,
+    "total_emails_processed": 199,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -841,6 +841,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dc9366b28df395",
+      "school": "cal_poly_slo",
+      "date": "2026-04-26",
+      "subject": "You said yes! Here's what's next.",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19dcafb2f604c3e5",
+      "school": "uc_riverside",
+      "date": "2026-04-26",
+      "subject": "Faculty-mentored research and internships",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
+    },
     {
       "id": "19dc1be1c6f79761",
       "school": "sac_state",
@@ -1722,27 +1740,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
-    },
-    {
-      "id": "19d0db304d343e52",
-      "school": "uc_santa_barbara",
-      "date": "2026-03-21",
-      "subject": "Michael, You're Invited to Open House!",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UCSB Admissions <admissions@sa.ucsb.edu>"
-    },
-    {
-      "id": "19d0c4e73b37e7f4",
-      "school": "sac_state",
-      "date": "2026-03-20",
-      "subject": "A World-Class Education in the Heart of California",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-26",
+      "scan_timestamp": "2026-04-26T19:16:24.852Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-26",
       "scan_timestamp": "2026-04-26T07:16:24.366Z",
@@ -2082,13 +2089,6 @@
     {
       "scan_date": "2026-04-02",
       "scan_timestamp": "2026-04-02T07:16:26.976Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-01",
-      "scan_timestamp": "2026-04-01T19:16:24.817Z",
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
