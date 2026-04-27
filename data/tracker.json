@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-26T19:16:24.852Z",
-    "total_scans": 120,
-    "total_emails_processed": 199,
+    "last_scan": "2026-04-27T07:16:24.554Z",
+    "total_scans": 121,
+    "total_emails_processed": 200,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -841,6 +841,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dcc08a093d18ca",
+      "school": "sac_state",
+      "date": "2026-04-26",
+      "subject": "Start Building Your Future at Sac State",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
     {
       "id": "19dc9366b28df395",
       "school": "cal_poly_slo",
@@ -1731,18 +1740,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19d0e23e2b1073cd",
-      "school": "csuf",
-      "date": "2026-03-21",
-      "subject": "Better Understand Your Financial Aid Package at Experience CSUF",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-27",
+      "scan_timestamp": "2026-04-27T07:16:24.554Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-26",
       "scan_timestamp": "2026-04-26T19:16:24.852Z",
@@ -2082,13 +2089,6 @@
     {
       "scan_date": "2026-04-02",
       "scan_timestamp": "2026-04-02T19:16:25.678Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-02",
-      "scan_timestamp": "2026-04-02T07:16:26.976Z",
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
