@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-28T07:16:25.580Z",
-    "total_scans": 123,
+    "last_scan": "2026-04-28T19:16:24.344Z",
+    "total_scans": 124,
     "total_emails_processed": 200,
     "created": "2026-02-16",
     "updated": "2026-02-26",
@@ -1745,6 +1745,13 @@
   "scan_history": [
     {
       "scan_date": "2026-04-28",
+      "scan_timestamp": "2026-04-28T19:16:24.345Z",
+      "emails_found": 0,
+      "new_decisions": 0,
+      "notes": "No new emails since last scan."
+    },
+    {
+      "scan_date": "2026-04-28",
       "scan_timestamp": "2026-04-28T07:16:25.580Z",
       "emails_found": 0,
       "new_decisions": 0,
@@ -2085,13 +2092,6 @@
       "emails_found": 6,
       "new_decisions": 1,
       "notes": "Found 6 new emails. Decisions: UC Riverside: accepted"
-    },
-    {
-      "scan_date": "2026-04-03",
-      "scan_timestamp": "2026-04-03T19:16:26.989Z",
-      "emails_found": 3,
-      "new_decisions": 0,
-      "notes": "Found 3 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
