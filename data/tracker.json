@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-28T19:16:24.344Z",
-    "total_scans": 124,
-    "total_emails_processed": 200,
+    "last_scan": "2026-04-29T07:16:26.955Z",
+    "total_scans": 125,
+    "total_emails_processed": 202,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -841,6 +841,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dd5e7bb3366d7b",
+      "school": "csuf",
+      "date": "2026-04-28",
+      "subject": "Careers at ? firms",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSUF Dean Sridhar Sundaram <cbereceptionist@fullerton.edu>"
+    },
+    {
+      "id": "19dd6531da02e020",
+      "school": "cal_poly_slo",
+      "date": "2026-04-28",
+      "subject": "Action needed: Complete your checklist item(s).?",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
     {
       "id": "19dcc08a093d18ca",
       "school": "sac_state",
@@ -1722,27 +1740,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
-    },
-    {
-      "id": "19d2b8d37c9c9348",
-      "school": "sjsu",
-      "date": "2026-03-26",
-      "subject": "RSVP | SJSU Admitted Spartan Day",
-      "category": "acceptance",
-      "confidence": 0.5,
-      "from": "Student Outreach and Recruitment <outreach@sjsu.edu>"
-    },
-    {
-      "id": "19d240d409607d01",
-      "school": "sjsu",
-      "date": "2026-03-25",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-29",
+      "scan_timestamp": "2026-04-29T07:16:26.955Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-28",
       "scan_timestamp": "2026-04-28T19:16:24.345Z",
@@ -2085,13 +2092,6 @@
       "emails_found": 1,
       "new_decisions": 1,
       "notes": "Found 1 new emails. Decisions: UC Santa Cruz: accepted"
-    },
-    {
-      "scan_date": "2026-04-04",
-      "scan_timestamp": "2026-04-04T07:16:25.917Z",
-      "emails_found": 6,
-      "new_decisions": 1,
-      "notes": "Found 6 new emails. Decisions: UC Riverside: accepted"
     }
   ],
   "feedback_log": [],
