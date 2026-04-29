@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-29T07:16:26.955Z",
-    "total_scans": 125,
-    "total_emails_processed": 202,
+    "last_scan": "2026-04-29T19:16:28.765Z",
+    "total_scans": 126,
+    "total_emails_processed": 204,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -841,6 +841,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dda3202befad19",
+      "school": "sac_state",
+      "date": "2026-04-29",
+      "subject": "2 Days Left to Secure Your Spot at Sac State",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
+    {
+      "id": "19dd84a5650c88b0",
+      "school": "sjsu",
+      "date": "2026-04-29",
+      "subject": "New message at MySJSU",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "CSJPRD@sjsu.edu"
+    },
     {
       "id": "19dd5e7bb3366d7b",
       "school": "csuf",
@@ -1722,27 +1740,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "\"Sacramento State Admissions & Outreach\" <admissions@csus.ed"
-    },
-    {
-      "id": "19d3231572c7127a",
-      "school": "csuf",
-      "date": "2026-03-28",
-      "subject": "Find Your Community at CSUF ? Clubs, Panels & More!",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
-    },
-    {
-      "id": "19d3058de4a9acbb",
-      "school": "sjsu",
-      "date": "2026-03-27",
-      "subject": "SJSU Intent to Enroll - Join us for Fall 2026!",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "SJSU Office of Undergraduate Admissions <admissions@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-29",
+      "scan_timestamp": "2026-04-29T19:16:28.765Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-29",
       "scan_timestamp": "2026-04-29T07:16:26.955Z",
@@ -2085,13 +2092,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-04-04",
-      "scan_timestamp": "2026-04-04T19:16:29.183Z",
-      "emails_found": 1,
-      "new_decisions": 1,
-      "notes": "Found 1 new emails. Decisions: UC Santa Cruz: accepted"
     }
   ],
   "feedback_log": [],
