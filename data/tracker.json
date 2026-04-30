@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-04-29T19:16:28.765Z",
-    "total_scans": 126,
-    "total_emails_processed": 204,
+    "last_scan": "2026-04-30T07:16:40.713Z",
+    "total_scans": 127,
+    "total_emails_processed": 207,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -775,7 +775,10 @@
         "complete the application by April 30",
         "Deadline: Thursday, April 30",
         "by April 30th will receive notification of acceptance by June",
-        "Submit your Intent to Enroll (ITE) today, no later than May 1"
+        "Submit your Intent to Enroll (ITE) today, no later than May 1",
+        "Register by May 15",
+        "Deadlines Transfer students: Register by May 15",
+        "by May 15 First-year students: Register by June 19 Firs"
       ],
       "portal_url": "https://idp.csus.edu/idp/profile/cas/login",
       "notes": "? ADMITTED! Decision email received 2026-04-17",
@@ -841,6 +844,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19ddb79542cfc548",
+      "school": "sac_state",
+      "date": "2026-04-29",
+      "subject": "Don't forget to Register for Mandatory New Student Orientation!",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Sacramento State New Student Orientation <orient.reservation"
+    },
+    {
+      "id": "19ddaade9b04eb01",
+      "school": "sjsu",
+      "date": "2026-04-29",
+      "subject": "Reminder from SJSU - Intent to Enroll due Friday!",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "\"San Jos? State University\" <admissions@sjsu.edu>"
+    },
+    {
+      "id": "19ddbf51c8042258",
+      "school": "cal_poly_slo",
+      "date": "2026-04-30",
+      "subject": "#CalPolyProud Newsletter ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
     {
       "id": "19dda3202befad19",
       "school": "sac_state",
@@ -1713,36 +1743,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "Admitted Student Day <admittedstudentday@csus.edu>"
-    },
-    {
-      "id": "19d412a1d74eeb85",
-      "school": "cal_poly_slo",
-      "date": "2026-03-30",
-      "subject": "Michael, your admission status has been updated.",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Cal Poly <admissions@calpoly.edu>"
-    },
-    {
-      "id": "19d416e04dfcd5ad",
-      "school": "cal_poly_slo",
-      "date": "2026-03-31",
-      "subject": "?Michael?, meet other transfer students at Open House!",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
-    },
-    {
-      "id": "19d3b31a00a0919c",
-      "school": "sac_state",
-      "date": "2026-03-29",
-      "subject": "Sacramento = opportunity",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "\"Sacramento State Admissions & Outreach\" <admissions@csus.ed"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-04-30",
+      "scan_timestamp": "2026-04-30T07:16:40.713Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-04-29",
       "scan_timestamp": "2026-04-29T19:16:28.765Z",
@@ -2082,13 +2092,6 @@
     {
       "scan_date": "2026-04-05",
       "scan_timestamp": "2026-04-05T19:16:25.771Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-04-05",
-      "scan_timestamp": "2026-04-05T07:16:25.863Z",
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
