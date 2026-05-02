@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-01T19:16:26.938Z",
-    "total_scans": 130,
-    "total_emails_processed": 215,
+    "last_scan": "2026-05-02T07:16:24.606Z",
+    "total_scans": 131,
+    "total_emails_processed": 219,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,42 @@
     }
   },
   "email_log": [
+    {
+      "id": "19de78296bbe832b",
+      "school": "sac_state",
+      "date": "2026-05-02",
+      "subject": "We?ve Extended Your ITE Deadline",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
+    {
+      "id": "19de5aa5524babf4",
+      "school": "cal_poly_slo",
+      "date": "2026-05-01",
+      "subject": "Here's your Cal Poly visit confirmation! ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Welcome Center <welcomecenter@calpoly.edu>"
+    },
+    {
+      "id": "19de5c8463042c79",
+      "school": "uc_santa_cruz",
+      "date": "2026-05-01",
+      "subject": "Upcoming Transfer Student Events for you ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
+    {
+      "id": "19de53437da88f04",
+      "school": "uc_berkeley",
+      "date": "2026-05-01",
+      "subject": "[SP26 TTS - Week 15] Transfer to Success Workshop Series - Recordings + Resources",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
     {
       "id": "19de4d6e0827f6b2",
       "school": "sac_state",
@@ -1708,45 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "CSJPRD@sjsu.edu"
-    },
-    {
-      "id": "19d5498ed236517c",
-      "school": "sjsu",
-      "date": "2026-04-03",
-      "subject": "Reminder from SJSU: Let us know your plans",
-      "category": "action_required",
-      "confidence": 0.5,
-      "from": "SJSU Undergraduate Admissions <nextsteps@sjsu.edu>"
-    },
-    {
-      "id": "19d54b4685cb9bd6",
-      "school": "uc_riverside",
-      "date": "2026-04-03",
-      "subject": "It?s April! What should you be doing now? ?",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d5074d8b52e85d",
-      "school": "sac_state",
-      "date": "2026-04-02",
-      "subject": "Save the Date! RSVP to Sac State Spring Sting on April 16",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Mitzi Felix <mitzi.felix@csus.edu>"
-    },
-    {
-      "id": "19d5115d99f5263a",
-      "school": "csuf",
-      "date": "2026-04-03",
-      "subject": "Welcome from President Rochon",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-02",
+      "scan_timestamp": "2026-05-02T07:16:24.606Z",
+      "emails_found": 4,
+      "new_decisions": 0,
+      "notes": "Found 4 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-01",
       "scan_timestamp": "2026-05-01T19:16:26.938Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-07",
-      "scan_timestamp": "2026-04-07T07:16:36.013Z",
-      "emails_found": 2,
-      "new_decisions": 0,
-      "notes": "Found 2 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
