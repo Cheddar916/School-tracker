@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-02T19:16:24.704Z",
-    "total_scans": 132,
-    "total_emails_processed": 219,
+    "last_scan": "2026-05-03T07:16:24.589Z",
+    "total_scans": 133,
+    "total_emails_processed": 220,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dea2de2f8549a5",
+      "school": "sjsu",
+      "date": "2026-05-02",
+      "subject": "Michael, Submit your Photo for your Tower Card",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "\"SJSU Bursar's Office\" <universitycomm@sjsu.edu>"
+    },
     {
       "id": "19de78296bbe832b",
       "school": "sac_state",
@@ -1735,18 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "Melanie Ly <lym@berkeley.edu>"
-    },
-    {
-      "id": "19d5265d47664783",
-      "school": "sjsu",
-      "date": "2026-04-03",
-      "subject": "New message at MySJSU",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSJPRD@sjsu.edu"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-03",
+      "scan_timestamp": "2026-05-03T07:16:24.589Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-02",
       "scan_timestamp": "2026-05-02T19:16:24.704Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 3,
       "new_decisions": 1,
       "notes": "Found 3 new emails. Decisions: San Jose State: accepted"
-    },
-    {
-      "scan_date": "2026-04-08",
-      "scan_timestamp": "2026-04-08T07:16:28.398Z",
-      "emails_found": 3,
-      "new_decisions": 1,
-      "notes": "Found 3 new emails. Decisions: UC Riverside: accepted"
     }
   ],
   "feedback_log": [],
