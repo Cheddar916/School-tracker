@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-03T19:16:26.347Z",
-    "total_scans": 134,
-    "total_emails_processed": 220,
+    "last_scan": "2026-05-04T07:16:24.895Z",
+    "total_scans": 135,
+    "total_emails_processed": 221,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19df0c973465618b",
+      "school": "cal_poly_slo",
+      "date": "2026-05-04",
+      "subject": "University Honors Program Transfer Application",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Honors Program <honors@calpoly.edu>"
+    },
     {
       "id": "19dea2de2f8549a5",
       "school": "sjsu",
@@ -1735,18 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "UC Irvine Undergraduate Admissions <admissions@uci.edu>"
-    },
-    {
-      "id": "19d559aec6b4cdef",
-      "school": "uc_berkeley",
-      "date": "2026-04-03",
-      "subject": "[SP26 TTS - Week 11] Transfer to Success Workshop Series - Recordings + Resources",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Melanie Ly <lym@berkeley.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-04",
+      "scan_timestamp": "2026-05-04T07:16:24.895Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-03",
       "scan_timestamp": "2026-05-03T19:16:26.347Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 1,
       "new_decisions": 1,
       "notes": "Found 1 new emails. Decisions: UC Santa Cruz: accepted"
-    },
-    {
-      "scan_date": "2026-04-09",
-      "scan_timestamp": "2026-04-09T07:16:25.171Z",
-      "emails_found": 2,
-      "new_decisions": 1,
-      "notes": "Found 2 new emails. Decisions: Sacramento State: accepted"
     }
   ],
   "feedback_log": [],
