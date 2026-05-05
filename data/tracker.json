@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-04T19:16:25.830Z",
-    "total_scans": 136,
+    "last_scan": "2026-05-05T07:16:23.896Z",
+    "total_scans": 137,
     "total_emails_processed": 221,
     "created": "2026-02-16",
     "updated": "2026-02-26",
@@ -1748,6 +1748,13 @@
   ],
   "scan_history": [
     {
+      "scan_date": "2026-05-05",
+      "scan_timestamp": "2026-05-05T07:16:23.896Z",
+      "emails_found": 0,
+      "new_decisions": 0,
+      "notes": "No new emails since last scan."
+    },
+    {
       "scan_date": "2026-05-04",
       "scan_timestamp": "2026-05-04T19:16:25.830Z",
       "emails_found": 0,
@@ -2089,13 +2096,6 @@
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-10",
-      "scan_timestamp": "2026-04-10T07:16:29.367Z",
-      "emails_found": 4,
-      "new_decisions": 1,
-      "notes": "Found 4 new emails. Decisions: Sacramento State: accepted"
     }
   ],
   "feedback_log": [],
