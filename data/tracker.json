@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-05T19:16:25.622Z",
-    "total_scans": 138,
-    "total_emails_processed": 221,
+    "last_scan": "2026-05-06T07:16:26.784Z",
+    "total_scans": 139,
+    "total_emails_processed": 222,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dfa5f84ed3779c",
+      "school": "cal_poly_slo",
+      "date": "2026-05-05",
+      "subject": "Action needed: Complete your checklist item(s).?",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
     {
       "id": "19df0c973465618b",
       "school": "cal_poly_slo",
@@ -1735,18 +1744,16 @@
       "category": "acceptance",
       "confidence": 0.99,
       "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d55e190e3dff5c",
-      "school": "uc_irvine",
-      "date": "2026-04-04",
-      "subject": "Update to your application",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Irvine Undergraduate Admissions <admissions@uci.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-06",
+      "scan_timestamp": "2026-05-06T07:16:26.794Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-05",
       "scan_timestamp": "2026-05-05T19:16:25.622Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-11",
-      "scan_timestamp": "2026-04-11T07:16:24.771Z",
-      "emails_found": 3,
-      "new_decisions": 0,
-      "notes": "Found 3 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
