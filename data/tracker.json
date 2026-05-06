@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-06T07:16:26.784Z",
-    "total_scans": 139,
-    "total_emails_processed": 222,
+    "last_scan": "2026-05-06T19:16:26.008Z",
+    "total_scans": 140,
+    "total_emails_processed": 224,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,24 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dfe57644f43316",
+      "school": "cal_poly_slo",
+      "date": "2026-05-06",
+      "subject": "We can't wait to see you at your visit of Cal Poly! ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Welcome Center <welcomecenter@calpoly.edu>"
+    },
+    {
+      "id": "19dfe3dd6ad10805",
+      "school": "uc_riverside",
+      "date": "2026-05-06",
+      "subject": "Join Us Tomorrow!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UCR Housing Services <ucrhousing@mcp.ucr.edu>"
+    },
     {
       "id": "19dfa5f84ed3779c",
       "school": "cal_poly_slo",
@@ -1726,27 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
-    },
-    {
-      "id": "19d5503127e13c33",
-      "school": "uc_riverside",
-      "date": "2026-04-03",
-      "subject": "Your admission decision is ready",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d55d07c2ae5abb",
-      "school": "uc_riverside",
-      "date": "2026-04-04",
-      "subject": "Congrats, you?ve been admitted to UCR ??",
-      "category": "acceptance",
-      "confidence": 0.99,
-      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-06",
+      "scan_timestamp": "2026-05-06T19:16:26.008Z",
+      "emails_found": 2,
+      "new_decisions": 0,
+      "notes": "Found 2 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-06",
       "scan_timestamp": "2026-05-06T07:16:26.794Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-04-11",
-      "scan_timestamp": "2026-04-11T19:16:25.457Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
