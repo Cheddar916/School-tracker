@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-06T19:16:26.008Z",
-    "total_scans": 140,
-    "total_emails_processed": 224,
+    "last_scan": "2026-05-07T07:16:27.154Z",
+    "total_scans": 141,
+    "total_emails_processed": 228,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,42 @@
     }
   },
   "email_log": [
+    {
+      "id": "19dff6bf2140cabb",
+      "school": "sac_state",
+      "date": "2026-05-06",
+      "subject": "Happening Tomorrow! Sac State Transfer Commitment Day",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Mitzi Felix <mitzi.felix@csus.edu>"
+    },
+    {
+      "id": "19dff85deaf1e056",
+      "school": "sac_state",
+      "date": "2026-05-06",
+      "subject": "Don't forget to Register for Mandatory New Student Orientation!",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Sacramento State New Student Orientation <orient.reservation"
+    },
+    {
+      "id": "19dff7bbd07242dc",
+      "school": "sjsu",
+      "date": "2026-05-06",
+      "subject": "SJSU Fall 2026 Status Update",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"San Jos? State University\" <admissions@sjsu.edu>"
+    },
+    {
+      "id": "19dffa69c745f354",
+      "school": "uc_santa_cruz",
+      "date": "2026-05-06",
+      "subject": "?? Join Us this Summer!",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
     {
       "id": "19dfe57644f43316",
       "school": "cal_poly_slo",
@@ -1708,45 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d6431c62c957dd",
-      "school": "uc_riverside",
-      "date": "2026-04-06",
-      "subject": "Michael, explore UCR at Highlander Day (May 9)",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Riverside Highlander Day <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d590385d77bff5",
-      "school": "uc_santa_cruz",
-      "date": "2026-04-04",
-      "subject": "You?re Invited, Michael: Upcoming Events for admitted students  ??",
-      "category": "acceptance",
-      "confidence": 0.5,
-      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
-    },
-    {
-      "id": "19d55fc31d85fa19",
-      "school": "cal_poly_slo",
-      "date": "2026-04-03",
-      "subject": "Don?t miss Open House, ?Michael?. RSVP before April 9!?",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
-    },
-    {
-      "id": "19d5597d21f7c334",
-      "school": "uc_santa_cruz",
-      "date": "2026-04-03",
-      "subject": "Michael, Important Message from Undergraduate Admissions",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-07",
+      "scan_timestamp": "2026-05-07T07:16:27.154Z",
+      "emails_found": 4,
+      "new_decisions": 0,
+      "notes": "Found 4 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-06",
       "scan_timestamp": "2026-05-06T19:16:26.008Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-12",
-      "scan_timestamp": "2026-04-12T07:16:24.640Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
     }
   ],
   "feedback_log": [],
