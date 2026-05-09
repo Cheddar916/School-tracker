@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-09T07:16:24.364Z",
-    "total_scans": 145,
-    "total_emails_processed": 231,
+    "last_scan": "2026-05-09T19:16:26.648Z",
+    "total_scans": 146,
+    "total_emails_processed": 232,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19e0db1144d80013",
+      "school": "sac_state",
+      "date": "2026-05-09",
+      "subject": "Deadline Extended to June 1: A Campus That Supports You",
+      "category": "action_required",
+      "confidence": 0.5,
+      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
+    },
     {
       "id": "19e09ee18c053737",
       "school": "uc_santa_cruz",
@@ -1735,18 +1744,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "UCR Housing Services <ucrhousing@mcp.ucr.edu>"
-    },
-    {
-      "id": "19d6955b7c4ee88a",
-      "school": "uc_riverside",
-      "date": "2026-04-07",
-      "subject": "Apply for University Honors at UCR",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Riverside <no-reply@admissions.ucr.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-09",
+      "scan_timestamp": "2026-05-09T19:16:26.648Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-09",
       "scan_timestamp": "2026-05-09T07:16:24.364Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 3,
       "new_decisions": 0,
       "notes": "Found 3 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-14",
-      "scan_timestamp": "2026-04-14T19:16:24.600Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
     }
   ],
   "feedback_log": [],
