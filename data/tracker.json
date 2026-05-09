@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-08T19:16:25.129Z",
-    "total_scans": 144,
-    "total_emails_processed": 230,
+    "last_scan": "2026-05-09T07:16:24.364Z",
+    "total_scans": 145,
+    "total_emails_processed": 231,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19e09ee18c053737",
+      "school": "uc_santa_cruz",
+      "date": "2026-05-08",
+      "subject": "Upcoming Transfer Student Events for you ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
     {
       "id": "19e05c17a46abcba",
       "school": "cal_poly_slo",
@@ -1735,18 +1744,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "UC Riverside <no-reply@admissions.ucr.edu>"
-    },
-    {
-      "id": "19d65ae6291decfe",
-      "school": "csuf",
-      "date": "2026-04-07",
-      "subject": "Veterans and Military families: Don?t miss this!",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "\"CSUF Outreach & Recruitment\" <outreach@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-09",
+      "scan_timestamp": "2026-05-09T07:16:24.364Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-08",
       "scan_timestamp": "2026-05-08T19:16:25.129Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-04-14",
-      "scan_timestamp": "2026-04-14T07:16:27.829Z",
-      "emails_found": 3,
-      "new_decisions": 0,
-      "notes": "Found 3 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
