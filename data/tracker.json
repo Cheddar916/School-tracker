@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-15T07:16:25.930Z",
-    "total_scans": 157,
-    "total_emails_processed": 238,
+    "last_scan": "2026-05-15T19:16:26.301Z",
+    "total_scans": 158,
+    "total_emails_processed": 239,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -845,6 +845,15 @@
     }
   },
   "email_log": [
+    {
+      "id": "19e2c27ddda4def1",
+      "school": "uc_santa_cruz",
+      "date": "2026-05-15",
+      "subject": "Upcoming Transfer Student Events for you ??",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
+    },
     {
       "id": "19e23927008719f1",
       "school": "sac_state",
@@ -1735,18 +1744,16 @@
       "category": "acceptance",
       "confidence": 0.5,
       "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
-    },
-    {
-      "id": "19d6f0b77ad500cd",
-      "school": "csuf",
-      "date": "2026-04-08",
-      "subject": "Michael Accept your Admission to CSUF, No Payment Required",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "CSUF Admissions <admissions@fullerton.edu>"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-15",
+      "scan_timestamp": "2026-05-15T19:16:26.301Z",
+      "emails_found": 1,
+      "new_decisions": 0,
+      "notes": "Found 1 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-15",
       "scan_timestamp": "2026-05-15T07:16:25.930Z",
@@ -2089,13 +2096,6 @@
       "emails_found": 0,
       "new_decisions": 0,
       "notes": "No new emails since last scan."
-    },
-    {
-      "scan_date": "2026-04-20",
-      "scan_timestamp": "2026-04-20T19:16:24.865Z",
-      "emails_found": 1,
-      "new_decisions": 0,
-      "notes": "Found 1 new emails. No decision changes."
     }
   ],
   "feedback_log": [],
