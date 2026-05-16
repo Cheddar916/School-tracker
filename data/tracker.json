@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "3.0",
-    "last_scan": "2026-05-15T19:16:26.301Z",
-    "total_scans": 158,
-    "total_emails_processed": 239,
+    "last_scan": "2026-05-16T07:16:24.977Z",
+    "total_scans": 159,
+    "total_emails_processed": 242,
     "created": "2026-02-16",
     "updated": "2026-02-26",
     "owner": "Michael Sarmento"
@@ -446,7 +446,8 @@
       "decision_date": null,
       "deadlines": [],
       "action_items": [
-        "by May 1 at 11:59 p"
+        "by May 1 at 11:59 p",
+        "register/nss26> by May 28"
       ],
       "portal_url": null,
       "notes": "Account: sarmento@calpoly.edu. Receiving biweekly newsletters",
@@ -845,6 +846,33 @@
     }
   },
   "email_log": [
+    {
+      "id": "19e2d84d94ec3800",
+      "school": "sac_state",
+      "date": "2026-05-15",
+      "subject": "Have you done the math?",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "\"Sacramento State Financial Aid & Scholarships\" <ssc@csus.ed"
+    },
+    {
+      "id": "19e2dfe36506af4f",
+      "school": "cal_poly_slo",
+      "date": "2026-05-15",
+      "subject": "Tips for fall 2026 registration",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Cal Poly Admissions <admissions@calpoly.edu>"
+    },
+    {
+      "id": "19e2d193039927f6",
+      "school": "uc_berkeley",
+      "date": "2026-05-15",
+      "subject": "[SP26 TTS - Week 17] Transfer to Success Workshop Series - Recordings + Resources",
+      "category": "informational",
+      "confidence": 0.25,
+      "from": "Melanie Ly <lym@berkeley.edu>"
+    },
     {
       "id": "19e2c27ddda4def1",
       "school": "uc_santa_cruz",
@@ -1717,36 +1745,16 @@
       "category": "informational",
       "confidence": 0.25,
       "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d74badec81f52d",
-      "school": "uc_riverside",
-      "date": "2026-04-10",
-      "subject": "Succeed with Asian Pacific Student Programs",
-      "category": "informational",
-      "confidence": 0.25,
-      "from": "UC Riverside Undergraduate Admissions <admissions@ucr.edu>"
-    },
-    {
-      "id": "19d73a188e3717a1",
-      "school": "uc_santa_cruz",
-      "date": "2026-04-09",
-      "subject": "You?re Invited, Michael: Transfer Day for admitted students! ??",
-      "category": "acceptance",
-      "confidence": 0.5,
-      "from": "UC Santa Cruz Admissions <do-not-reply-adm-group@ucsc.edu>"
-    },
-    {
-      "id": "19d6f57c76ebae97",
-      "school": "sac_state",
-      "date": "2026-04-08",
-      "subject": "A Message from the College of Business",
-      "category": "acceptance",
-      "confidence": 0.5,
-      "from": "Sacramento State Admissions and Outreach <admissions@csus.ed"
     }
   ],
   "scan_history": [
+    {
+      "scan_date": "2026-05-16",
+      "scan_timestamp": "2026-05-16T07:16:24.977Z",
+      "emails_found": 3,
+      "new_decisions": 0,
+      "notes": "Found 3 new emails. No decision changes."
+    },
     {
       "scan_date": "2026-05-15",
       "scan_timestamp": "2026-05-15T19:16:26.301Z",
@@ -2089,13 +2097,6 @@
       "emails_found": 1,
       "new_decisions": 0,
       "notes": "Found 1 new emails. No decision changes."
-    },
-    {
-      "scan_date": "2026-04-21",
-      "scan_timestamp": "2026-04-21T07:16:25.209Z",
-      "emails_found": 0,
-      "new_decisions": 0,
-      "notes": "No new emails since last scan."
     }
   ],
   "feedback_log": [],
